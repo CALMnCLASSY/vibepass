@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nyashinski ShowMan 2026 - The Residency</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+</head>
+<body>
+    <div class="noise-overlay"></div>
+    
+    <div class="container">
+        <header>
+            <div class="center-star">★</div>
+            <div class="pre-title">NYASHINSKI </div>
+            <h1>SHOWMAN</h1>
+            <div class="subtitle">
+                THE RESIDENCY
+            </div>
+            
+        </header>
+
+      
+        <div class="shows-section">
+            <!-- <div class="section-title">SELECT YOUR SHOW</div> -->
+            
+            <div class="shows-grid" id="showsGrid">
+                <div style="text-align: center; padding: 40px; color: #1d1d1d; font-size: 1.5rem;">
+                    Loading shows...
+                </div>
+            </div>
+        </div>
+
+        <section class="continue-payment-section" id="continuePaymentSection" style="display: none;">
+            <h3 class="continue-payment-title">Already Paying in Installments?</h3>
+            <p class="continue-payment-subtitle">Enter your phone number to continue with your pending payment plan.</p>
+            <form id="continuePaymentForm" class="continue-payment-form">
+                <input type="tel" id="continuePhone" placeholder="e.g. 0712345678 or +254712345678" required>
+                <button type="submit">CONTINUE PAYMENT</button>
+            </form>
+            <p id="continuePaymentFeedback" class="continue-payment-feedback"></p>
+        </section>
+
+        <section class="support-section">
+            <h3 class="support-title">Support / Inquiries</h3>
+            <p class="support-subtitle">Have a question? Send us a message and our team will get back to you.</p>
+            <form id="supportForm" class="support-form">
+                <div class="support-row">
+                    <input type="text" id="supportName" placeholder="Your name" required>
+                    <input type="email" id="supportEmail" placeholder="Your email" required>
+                </div>
+                <div class="support-row">
+                    <input type="tel" id="supportPhone" placeholder="Your phone (optional)">
+                    <input type="text" id="supportSubject" placeholder="Subject" required>
+                </div>
+                <textarea id="supportMessageText" placeholder="Type your message here..." required></textarea>
+                <button type="submit">SEND INQUIRY</button>
+            </form>
+            <p id="supportMessage" class="support-feedback success" role="status"></p>
+            <p id="supportError" class="support-feedback error" role="alert"></p>
+        </section>
+
+        <div class="footer-note">
+            ★ TICKET COST SUBJECT TO AVAILABILITY ★
+        </div>
+    </div>
+
+    <div class="modal" id="ticketModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            
+            <div id="formSection">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                
+                <form id="ticketForm" onsubmit="submitForm(event)">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" required placeholder="Enter your name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required placeholder="Enter your email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" required placeholder="Enter your phone number">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price_id">Ticket Type</label>
+                        <select id="price_id" required>
+                            <option value="">Select ticket type</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tickets">Number of Tickets</label>
+                        <select id="tickets" required>
+                            <option value="">Select quantity</option>
+                            <option value="1">1 Ticket</option>
+                            <option value="2">2 Tickets</option>
+                            <option value="3">3 Tickets</option>
+                            <option value="4">4 Tickets</option>
+                            <option value="5">5 Tickets</option>
+                            <option value="6">6 Tickets</option>
+                            <option value="7">7 Tickets</option>
+                            <option value="8">8 Tickets</option>
+                            <option value="9">9 Tickets</option>
+                            <option value="10">10 Tickets</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="paymentModeGroup" style="display: none;">
+                        <label for="payment_mode">Payment Mode</label>
+                        <select id="payment_mode">
+                            <option value="full">Full Payment</option>
+                            <option value="installments">Installments</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="depositGroup" style="display: none;">
+                        <label for="deposit_amount">Deposit Amount (KES)</label>
+                        <input type="number" id="deposit_amount" min="1" step="1" placeholder="Enter deposit amount">
+                        <small id="depositHint" style="display:block; margin-top:6px; font-size:12px; color:#333;"></small>
+                    </div>
+
+                    <div class="form-group" id="installmentsCountGroup" style="display: none;">
+                        <label for="installments_count">Installment Count</label>
+                        <select id="installments_count">
+                            <option value="1">1 installment</option>
+                            <option value="2">2 installments</option>
+                            <option value="3">3 installments</option>
+                            <option value="4">4 installments</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="submit-btn">CONFIRM</button>
+                </form>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                <div class="success-icon" id="successIcon">★</div>
+                <div class="success-text" id="successTitle"></div>
+                <p id="successMessageText" style="margin-top: 15px; line-height: 1.6; font-size: 0.95rem; color: #1d1d1d; font-weight: 600;"></p>
+                <button class="submit-btn" style="margin-top: 20px;" onclick="closeModal()">CLOSE</button>
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                <div class="error-icon">⚠</div>
+                <div class="error-text">ERROR</div>
+                <p id="errorMessageText"></p>
+                <button class="submit-btn" style="margin-top: 20px;" onclick="closeError()">CLOSE</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
