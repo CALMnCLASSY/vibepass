@@ -26,6 +26,16 @@ export default function ShowmanClient({ initialEvents }: { initialEvents: EventT
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [isProcessing, setIsProcessing] = useState(false);
 
+    // Support Form State
+    const [supportForm, setSupportForm] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+    });
+    const [supportStatus, setSupportStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
     useEffect(() => {
         if (isModalOpen) {
             document.body.style.overflow = 'hidden';
@@ -158,6 +168,45 @@ export default function ShowmanClient({ initialEvents }: { initialEvents: EventT
         });
     };
 
+    const handleSupportSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setSupportStatus('submitting');
+        
+        const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+        if (!accessKey) {
+            alert('Web3Forms key is missing in environment variables.');
+            setSupportStatus('error');
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append('access_key', accessKey);
+            formData.append('subject', supportForm.subject);
+            formData.append('from_name', supportForm.name);
+            formData.append('email', supportForm.email);
+            formData.append('phone', supportForm.phone);
+            formData.append('message', supportForm.message);
+
+            const res = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                setSupportStatus('success');
+                setSupportForm({ name: '', email: '', phone: '', subject: '', message: '' });
+                setTimeout(() => setSupportStatus('idle'), 5000);
+            } else {
+                setSupportStatus('error');
+            }
+        } catch (err) {
+            console.error('Support form error:', err);
+            setSupportStatus('error');
+        }
+    };
+
     return (
         <div className="showman-root">
             <div className="noise-overlay"></div>
@@ -208,17 +257,28 @@ export default function ShowmanClient({ initialEvents }: { initialEvents: EventT
                 <section className="support-section">
                     <h3 className="support-title">Support / Inquiries</h3>
                     <p className="support-subtitle">Have a question? Send us a message and our team will get back to you.</p>
-                    <form className="support-form" onSubmit={(e) => { e.preventDefault(); alert("Message sent"); }}>
+                    <form className="support-form" onSubmit={handleSupportSubmit}>
                         <div className="support-row">
-                            <input type="text" placeholder="Your name" required />
-                            <input type="email" placeholder="Your email" required />
+                            <input type="text" placeholder="Your name" required 
+                                value={supportForm.name} onChange={e => setSupportForm({...supportForm, name: e.target.value})} />
+                            <input type="email" placeholder="Your email" required 
+                                value={supportForm.email} onChange={e => setSupportForm({...supportForm, email: e.target.value})} />
                         </div>
                         <div className="support-row">
-                            <input type="tel" placeholder="Your phone (optional)" />
-                            <input type="text" placeholder="Subject" required />
+                            <input type="tel" placeholder="Your phone (optional)" 
+                                value={supportForm.phone} onChange={e => setSupportForm({...supportForm, phone: e.target.value})} />
+                            <input type="text" placeholder="Subject" required 
+                                value={supportForm.subject} onChange={e => setSupportForm({...supportForm, subject: e.target.value})} />
                         </div>
-                        <textarea placeholder="Type your message here..." required></textarea>
-                        <button type="submit">SEND INQUIRY</button>
+                        <textarea placeholder="Type your message here..." required
+                                value={supportForm.message} onChange={e => setSupportForm({...supportForm, message: e.target.value})}></textarea>
+                        
+                        {supportStatus === 'success' && <p style={{color: '#0f7b2d', marginTop: '10px', fontSize: '0.9rem', fontWeight: 'bold'}}>Your message has been sent successfully!</p>}
+                        {supportStatus === 'error' && <p style={{color: '#b42318', marginTop: '10px', fontSize: '0.9rem', fontWeight: 'bold'}}>There was an error sending your message. Please try again.</p>}
+                        
+                        <button type="submit" disabled={supportStatus === 'submitting'} style={{marginTop: '10px'}}>
+                            {supportStatus === 'submitting' ? 'SENDING...' : 'SEND INQUIRY'}
+                        </button>
                     </form>
                 </section>
 

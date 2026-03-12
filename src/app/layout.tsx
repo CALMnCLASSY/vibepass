@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import React from "react";
+import React, { Suspense } from "react";
 import { Outfit } from "next/font/google";
 import Script from "next/script";
+import VisitorTracker from "@/components/VisitorTracker";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -22,6 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${outfit.variable} antialiased bg-background text-foreground`}>
+        <Suspense fallback={null}>
+          <VisitorTracker />
+        </Suspense>
         {children}
         <Script src="https://js.paystack.co/v2/inline.js" strategy="lazyOnload" />
       </body>
