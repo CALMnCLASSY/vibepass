@@ -254,7 +254,9 @@ export default function ShowmanClient({ initialEvents }: { initialEvents: EventT
                                 <div className="form-group">
                                     <label>Ticket Type</label>
                                     <select required>
-                                        <option value="">{selectedShow?.price ? `General Admission - KES ${selectedShow.price}` : 'Select ticket type'}</option>
+                                        <option value={selectedShow?.price || ""}>
+                                            {selectedShow ? `${selectedShow.name.toUpperCase().includes('VIP') ? 'VIP' : 'General Admission'} - KES ${selectedShow.price.toLocaleString()}` : 'Select ticket type'}
+                                        </option>
                                     </select>
                                 </div>
                                 <div className="form-group">
@@ -264,6 +266,11 @@ export default function ShowmanClient({ initialEvents }: { initialEvents: EventT
                                             <option key={n} value={n}>{n} Ticket{n > 1 ? 's' : ''}</option>
                                         ))}
                                     </select>
+                                </div>
+                                <div className="form-group" style={{marginTop: '15px', marginBottom: '5px'}}>
+                                    <label style={{color: '#ffffff', fontSize: '1.2rem'}}>
+                                        Total Amount: KES {selectedShow ? (selectedShow.price * parseInt(formData.tickets)).toLocaleString() : 0}
+                                    </label>
                                 </div>
                                 <button type="submit" className="submit-btn" style={{marginTop: '20px'}} disabled={isProcessing}>
                                     {isProcessing ? 'PROCESSING...' : 'CONFIRM TO PAY'}

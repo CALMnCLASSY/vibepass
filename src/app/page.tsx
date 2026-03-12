@@ -3,10 +3,25 @@ import Hero from '@/components/Hero';
 import EventCard from '@/components/EventCard';
 import Newsletter from '@/components/Newsletter';
 import { getEvents } from '@/data/events';
+import type { EventType } from '@/data/events';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
-  const events = await getEvents();
+  let events = await getEvents();
+
+  const showmanEvents = events.filter(e => e.name.toUpperCase().includes('SHOWMAN'));
+  const otherEvents = events.filter(e => !e.name.toUpperCase().includes('SHOWMAN'));
+
+  if (showmanEvents.length > 0) {
+    const groupedShowman: EventType = {
+      ...showmanEvents[0],
+      name: "NYASHINSKI SHOWMAN - THE RESIDENCY",
+      price: 3500 // Base price for display
+    };
+    events = [groupedShowman, ...otherEvents];
+  }
 
   return (
     <main className="min-h-screen flex flex-col">
