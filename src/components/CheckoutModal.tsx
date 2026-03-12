@@ -58,7 +58,14 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
 
     setIsProcessing(true);
 
-    const handler = window.PaystackPop.setup({
+    if (!PAYSTACK_KEY) {
+      alert('Paystack public key is missing. Please check your environment variables.');
+      setIsProcessing(false);
+      return;
+    }
+
+    const paystack = new window.PaystackPop();
+    paystack.newTransaction({
       key: PAYSTACK_KEY,
       email: formData.email,
       amount: event.price * 100, // Paystack always expects smallest currency unit
@@ -71,18 +78,24 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
           { display_name: 'Event', variable_name: 'event_name', value: event.name },
         ],
       },
-      callback: () => {
+      onSuccess: () => {
         // Payment successful
         setIsProcessing(false);
         setStep('SUCCESS');
       },
-      onClose: () => {
+      onCancel: () => {
         // User closed popup without paying
         setIsProcessing(false);
       },
+      onLoad: () => {
+        // Called when the popup loads
+      },
+      onError: (error: any) => {
+        console.error('Paystack error:', error);
+        alert(`Payment error: ${error.message || 'Unknown error'}`);
+        setIsProcessing(false);
+      }
     });
-
-    handler.openIframe();
   };
 
   return (
