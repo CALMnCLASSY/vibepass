@@ -8,8 +8,11 @@ interface EventCardProps {
 }
 
 export default function EventCard({ event }: EventCardProps) {
+  const isShowman = event.name.toUpperCase().includes('SHOWMAN');
+  const targetHref = isShowman ? '/showman' : `/events/${event.id}`;
+
   return (
-    <Link href={`/events/${event.id}`} className="group relative bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-electric-purple/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] flex flex-col cursor-pointer hover:-translate-y-1">
+    <Link href={targetHref} className="group relative bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-electric-purple/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] flex flex-col cursor-pointer hover:-translate-y-1">
       <div className="relative h-56 w-full overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
