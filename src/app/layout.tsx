@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import React from "react";
 import { Outfit } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -21,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${outfit.variable} antialiased bg-background text-foreground`}>
         {children}
+        <Script src="https://js.paystack.co/v2/inline.js" strategy="lazyOnload" />
       </body>
     </html>
   );

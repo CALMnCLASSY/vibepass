@@ -1,6 +1,16 @@
+'use client';
+
 import React, { useState } from 'react';
-import { X, CheckCircle2, User, Mail, Phone, Lock } from 'lucide-react';
+import { X, CheckCircle2, User, Mail, Phone, Lock, CreditCard, ShieldCheck } from 'lucide-react';
 import type { EventType } from '@/data/events';
+
+// Extend window type for Paystack
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    PaystackPop: any;
+  }
+}
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -10,16 +20,18 @@ interface CheckoutModalProps {
 
 type CheckoutStep = 'DETAILS' | 'PAYMENT' | 'SUCCESS';
 
+const PAYSTACK_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY as string;
+
 export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalProps) {
   const [step, setStep] = useState<CheckoutStep>('DETAILS');
   const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
+  const [isProcessing, setIsProcessing] = useState(false);
 
   if (!isOpen || !event) return null;
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       onClose();
-      // Reset state on close
       setTimeout(() => setStep('DETAILS'), 300);
     }
   };
@@ -29,21 +41,52 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
     setStep('PAYMENT');
   };
 
-  const handlePaymentSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStep('SUCCESS');
-  };
-
   const closeReset = () => {
     onClose();
     setTimeout(() => {
       setStep('DETAILS');
       setFormData({ name: '', email: '', phone: '' });
+      setIsProcessing(false);
     }, 300);
   };
 
+  const handlePaystackPayment = () => {
+    if (!window.PaystackPop) {
+      alert('Payment system is loading. Please wait a moment and try again.');
+      return;
+    }
+
+    setIsProcessing(true);
+
+    const handler = window.PaystackPop.setup({
+      key: PAYSTACK_KEY,
+      email: formData.email,
+      amount: event.price * 100, // Paystack always expects smallest currency unit
+      currency: 'KES',
+      ref: `vibe-pass-${Date.now()}-${Math.floor(Math.random() * 1000000)}`,
+      metadata: {
+        custom_fields: [
+          { display_name: 'Customer Name', variable_name: 'customer_name', value: formData.name },
+          { display_name: 'Phone Number', variable_name: 'phone_number', value: formData.phone },
+          { display_name: 'Event', variable_name: 'event_name', value: event.name },
+        ],
+      },
+      callback: () => {
+        // Payment successful
+        setIsProcessing(false);
+        setStep('SUCCESS');
+      },
+      onClose: () => {
+        // User closed popup without paying
+        setIsProcessing(false);
+      },
+    });
+
+    handler.openIframe();
+  };
+
   return (
-    <div 
+    <div
       className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center bg-black/80 backdrop-blur-sm p-0 sm:p-4 animation-fade-in"
       onClick={handleBackdropClick}
     >
@@ -53,7 +96,7 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={event.imageUrl} alt="" className="w-full h-full object-cover opacity-40" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#111] to-transparent" />
-          <button 
+          <button
             onClick={closeReset}
             className="absolute top-4 right-4 p-2 bg-black/50 hover:bg-black/80 rounded-full text-white/70 hover:text-white transition-colors"
           >
@@ -70,6 +113,7 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
             </div>
           </div>
 
+          {/* ── STEP 1: DETAILS ── */}
           {step === 'DETAILS' && (
             <div className="animation-fade-in">
               <div className="flex items-center gap-2 mb-6 bg-white/5 border border-white/5 p-3 rounded-lg">
@@ -84,12 +128,12 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <User className="h-5 w-5 text-gray-500" />
                     </div>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       required
                       value={formData.name}
-                      onChange={e => setFormData({...formData, name: e.target.value})}
-                      placeholder="Jane Doe" 
+                      onChange={e => setFormData({ ...formData, name: e.target.value })}
+                      placeholder="Jane Doe"
                       className="w-full bg-black/50 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-purple/50 focus:border-electric-purple transition-all"
                     />
                   </div>
@@ -101,12 +145,12 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Mail className="h-5 w-5 text-gray-500" />
                     </div>
-                    <input 
-                      type="email" 
+                    <input
+                      type="email"
                       required
                       value={formData.email}
-                      onChange={e => setFormData({...formData, email: e.target.value})}
-                      placeholder="jane@example.com" 
+                      onChange={e => setFormData({ ...formData, email: e.target.value })}
+                      placeholder="jane@example.com"
                       className="w-full bg-black/50 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-purple/50 focus:border-electric-purple transition-all"
                     />
                   </div>
@@ -118,18 +162,18 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Phone className="h-5 w-5 text-gray-500" />
                     </div>
-                    <input 
-                      type="tel" 
+                    <input
+                      type="tel"
                       required
                       value={formData.phone}
-                      onChange={e => setFormData({...formData, phone: e.target.value})}
-                      placeholder="07XX XXX XXX" 
+                      onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                      placeholder="07XX XXX XXX"
                       className="w-full bg-black/50 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-purple/50 focus:border-electric-purple transition-all"
                     />
                   </div>
                 </div>
 
-                <button 
+                <button
                   type="submit"
                   className="w-full bg-white hover:bg-gray-200 text-black font-bold py-4 rounded-xl mt-6 transition-colors flex justify-center items-center gap-2"
                 >
@@ -139,59 +183,86 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
             </div>
           )}
 
+          {/* ── STEP 2: PAYMENT ── */}
           {step === 'PAYMENT' && (
             <div className="animation-fade-in">
-              <form onSubmit={handlePaymentSubmit} className="space-y-4">
-                <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col mb-6 gap-2">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-gray-400">Tickets</span>
-                    <span className="text-white">1x General Admission</span>
-                  </div>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-gray-400">Total</span>
-                    <span className="font-bold text-electric-purple text-lg">Kes {event.price.toLocaleString()}</span>
-                  </div>
+              {/* Order Summary */}
+              <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col mb-5 gap-3">
+                <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">Order Summary</p>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-300">{event.name}</span>
+                  <span className="text-white font-medium">1× Ticket</span>
                 </div>
-
-                <div className="space-y-3">
-                  <label className="block text-sm font-medium text-gray-300">M-Pesa Number</label>
-                  <input 
-                    type="tel" 
-                    placeholder="07XX XXX XXX" 
-                    defaultValue={formData.phone}
-                    required
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#00b050]/50 focus:border-[#00b050] transition-all"
-                  />
-                  <p className="text-xs text-gray-500">We will send an STK push to this number.</p>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-400">Buyer</span>
+                  <span className="text-white">{formData.name}</span>
                 </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-400">Email</span>
+                  <span className="text-white truncate max-w-[60%] text-right">{formData.email}</span>
+                </div>
+                <div className="border-t border-white/10 pt-3 flex justify-between items-center">
+                  <span className="text-gray-400 font-medium">Total</span>
+                  <span className="font-bold text-electric-purple text-xl">Kes {event.price.toLocaleString()}</span>
+                </div>
+              </div>
 
-                <button 
-                  type="submit"
-                  className="w-full bg-[#00b050] hover:bg-[#009040] text-white font-bold py-4 rounded-xl mt-4 transition-colors flex justify-center items-center gap-2"
-                >
-                  Pay with M-Pesa
-                </button>
-                <button 
-                  type="button"
-                  onClick={() => setStep('DETAILS')}
-                  className="w-full bg-transparent text-gray-400 hover:text-white text-sm py-2 mt-2 transition-colors"
-                >
-                  Back to Details
-                </button>
-              </form>
+              {/* Security badge */}
+              <div className="flex items-center gap-2 bg-white/5 border border-white/5 p-3 rounded-lg mb-5">
+                <ShieldCheck className="w-4 h-4 text-green-400 shrink-0" />
+                <p className="text-xs text-gray-300">
+                  Secured by <span className="text-white font-semibold">Paystack</span>. Your payment info is encrypted and never stored on our servers.
+                </p>
+              </div>
+
+              {/* Pay Button */}
+              <button
+                type="button"
+                onClick={handlePaystackPayment}
+                disabled={isProcessing}
+                className="w-full bg-electric-purple hover:bg-purple-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-colors flex justify-center items-center gap-2 shadow-[0_0_20px_rgba(139,92,246,0.3)]"
+              >
+                {isProcessing ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                    </svg>
+                    Opening Payment...
+                  </>
+                ) : (
+                  <>
+                    <CreditCard className="w-5 h-5" />
+                    Pay Kes {event.price.toLocaleString()} with Paystack
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setStep('DETAILS')}
+                className="w-full bg-transparent text-gray-400 hover:text-white text-sm py-2 mt-3 transition-colors"
+              >
+                ← Back to Details
+              </button>
             </div>
           )}
 
+          {/* ── STEP 3: SUCCESS ── */}
           {step === 'SUCCESS' && (
             <div className="py-8 flex flex-col items-center text-center animation-fade-in">
-              <div className="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mb-6">
+              <div className="w-20 h-20 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mb-6">
                 <CheckCircle2 className="w-10 h-10" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Check Your Phone</h3>
-              <p className="text-gray-400 text-sm mb-8 leading-relaxed">
-                An M-Pesa prompt has been sent to <strong className="text-white">{formData.phone || 'your phone'}</strong>. Enter your PIN to complete the purchase. Tickets will be sent to <strong className="text-white">{formData.email}</strong>.
+              <h3 className="text-2xl font-bold text-white mb-2">Payment Successful! 🎉</h3>
+              <p className="text-gray-400 text-sm mb-2 leading-relaxed">
+                Your ticket for <strong className="text-white">{event.name}</strong> has been confirmed.
               </p>
-              <button 
+              <p className="text-gray-400 text-sm mb-8 leading-relaxed">
+                A confirmation and your e-ticket will be sent to{' '}
+                <strong className="text-white">{formData.email}</strong>.
+              </p>
+              <button
                 onClick={closeReset}
                 className="w-full bg-white/10 hover:bg-white/20 text-white font-medium py-3 rounded-xl transition-colors"
               >
