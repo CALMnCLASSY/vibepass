@@ -2,10 +2,12 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import EventCard from '@/components/EventCard';
 import Newsletter from '@/components/Newsletter';
-import { DUMMY_EVENTS } from '@/data/events';
+import { getEvents } from '@/data/events';
 import Link from 'next/link';
 
-export default function Home() {
+export default async function Home() {
+  const events = await getEvents();
+
   return (
     <main className="min-h-screen flex flex-col">
       <Header />
@@ -25,7 +27,7 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {DUMMY_EVENTS.map(event => (
+            {events.slice(0, 4).map(event => (
               <EventCard 
                 key={event.id} 
                 event={event} 

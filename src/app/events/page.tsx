@@ -1,8 +1,10 @@
 import Header from '@/components/Header';
 import EventCard from '@/components/EventCard';
-import { DUMMY_EVENTS } from '@/data/events';
+import { getEvents } from '@/data/events';
 
-export default function EventsList() {
+export default async function EventsList() {
+  const events = await getEvents();
+
   return (
     <main className="min-h-screen flex flex-col bg-[#0a0a0a]">
       <Header />
@@ -22,7 +24,7 @@ export default function EventsList() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="flex justify-between items-center mb-8 border-b border-white/10 pb-4">
-            <span className="text-electric-purple font-semibold">{DUMMY_EVENTS.length} Events Found</span>
+            <span className="text-electric-purple font-semibold">{events.length} Events Found</span>
             <select className="bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-1 focus:ring-electric-purple text-sm">
               <option>Sort by Date: Soonest</option>
               <option>Sort by Price: Low to High</option>
@@ -32,7 +34,7 @@ export default function EventsList() {
 
           {/* The Column Layout */}
           <div className="flex flex-col gap-8">
-            {DUMMY_EVENTS.map(event => (
+            {events.map(event => (
               <EventCard 
                 key={event.id} 
                 event={event} 

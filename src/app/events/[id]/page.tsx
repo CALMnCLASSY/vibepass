@@ -4,15 +4,22 @@ import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Header from '@/components/Header';
 import CheckoutModal from '@/components/CheckoutModal';
-import { DUMMY_EVENTS } from '@/data/events';
+import { getEventById } from '@/data/events';
 import { Calendar, MapPin, ShieldCheck, Ticket } from 'lucide-react';
 
 export default function EventPage() {
   const params = useParams();
   const eventId = params.id as string;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  const event = DUMMY_EVENTS.find(e => e.id === eventId);
+  const [event, setEvent] = useState<any>(null);
+
+  React.useEffect(() => {
+    async function loadEvent() {
+      const e = await getEventById(eventId);
+      setEvent(e);
+    }
+    loadEvent();
+  }, [eventId]);
   
   if (!event) {
     return (

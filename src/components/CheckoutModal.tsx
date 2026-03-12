@@ -78,10 +78,38 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
           { display_name: 'Event', variable_name: 'event_name', value: event.name },
         ],
       },
-      onSuccess: () => {
-        // Payment successful
-        setIsProcessing(false);
-        setStep('SUCCESS');
+      onSuccess: async (response: any) => {
+        // Payment successful on frontend, now ping Render backend
+        try {
+          // Tell the user we are verifying
+          setStep('PAYMENT'); // Keep them on the payment screen while it loads
+          setIsProcessing(true);
+
+          const res = await fetch('https://classybooks.onrender.com/api/verify-payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              reference: response.reference,
+              eventId: event.id,
+              eventName: event.name,
+              customerName: formData.name,
+              customerEmail: formData.email,
+              customerPhone: formData.phone,
+              amount: event.price
+            })
+          });
+
+          if (!res.ok) {
+            throw new Error('Backend verification failed');
+          }
+
+          setIsProcessing(false);
+          setStep('SUCCESS');
+        } catch (error) {
+          console.error('Error verifying payment:', error);
+          alert('Payment succeeded but we could not verify the ticket on our end. Please contact support.');
+          setIsProcessing(false);
+        }
       },
       onCancel: () => {
         // User closed popup without paying
