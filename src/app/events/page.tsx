@@ -2,6 +2,8 @@ import Header from '@/components/Header';
 import EventCard from '@/components/EventCard';
 import { getEvents } from '@/data/events';
 
+export const dynamic = 'force-dynamic';
+
 export default async function EventsList() {
   const events = await getEvents();
 

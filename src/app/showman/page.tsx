@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: 'The production builds on the success of his previous concert, SHIN CITY, and elevates it into a first-of-its-kind residency format in Kenya.',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function ShowmanPage() {
   const events = await getEvents();
   
