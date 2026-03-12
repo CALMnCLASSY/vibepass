@@ -25,6 +25,7 @@ const PAYSTACK_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY as string;
 export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalProps) {
   const [step, setStep] = useState<CheckoutStep>('DETAILS');
   const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
+  const [quantity, setQuantity] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
 
   if (!isOpen || !event) return null;
@@ -46,6 +47,7 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
     setTimeout(() => {
       setStep('DETAILS');
       setFormData({ name: '', email: '', phone: '' });
+      setQuantity(1);
       setIsProcessing(false);
     }, 300);
   };
@@ -64,11 +66,13 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
       return;
     }
 
+    const totalAmount = event.price * quantity;
+
     const paystack = new window.PaystackPop();
     paystack.newTransaction({
       key: PAYSTACK_KEY,
       email: formData.email,
-      amount: event.price * 100, // Paystack always expects smallest currency unit
+      amount: totalAmount * 100, // Paystack always expects smallest currency unit
       currency: 'KES',
       ref: `vibe-pass-${Date.now()}-${Math.floor(Math.random() * 1000000)}`,
       metadata: {
@@ -76,6 +80,7 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
           { display_name: 'Customer Name', variable_name: 'customer_name', value: formData.name },
           { display_name: 'Phone Number', variable_name: 'phone_number', value: formData.phone },
           { display_name: 'Event', variable_name: 'event_name', value: event.name },
+          { display_name: 'Quantity', variable_name: 'ticket_quantity', value: quantity },
         ],
       },
       onSuccess: async (response: any) => {
@@ -95,7 +100,8 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
               customerName: formData.name,
               customerEmail: formData.email,
               customerPhone: formData.phone,
-              amount: event.price
+              amount: totalAmount,
+              quantity: quantity
             })
           });
 
@@ -214,6 +220,27 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
                   </div>
                 </div>
 
+                <div className="space-y-1 pt-2">
+                  <label className="text-sm font-medium text-gray-300 ml-1">Number of Tickets</label>
+                  <div className="flex items-center gap-4 bg-black/50 border border-white/10 rounded-xl p-2 w-full max-w-[200px]">
+                    <button 
+                      type="button"
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="w-10 h-10 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-white font-bold transition-colors"
+                    >
+                      -
+                    </button>
+                    <span className="flex-1 text-center font-bold text-white text-lg">{quantity}</span>
+                    <button 
+                      type="button"
+                      onClick={() => setQuantity(Math.min(10, quantity + 1))}
+                      className="w-10 h-10 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-white font-bold transition-colors"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
                 <button
                   type="submit"
                   className="w-full bg-white hover:bg-gray-200 text-black font-bold py-4 rounded-xl mt-6 transition-colors flex justify-center items-center gap-2"
@@ -232,7 +259,7 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
                 <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">Order Summary</p>
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-gray-300">{event.name}</span>
-                  <span className="text-white font-medium">1× Ticket</span>
+                  <span className="text-white font-medium">{quantity}× Ticket{quantity > 1 ? 's' : ''}</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-gray-400">Buyer</span>
@@ -244,7 +271,7 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
                 </div>
                 <div className="border-t border-white/10 pt-3 flex justify-between items-center">
                   <span className="text-gray-400 font-medium">Total</span>
-                  <span className="font-bold text-electric-purple text-xl">Kes {event.price.toLocaleString()}</span>
+                  <span className="font-bold text-electric-purple text-xl">Kes {(event.price * quantity).toLocaleString()}</span>
                 </div>
               </div>
 
@@ -274,7 +301,7 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
                 ) : (
                   <>
                     <CreditCard className="w-5 h-5" />
-                    Pay Kes {event.price.toLocaleString()} with Paystack
+                    Pay Kes {(event.price * quantity).toLocaleString()} with Paystack
                   </>
                 )}
               </button>
@@ -297,10 +324,10 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
               </div>
               <h3 className="text-2xl font-bold text-white mb-2">Payment Successful! 🎉</h3>
               <p className="text-gray-400 text-sm mb-2 leading-relaxed">
-                Your ticket for <strong className="text-white">{event.name}</strong> has been confirmed.
+                Your <strong className="text-white">{quantity} ticket{quantity > 1 ? 's' : ''}</strong> for <strong className="text-white">{event.name}</strong> {quantity > 1 ? 'have' : 'has'} been confirmed.
               </p>
               <p className="text-gray-400 text-sm mb-8 leading-relaxed">
-                A confirmation and your e-ticket will be sent to{' '}
+                A confirmation and your e-ticket{quantity > 1 ? 's' : ''} will be sent to{' '}
                 <strong className="text-white">{formData.email}</strong>.
               </p>
               <button
