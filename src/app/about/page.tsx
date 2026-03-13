@@ -1,4 +1,5 @@
 import Header from '@/components/Header';
+import Image from 'next/image';
 import { Sparkles, ShieldCheck, Ticket, Users } from 'lucide-react';
 
 export default function About() {
@@ -77,11 +78,12 @@ export default function About() {
             </div>
           </div>
           <div className="flex-1 relative w-full aspect-square md:aspect-auto md:h-[500px] rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(236,72,153,0.15)]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5RsrDc8cYFTIAQ1YFn2ewpjkXGWuCgUO7kA&s"
               alt="Crowd cheering at a concert"
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-transparent to-transparent opacity-60"></div>
           </div>

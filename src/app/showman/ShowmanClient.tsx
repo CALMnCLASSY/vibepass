@@ -205,14 +205,16 @@ export default function ShowmanClient({ initialEvents }: { initialEvents: EventT
             });
 
             if (!res.ok) {
-                throw new Error('Failed to send message');
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData.details || errData.error || 'Failed to send');
             }
 
             setSupportStatus('success');
             setSupportForm({ name: '', email: '', phone: '', subject: '', message: '' }); // Reset all fields
             setTimeout(() => setSupportStatus('idle'), 5000);
-        } catch (err) {
+        } catch (err: any) {
             console.error('Support form error:', err);
+            alert('Error sending support request: ' + (err.message || 'Unknown error'));
             setSupportStatus('error');
         }
     };

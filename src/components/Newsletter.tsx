@@ -25,13 +25,17 @@ export default function Newsletter() {
         })
       });
 
-      if (!res.ok) throw new Error('Failed to send');
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.details || errData.error || 'Failed to send');
+      }
 
       setStatus('success');
       setEmail('');
       setTimeout(() => setStatus('idle'), 5000);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      alert('Error joining: ' + (error.message || 'Unknown error'));
       setStatus('error');
     }
   };

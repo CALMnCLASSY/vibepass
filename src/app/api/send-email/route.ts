@@ -48,9 +48,14 @@ export async function POST(req: Request) {
         user: smtpEmail,
         pass: smtpPassword,
       },
+      // Force IPv4 to avoid ENETUNREACH errors on certain hosting providers like Railway
+      family: 4,
+      connectionTimeout: 10000, // 10 seconds
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
       debug: true,
       logger: true
-    });
+    } as any);
 
     // Send the email to the admin/owner (from themselves, but authenticated)
     const info = await transporter.sendMail({
