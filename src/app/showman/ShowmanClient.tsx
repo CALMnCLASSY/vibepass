@@ -187,16 +187,8 @@ export default function ShowmanClient({ initialEvents }: { initialEvents: EventT
 
     const handleSupportSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsSubmittingSupport(true);
         setSupportStatus('submitting');
         
-        const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
-        if (!accessKey) {
-            alert('Web3Forms key is missing in environment variables.');
-            setSupportStatus('error');
-            setIsSubmittingSupport(false);
-            return;
-        }
         try {
             const res = await fetch('/api/send-email', {
                 method: 'POST',
@@ -222,8 +214,6 @@ export default function ShowmanClient({ initialEvents }: { initialEvents: EventT
         } catch (err) {
             console.error('Support form error:', err);
             setSupportStatus('error');
-        } finally {
-            setIsSubmittingSupport(false);
         }
     };
 
