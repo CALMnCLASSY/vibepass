@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
 
 export async function POST(req: Request) {
   try {
@@ -19,9 +20,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) {
-      console.error('RESEND_API_KEY is not set');
+    const smtpEmail = process.env.SMTP_EMAIL;
+    const smtpPassword = process.env.SMTP_PASSWORD;
+
+    if (!smtpEmail || !smtpPassword) {
+      console.error('SMTP credentials are not set');
       return NextResponse.json({ error: 'Email service configuration error' }, { status: 500 });
     }
 
@@ -64,30 +67,27 @@ export async function POST(req: Request) {
       </div>
     `;
 
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json'
+    // Create a Nodemailer transporter using Gmail
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: smtpEmail,
+        pass: smtpPassword, // App-specific password required for Gmail
       },
-      body: JSON.stringify({
-        from: 'Vibe Pass Africa <tickets@vibepass.africa>', 
-        to: [customerEmail],
-        subject: `Your Tickets for ${eventName} 🎟️`,
-        html: htmlContent
-      })
     });
 
-    if (!res.ok) {
-      const errorData = await res.json();
-      console.error('Resend API Error:', errorData);
-      throw new Error(`Resend API Error: ${errorData.message}`);
-    }
+    // Send the email
+    const info = await transporter.sendMail({
+      from: `"Vibe Pass Africa" <${smtpEmail}>`, 
+      to: customerEmail,
+      subject: `Your Tickets for ${eventName} 🎟️`,
+      html: htmlContent,
+    });
 
-    const data = await res.json();
-    return NextResponse.json({ success: true, data });
-  } catch (error) {
+    console.log('Message sent: %s', info.messageId);
+    return NextResponse.json({ success: true, messageId: info.messageId });
+  } catch (error: any) {
     console.error('Email sending error:', error);
-    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });
+    return NextResponse.json({ error: error.message || 'Failed to send email' }, { status: 500 });
   }
 }
