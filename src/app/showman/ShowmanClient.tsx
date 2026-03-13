@@ -145,6 +145,23 @@ export default function ShowmanClient({ initialEvents }: { initialEvents: EventT
                         throw new Error('Backend verification failed');
                     }
 
+                    // Call internal email API route
+                    fetch('/api/send-ticket', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            customerEmail: formData.email,
+                            customerName: formData.name,
+                            eventName: selectedShow.name,
+                            quantity: quantity,
+                            totalAmount: totalAmount,
+                            date: selectedShow.date,
+                            location: selectedShow.location,
+                            ticketId: `VP-${Date.now().toString().slice(-6)}`,
+                            eventImageUrl: selectedShow.imageUrl || undefined
+                        })
+                    }).catch(err => console.error('Error dispatching ticket email:', err));
+
                     setIsProcessing(false);
                     setSuccessMessage(`Tickets for ${selectedShow.name} confirmed! Please check your email for the e-tickets.`);
                 } catch (error) {
@@ -183,7 +200,7 @@ export default function ShowmanClient({ initialEvents }: { initialEvents: EventT
             const formData = new FormData();
             formData.append('access_key', accessKey);
             formData.append('subject', supportForm.subject);
-            formData.append('from_name', supportForm.name);
+            formData.append('name', supportForm.name);
             formData.append('email', supportForm.email);
             formData.append('phone', supportForm.phone);
             formData.append('message', supportForm.message);

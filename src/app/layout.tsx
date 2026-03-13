@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${outfit.variable} antialiased bg-background text-foreground`}>
+      <body className={`${outfit.variable} font-sans antialiased bg-background text-foreground`}>
         <Suspense fallback={null}>
           <VisitorTracker />
         </Suspense>

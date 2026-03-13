@@ -109,6 +109,23 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
             throw new Error('Backend verification failed');
           }
 
+          // Call internal email API route
+          fetch('/api/send-ticket', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  customerEmail: formData.email,
+                  customerName: formData.name,
+                  eventName: event.name,
+                  quantity: quantity,
+                  totalAmount: totalAmount,
+                  date: event.date,
+                  location: event.location,
+                  ticketId: `VP-${Date.now().toString().slice(-6)}`,
+                  eventImageUrl: event.imageUrl
+              })
+          }).catch(err => console.error('Error dispatching ticket email:', err));
+
           setIsProcessing(false);
           setStep('SUCCESS');
         } catch (error) {
