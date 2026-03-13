@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
 
 export async function POST(req: Request) {
   try {
@@ -18,10 +17,10 @@ export async function POST(req: Request) {
     }
 
     const smtpEmail = process.env.SMTP_EMAIL;
-    const smtpPassword = process.env.SMTP_PASSWORD;
+    const brevoApiKey = process.env.BREVO_API_KEY;
 
-    if (!smtpEmail || !smtpPassword) {
-      console.error('SMTP credentials are not set');
+    if (!smtpEmail || !brevoApiKey) {
+      console.error('Brevo credentials are not set');
       return NextResponse.json({ error: 'Email service configuration error' }, { status: 500 });
     }
 
@@ -39,35 +38,35 @@ export async function POST(req: Request) {
       </div>
     `;
 
-    // Create a Nodemailer transporter using Gmail explicit SMTP
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false, // Use STARTTLS
-      auth: {
-        user: smtpEmail,
-        pass: smtpPassword,
+    // Send email via Brevo REST API
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'api-key': brevoApiKey,
       },
-      // Force IPv4 to avoid ENETUNREACH errors on certain hosting providers like Railway
-      family: 4,
-      connectionTimeout: 15000, // 15 seconds
-      greetingTimeout: 15000,
-      socketTimeout: 15000,
-      debug: true,
-      logger: true
-    } as any);
-
-    // Send the email to the admin/owner (from themselves, but authenticated)
-    const info = await transporter.sendMail({
-      from: `"Vibe Pass System" <${smtpEmail}>`, 
-      to: smtpEmail, // Send to the owner
-      replyTo: fromEmail, // So clicking reply responds to the customer
-      subject: `[VibePass] ${subject || formType + ' Submission'}`,
-      html: htmlContent,
+      body: JSON.stringify({
+        sender: { name: "Vibe Pass System", email: smtpEmail },
+        to: [{ email: smtpEmail, name: "Vibe Pass Admin" }],
+        replyTo: { email: fromEmail, name: fromName || "Customer" },
+        subject: `[VibePass] ${subject || formType + ' Submission'}`,
+        htmlContent: htmlContent,
+      }),
     });
 
-    console.log('Admin notification sent: %s', info.messageId);
-    return NextResponse.json({ success: true, messageId: info.messageId });
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error('Brevo API Error:', data);
+      return NextResponse.json({ 
+        error: data.message || 'Failed to send email via Brevo',
+        details: JSON.stringify(data)
+      }, { status: response.status });
+    }
+
+    console.log('Admin notification sent via Brevo:', data.messageId);
+    return NextResponse.json({ success: true, messageId: data.messageId });
   } catch (error: any) {
     console.error('Form email sending error:', error);
     return NextResponse.json({ 

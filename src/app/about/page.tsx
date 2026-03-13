@@ -1,6 +1,6 @@
 import Header from '@/components/Header';
-import Image from 'next/image';
 import { Sparkles, ShieldCheck, Ticket, Users } from 'lucide-react';
+import Image from 'next/image';
 
 export default function About() {
   return (
@@ -82,9 +82,8 @@ export default function About() {
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5RsrDc8cYFTIAQ1YFn2ewpjkXGWuCgUO7kA&s"
               alt="Crowd cheering at a concert"
               fill
-              unoptimized
               className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-transparent to-transparent opacity-60"></div>
           </div>

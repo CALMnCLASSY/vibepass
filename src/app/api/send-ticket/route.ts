@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
 
 export async function POST(req: Request) {
   try {
@@ -21,10 +20,10 @@ export async function POST(req: Request) {
     }
 
     const smtpEmail = process.env.SMTP_EMAIL;
-    const smtpPassword = process.env.SMTP_PASSWORD;
+    const brevoApiKey = process.env.BREVO_API_KEY;
 
-    if (!smtpEmail || !smtpPassword) {
-      console.error('SMTP credentials are not set');
+    if (!smtpEmail || !brevoApiKey) {
+      console.error('Brevo credentials are not set');
       return NextResponse.json({ error: 'Email service configuration error' }, { status: 500 });
     }
 
@@ -67,34 +66,34 @@ export async function POST(req: Request) {
       </div>
     `;
 
-    // Create a Nodemailer transporter using Gmail explicit SMTP
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false, // Use STARTTLS
-      auth: {
-        user: smtpEmail,
-        pass: smtpPassword, // App-specific password required for Gmail
+    // Send email via Brevo REST API
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'api-key': brevoApiKey,
       },
-      // Force IPv4 to avoid ENETUNREACH errors on certain hosting providers like Railway
-      family: 4,
-      connectionTimeout: 15000, // 15 seconds
-      greetingTimeout: 15000,
-      socketTimeout: 15000,
-      debug: true,
-      logger: true
-    } as any);
-
-    // Send the email
-    const info = await transporter.sendMail({
-      from: `"Vibe Pass Africa" <${smtpEmail}>`, 
-      to: customerEmail,
-      subject: `Your Tickets for ${eventName} 🎟️`,
-      html: htmlContent,
+      body: JSON.stringify({
+        sender: { name: "Vibe Pass Africa", email: smtpEmail },
+        to: [{ email: customerEmail, name: customerName }],
+        subject: `Your Tickets for ${eventName} 🎟️`,
+        htmlContent: htmlContent,
+      }),
     });
 
-    console.log('Message sent: %s', info.messageId);
-    return NextResponse.json({ success: true, messageId: info.messageId });
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error('Brevo API Error:', data);
+      return NextResponse.json({ 
+        error: data.message || 'Failed to send ticket via Brevo',
+        details: JSON.stringify(data)
+      }, { status: response.status });
+    }
+
+    console.log('Ticket sent via Brevo:', data.messageId);
+    return NextResponse.json({ success: true, messageId: data.messageId });
   } catch (error: any) {
     console.error('Email sending error:', error);
     return NextResponse.json({ 
