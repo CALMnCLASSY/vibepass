@@ -70,17 +70,17 @@ export async function POST(req: Request) {
     // Create a Nodemailer transporter using Gmail explicit SMTP
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
+      port: 587,
+      secure: false, // Use STARTTLS
       auth: {
         user: smtpEmail,
         pass: smtpPassword, // App-specific password required for Gmail
       },
       // Force IPv4 to avoid ENETUNREACH errors on certain hosting providers like Railway
       family: 4,
-      connectionTimeout: 10000, // 10 seconds
-      greetingTimeout: 10000,
-      socketTimeout: 10000,
+      connectionTimeout: 15000, // 15 seconds
+      greetingTimeout: 15000,
+      socketTimeout: 15000,
       debug: true,
       logger: true
     } as any);
