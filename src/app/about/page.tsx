@@ -5,11 +5,11 @@ export default function About() {
   return (
     <main className="min-h-screen flex flex-col bg-[#0a0a0a]">
       <Header />
-      
+
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-electric-purple/10 rounded-full blur-[120px] -z-10 mix-blend-screen pointer-events-none"></div>
-        
+
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-electric-purple text-sm font-semibold mb-4 shadow-[0_0_15px_rgba(139,92,246,0.2)]">
             <Sparkles className="w-4 h-4" />
@@ -78,9 +78,9 @@ export default function About() {
           </div>
           <div className="flex-1 relative w-full aspect-square md:aspect-auto md:h-[500px] rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(236,72,153,0.15)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img 
-              src="https://images.unsplash.com/photo-1533174000223-3b69ea4a559e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-              alt="Crowd cheering at a concert" 
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5RsrDc8cYFTIAQ1YFn2ewpjkXGWuCgUO7kA&s"
+              alt="Crowd cheering at a concert"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-transparent to-transparent opacity-60"></div>

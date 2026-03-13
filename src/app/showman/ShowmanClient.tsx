@@ -187,40 +187,43 @@ export default function ShowmanClient({ initialEvents }: { initialEvents: EventT
 
     const handleSupportSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsSubmittingSupport(true);
         setSupportStatus('submitting');
         
         const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
         if (!accessKey) {
             alert('Web3Forms key is missing in environment variables.');
             setSupportStatus('error');
+            setIsSubmittingSupport(false);
             return;
         }
-
         try {
-            const formData = new FormData();
-            formData.append('access_key', accessKey);
-            formData.append('subject', supportForm.subject);
-            formData.append('name', supportForm.name);
-            formData.append('email', supportForm.email);
-            formData.append('phone', supportForm.phone);
-            formData.append('message', supportForm.message);
-
-            const res = await fetch('https://api.web3forms.com/submit', {
+            const res = await fetch('/api/send-email', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    fromName: supportForm.name,
+                    fromEmail: supportForm.email,
+                    subject: 'Showman Event Support Form',
+                    message: supportForm.message,
+                    formType: 'Showman Event Page'
+                })
             });
 
-            const data = await res.json();
-            if (data.success) {
-                setSupportStatus('success');
-                setSupportForm({ name: '', email: '', phone: '', subject: '', message: '' });
-                setTimeout(() => setSupportStatus('idle'), 5000);
-            } else {
-                setSupportStatus('error');
+            if (!res.ok) {
+                throw new Error('Failed to send message');
             }
+
+            setSupportStatus('success');
+            setSupportForm({ name: '', email: '', phone: '', subject: '', message: '' }); // Reset all fields
+            setTimeout(() => setSupportStatus('idle'), 5000);
         } catch (err) {
             console.error('Support form error:', err);
             setSupportStatus('error');
+        } finally {
+            setIsSubmittingSupport(false);
         }
     };
 
