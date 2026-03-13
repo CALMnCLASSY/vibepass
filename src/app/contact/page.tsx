@@ -17,7 +17,7 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
-    
+
     try {
       const res = await fetch('/api/send-email', {
         method: 'POST',
@@ -71,7 +71,7 @@ export default function Contact() {
                 <div>
                   <h3 className="text-lg font-semibold text-white mb-1">Email Us</h3>
                   <p className="text-gray-400 mb-1">For general inquiries and support</p>
-                  <a href="mailto:[EMAIL_ADDRESS]" className="text-electric-purple hover:underline font-medium">[EMAIL_ADDRESS]</a>
+                  <a href="mailto:vibepassevents@gmail.com" className="text-electric-purple hover:underline font-medium">vibepassevents@gmail.com</a>
                 </div>
               </div>
 
@@ -107,20 +107,20 @@ export default function Contact() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-sm font-medium text-gray-300 ml-1">First Name</label>
-                  <input required value={formData.firstName} onChange={e => setFormData({...formData, firstName: e.target.value})} type="text" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-purple/50 focus:border-electric-purple transition-all" placeholder="John" />
+                  <input required value={formData.firstName} onChange={e => setFormData({ ...formData, firstName: e.target.value })} type="text" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-purple/50 focus:border-electric-purple transition-all" placeholder="John" />
                 </div>
                 <div className="space-y-1">
                   <label className="text-sm font-medium text-gray-300 ml-1">Last Name</label>
-                  <input required value={formData.lastName} onChange={e => setFormData({...formData, lastName: e.target.value})} type="text" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-purple/50 focus:border-electric-purple transition-all" placeholder="Doe" />
+                  <input required value={formData.lastName} onChange={e => setFormData({ ...formData, lastName: e.target.value })} type="text" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-purple/50 focus:border-electric-purple transition-all" placeholder="Doe" />
                 </div>
               </div>
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-300 ml-1">Email Address</label>
-                <input required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} type="email" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-purple/50 focus:border-electric-purple transition-all" placeholder="john@example.com" />
+                <input required value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} type="email" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-purple/50 focus:border-electric-purple transition-all" placeholder="john@example.com" />
               </div>
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-300 ml-1">Subject</label>
-                <select required value={formData.subject} onChange={e => setFormData({...formData, subject: e.target.value})} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-electric-purple/50 focus:border-electric-purple transition-all">
+                <select required value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-electric-purple/50 focus:border-electric-purple transition-all">
                   <option>Ticket Support</option>
                   <option>Refund Request</option>
                   <option>Organizer Partnership</option>
@@ -129,12 +129,12 @@ export default function Contact() {
               </div>
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-300 ml-1">Message</label>
-                <textarea required value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} rows={5} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-purple/50 focus:border-electric-purple transition-all resize-none" placeholder="How can we help?"></textarea>
+                <textarea required value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} rows={5} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-electric-purple/50 focus:border-electric-purple transition-all resize-none" placeholder="How can we help?"></textarea>
               </div>
-              
+
               {status === 'success' && <p className="text-green-400 text-sm font-medium">Your message has been sent!</p>}
               {status === 'error' && <p className="text-red-400 text-sm font-medium">Failed to send message. Please try again.</p>}
-              
+
               <button disabled={status === 'submitting'} type="submit" className="w-full disabled:opacity-50 disabled:cursor-not-allowed bg-electric-purple hover:bg-purple-600 text-white font-bold py-4 rounded-xl mt-2 transition-transform hover:scale-[1.02] shadow-[0_0_20px_rgba(139,92,246,0.3)]">
                 {status === 'submitting' ? 'Sending...' : 'Send Message'}
               </button>
