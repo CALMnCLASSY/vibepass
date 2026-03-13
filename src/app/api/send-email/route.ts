@@ -39,13 +39,17 @@ export async function POST(req: Request) {
       </div>
     `;
 
-    // Create a Nodemailer transporter using Gmail
+    // Create a Nodemailer transporter using Gmail explicit SMTP
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
       auth: {
         user: smtpEmail,
         pass: smtpPassword,
       },
+      debug: true,
+      logger: true
     });
 
     // Send the email to the admin/owner (from themselves, but authenticated)
@@ -61,6 +65,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true, messageId: info.messageId });
   } catch (error: any) {
     console.error('Form email sending error:', error);
-    return NextResponse.json({ error: error.message || 'Failed to send email' }, { status: 500 });
+    return NextResponse.json({ 
+      error: error.message || 'Failed to send email', 
+      details: error.toString() 
+    }, { status: 500 });
   }
 }
