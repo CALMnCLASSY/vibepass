@@ -96,7 +96,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-white mb-1">Office Location</h3>
-                  <p className="text-gray-400">The Garage Plaza, Kilimani<br />Nairobi, Kenya</p>
+                  <p className="text-gray-400">B201 <br />Sameer Business Park, Mombasa Rd<br />Nairobi, Kenya</p>
                 </div>
               </div>
             </div>
