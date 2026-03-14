@@ -9,7 +9,11 @@ interface EventCardProps {
 
 export default function EventCard({ event }: EventCardProps) {
   const isShowman = event.name.toUpperCase().includes('SHOWMAN');
-  const targetHref = isShowman ? '/showman' : `/events/${event.id}`;
+  const isVurugu = event.name.toUpperCase().includes('VURUGU');
+  
+  let targetHref = `/events/${event.id}`;
+  if (isShowman) targetHref = '/showman';
+  if (isVurugu) targetHref = '/vurugu';
 
   return (
     <Link href={targetHref} className="group relative bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-electric-purple/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] flex flex-col cursor-pointer hover:-translate-y-1">

@@ -12,16 +12,31 @@ export default async function Home() {
   let events = await getEvents();
 
   const showmanEvents = events.filter(e => e.name.toUpperCase().includes('SHOWMAN'));
-  const otherEvents = events.filter(e => !e.name.toUpperCase().includes('SHOWMAN'));
+  const vuruguEvents = events.filter(e => e.name.toUpperCase().includes('VURUGU'));
+  const otherEvents = events.filter(e => 
+    !e.name.toUpperCase().includes('SHOWMAN') && 
+    !e.name.toUpperCase().includes('VURUGU')
+  );
+
+  let groupedEvents: EventType[] = [];
 
   if (showmanEvents.length > 0) {
-    const groupedShowman: EventType = {
+    groupedEvents.push({
       ...showmanEvents[0],
       name: "NYASHINSKI SHOWMAN - THE RESIDENCY",
       price: 3500 // Base price for display
-    };
-    events = [groupedShowman, ...otherEvents];
+    });
   }
+
+  if (vuruguEvents.length > 0) {
+    groupedEvents.push({
+      ...vuruguEvents[0],
+      name: "VURUGU BOXING - KASARANI",
+      price: 1500 // Base regular price
+    });
+  }
+
+  events = [...groupedEvents, ...otherEvents];
 
   return (
     <main className="min-h-screen flex flex-col">
