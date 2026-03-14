@@ -11,6 +11,36 @@ export const dynamic = 'force-dynamic';
 export default async function Home() {
   let events = await getEvents();
 
+  // If database is empty, provide fallback mock data for demonstration
+  if (events.length === 0) {
+    events = [
+      {
+        id: 'mock-showman',
+        name: 'NYASHINSKI SHOWMAN - THE RESIDENCY',
+        date: '2026-03-15',
+        location: 'Sarit Expo Centre',
+        imageUrl: 'https://madfun.s3.af-south-1.amazonaws.com/Nyashinski+Showman_720.jpeg',
+        price: 3500,
+        organizer: 'Vibe Pass Africa',
+        description: 'The ultimate residency experience.',
+        longDescription: '',
+        isActive: true
+      },
+      {
+        id: 'mock-vurugu',
+        name: 'VURUGU BOXING - KASARANI',
+        date: '2026-04-04',
+        location: 'Kasarani Stadium Indoor Arena',
+        imageUrl: 'https://madfun.s3.af-south-1.amazonaws.com/Vurugu_720.jpeg',
+        price: 1500,
+        organizer: 'Vibe Pass Africa',
+        description: 'Witness fierce warriors clash.',
+        longDescription: '',
+        isActive: true
+      }
+    ];
+  }
+
   const showmanEvents = events.filter(e => e.name.toUpperCase().includes('SHOWMAN'));
   const vuruguEvents = events.filter(e => e.name.toUpperCase().includes('VURUGU'));
   const otherEvents = events.filter(e => 
