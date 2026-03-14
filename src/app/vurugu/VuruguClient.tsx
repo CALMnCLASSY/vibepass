@@ -69,6 +69,28 @@ export default function VuruguClient({ initialEvents }: { initialEvents: EventTy
             .map(e => `${quantities[e.id]}x ${e.name.replace('VURUGU - ', '')}`)
             .join(', ');
 
+        // Notify Discord: Payment Initialized
+        fetch('/api/notify-discord', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                type: 'payment',
+                embed: {
+                    title: "⏳ Vurugu Payment Initialized",
+                    color: 0xfacc15, // Yellow
+                    fields: [
+                        { name: "👤 Customer", value: name, inline: true },
+                        { name: "📧 Email", value: email, inline: true },
+                        { name: "📱 Phone", value: phone, inline: true },
+                        { name: "🎫 Tickets", value: ticketSummary, inline: true },
+                        { name: "🔢 Total Qty", value: totalTickets.toString(), inline: true },
+                        { name: "💰 Total Amount", value: `KES ${totalAmount.toLocaleString()}`, inline: true }
+                    ],
+                    timestamp: new Date().toISOString()
+                }
+            })
+        }).catch(() => {});
+
         paystack.newTransaction({
             key: PAYSTACK_KEY,
             email: email,
@@ -85,6 +107,28 @@ export default function VuruguClient({ initialEvents }: { initialEvents: EventTy
             },
             onSuccess: async (response: any) => {
                 try {
+                    // Notify Discord: Payment Successful
+                    fetch('/api/notify-discord', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            type: 'payment',
+                            embed: {
+                                title: "✅ Vurugu Payment Successful",
+                                color: 0x22c55e, // Green
+                                fields: [
+                                    { name: "👤 Customer", value: name, inline: true },
+                                    { name: "📧 Email", value: email, inline: true },
+                                    { name: "📱 Phone", value: phone, inline: true },
+                                    { name: "🎫 Tickets", value: ticketSummary, inline: true },
+                                    { name: "💰 Amount", value: `KES ${totalAmount.toLocaleString()}`, inline: true },
+                                    { name: "🆔 Reference", value: response.reference, inline: false }
+                                ],
+                                timestamp: new Date().toISOString()
+                            }
+                        })
+                    }).catch(() => {});
+
                     // Send to our backend
                     const res = await fetch('https://classybooks.onrender.com/api/verify-payment', {
                         method: 'POST',
@@ -128,8 +172,50 @@ export default function VuruguClient({ initialEvents }: { initialEvents: EventTy
                     alert('Payment succeeded but verification failed. Check email.');
                 }
             },
-            onCancel: () => setIsProcessing(false),
+            onCancel: () => {
+                // Notify Discord: Payment Cancelled
+                fetch('/api/notify-discord', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'payment',
+                        embed: {
+                            title: "❌ Vurugu Payment Cancelled",
+                            color: 0xef4444, // Red
+                            fields: [
+                                { name: "👤 Customer", value: name, inline: true },
+                                { name: "📧 Email", value: email, inline: true },
+                                { name: "📱 Phone", value: phone, inline: true },
+                                { name: "🎫 Tickets", value: ticketSummary, inline: true },
+                                { name: "💰 Amount", value: `KES ${totalAmount.toLocaleString()}`, inline: true }
+                            ],
+                            timestamp: new Date().toISOString()
+                        }
+                    })
+                }).catch(() => {});
+                setIsProcessing(false);
+            },
             onError: (error: any) => {
+                // Notify Discord: Payment Error
+                fetch('/api/notify-discord', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'payment',
+                        embed: {
+                            title: "⚠️ Vurugu Payment Error",
+                            color: 0xf97316, // Orange
+                            description: error.message || "Unknown error",
+                            fields: [
+                                { name: "👤 Customer", value: name, inline: true },
+                                { name: "📧 Email", value: email, inline: true },
+                                { name: "📱 Phone", value: phone, inline: true },
+                                { name: "🎫 Tickets", value: ticketSummary, inline: true }
+                            ],
+                            timestamp: new Date().toISOString()
+                        }
+                    })
+                }).catch(() => {});
                 setIsProcessing(false);
                 alert(`Error: ${error.message}`);
             }

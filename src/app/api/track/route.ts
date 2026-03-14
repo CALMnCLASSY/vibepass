@@ -4,10 +4,10 @@ export async function POST(request: Request) {
   try {
     const { url, userAgent, timestamp, referrer } = await request.json();
 
-    const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+    const webhookUrl = process.env.DISCORD_INQUIRIES_WEBHOOK_URL;
 
     if (!webhookUrl) {
-      console.warn("Discord Webhook URL not configured.");
+      console.warn("Discord Inquiries Webhook URL not configured.");
       return NextResponse.json({ success: false, error: 'Webhook URL missing' }, { status: 500 });
     }
 

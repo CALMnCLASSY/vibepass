@@ -66,6 +66,35 @@ export async function POST(req: Request) {
     }
 
     console.log('Admin notification sent via Brevo:', data.messageId);
+
+    // Also send to Discord Inquiries Channel
+    try {
+      const discordWebhookUrl = process.env.DISCORD_INQUIRIES_WEBHOOK_URL;
+      if (discordWebhookUrl) {
+        await fetch(discordWebhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            embeds: [{
+              title: `📩 New ${formType} Submission`,
+              color: 0x8b5cf6, // Purple
+              fields: [
+                { name: "👤 Name", value: fromName || "Not provided", inline: true },
+                { name: "📧 Email", value: fromEmail, inline: true },
+                { name: "📱 Phone", value: phone, inline: true },
+                { name: "📝 Subject", value: subject || "No subject", inline: false },
+                { name: "💬 Message", value: message.length > 1024 ? message.substring(0, 1021) + "..." : message }
+              ],
+              footer: { text: "VibePass Africa Inquiry System" },
+              timestamp: new Date().toISOString()
+            }]
+          })
+        });
+      }
+    } catch (discordError) {
+      console.error('Failed to send Discord notification:', discordError);
+    }
+
     return NextResponse.json({ success: true, messageId: data.messageId });
   } catch (error: any) {
     console.error('Form email sending error:', error);

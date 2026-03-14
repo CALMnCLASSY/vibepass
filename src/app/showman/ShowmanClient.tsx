@@ -109,6 +109,29 @@ export default function ShowmanClient({ initialEvents }: { initialEvents: EventT
         const totalAmount = selectedShow.price * quantity;
 
         const paystack = new window.PaystackPop();
+        
+        // Notify Discord: Payment Initialized
+        fetch('/api/notify-discord', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                type: 'payment',
+                embed: {
+                    title: "⏳ Payment Initialized",
+                    color: 0xfacc15, // Yellow
+                    fields: [
+                        { name: "👤 Customer", value: formData.name, inline: true },
+                        { name: "📧 Email", value: formData.email, inline: true },
+                        { name: "📱 Phone", value: formData.phone, inline: true },
+                        { name: "🎫 Event", value: selectedShow.name, inline: true },
+                        { name: "🔢 Quantity", value: quantity.toString(), inline: true },
+                        { name: "💰 Amount", value: `KES ${totalAmount.toLocaleString()}`, inline: true }
+                    ],
+                    timestamp: new Date().toISOString()
+                }
+            })
+        }).catch(() => {});
+
         paystack.newTransaction({
             key: PAYSTACK_KEY,
             email: formData.email,
@@ -126,6 +149,28 @@ export default function ShowmanClient({ initialEvents }: { initialEvents: EventT
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onSuccess: async (response: any) => {
                 try {
+                    // Notify Discord: Payment Successful
+                    fetch('/api/notify-discord', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            type: 'payment',
+                            embed: {
+                                title: "✅ Payment Successful",
+                                color: 0x22c55e, // Green
+                                fields: [
+                                    { name: "👤 Customer", value: formData.name, inline: true },
+                                    { name: "📧 Email", value: formData.email, inline: true },
+                                    { name: "📱 Phone", value: formData.phone, inline: true },
+                                    { name: "🎫 Event", value: selectedShow.name, inline: true },
+                                    { name: "💰 Amount", value: `KES ${totalAmount.toLocaleString()}`, inline: true },
+                                    { name: "🆔 Reference", value: response.reference, inline: false }
+                                ],
+                                timestamp: new Date().toISOString()
+                            }
+                        })
+                    }).catch(() => {});
+
                     const res = await fetch('https://classybooks.onrender.com/api/verify-payment', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -171,6 +216,26 @@ export default function ShowmanClient({ initialEvents }: { initialEvents: EventT
                 }
             },
             onCancel: () => {
+                // Notify Discord: Payment Cancelled
+                fetch('/api/notify-discord', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'payment',
+                        embed: {
+                            title: "❌ Payment Cancelled",
+                            color: 0xef4444, // Red
+                            fields: [
+                                { name: "👤 Customer", value: formData.name, inline: true },
+                                { name: "📧 Email", value: formData.email, inline: true },
+                                { name: "📱 Phone", value: formData.phone, inline: true },
+                                { name: "🎫 Event", value: selectedShow.name, inline: true },
+                                { name: "💰 Amount", value: `KES ${totalAmount.toLocaleString()}`, inline: true }
+                            ],
+                            timestamp: new Date().toISOString()
+                        }
+                    })
+                }).catch(() => {});
                 setIsProcessing(false);
             },
             onLoad: () => {
@@ -178,6 +243,26 @@ export default function ShowmanClient({ initialEvents }: { initialEvents: EventT
             },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onError: (error: any) => {
+                // Notify Discord: Payment Error
+                fetch('/api/notify-discord', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'payment',
+                        embed: {
+                            title: "⚠️ Payment Error",
+                            color: 0xf97316, // Orange
+                            description: error.message || "Unknown error",
+                            fields: [
+                                { name: "👤 Customer", value: formData.name, inline: true },
+                                { name: "📧 Email", value: formData.email, inline: true },
+                                { name: "📱 Phone", value: formData.phone, inline: true },
+                                { name: "🎫 Event", value: selectedShow.name, inline: true }
+                            ],
+                            timestamp: new Date().toISOString()
+                        }
+                    })
+                }).catch(() => {});
                 console.error('Paystack error:', error);
                 alert(`Payment error: ${error.message || 'Unknown error'}`);
                 setIsProcessing(false);
