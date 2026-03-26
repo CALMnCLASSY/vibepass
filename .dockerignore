@@ -7,4 +7,3 @@ public/images/*
 README.md
 Dockerfile
 .dockerignore
-package-lock.json
