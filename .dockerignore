@@ -1,0 +1,10 @@
+node_modules
+.next
+.git
+.env*
+!.env.example
+public/images/*
+README.md
+Dockerfile
+.dockerignore
+package-lock.json

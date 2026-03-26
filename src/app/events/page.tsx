@@ -1,24 +1,12 @@
 import Header from '@/components/Header';
 import EventCard from '@/components/EventCard';
-import { getEvents } from '@/data/events';
+import { getGroupedEvents } from '@/data/events';
 import type { EventType } from '@/data/events';
 
 export const dynamic = 'force-dynamic';
 
 export default async function EventsList() {
-  let events = await getEvents();
-
-  const showmanEvents = events.filter(e => e.name.toUpperCase().includes('SHOWMAN'));
-  const otherEvents = events.filter(e => !e.name.toUpperCase().includes('SHOWMAN'));
-
-  if (showmanEvents.length > 0) {
-    const groupedShowman: EventType = {
-      ...showmanEvents[0],
-      name: "NYASHINSKI SHOWMAN - THE RESIDENCY",
-      price: 3500
-    };
-    events = [groupedShowman, ...otherEvents];
-  }
+  let events = await getGroupedEvents();
 
   return (
     <main className="min-h-screen flex flex-col bg-[#0a0a0a]">

@@ -2,14 +2,14 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import EventCard from '@/components/EventCard';
 import Newsletter from '@/components/Newsletter';
-import { getEvents } from '@/data/events';
+import { getGroupedEvents } from '@/data/events';
 import type { EventType } from '@/data/events';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  let events = await getEvents();
+  let events = await getGroupedEvents();
 
   // If database is empty, provide fallback mock data for demonstration
   if (events.length === 0) {
@@ -40,33 +40,6 @@ export default async function Home() {
       }
     ];
   }
-
-  const showmanEvents = events.filter(e => e.name.toUpperCase().includes('SHOWMAN'));
-  const vuruguEvents = events.filter(e => e.name.toUpperCase().includes('VURUGU'));
-  const otherEvents = events.filter(e => 
-    !e.name.toUpperCase().includes('SHOWMAN') && 
-    !e.name.toUpperCase().includes('VURUGU')
-  );
-
-  let groupedEvents: EventType[] = [];
-
-  if (showmanEvents.length > 0) {
-    groupedEvents.push({
-      ...showmanEvents[0],
-      name: "NYASHINSKI SHOWMAN - THE RESIDENCY",
-      price: 3500 // Base price for display
-    });
-  }
-
-  if (vuruguEvents.length > 0) {
-    groupedEvents.push({
-      ...vuruguEvents[0],
-      name: "VURUGU BOXING - KASARANI",
-      price: 1500 // Base regular price
-    });
-  }
-
-  events = [...groupedEvents, ...otherEvents];
 
   return (
     <main className="min-h-screen flex flex-col">

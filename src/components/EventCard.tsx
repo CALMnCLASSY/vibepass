@@ -1,6 +1,7 @@
 import React from 'react';
 import { Calendar, MapPin, ShieldCheck, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { GROUP_CONFIG } from '@/data/events';
 import type { EventType } from '@/data/events';
 
 interface EventCardProps {
@@ -8,12 +9,15 @@ interface EventCardProps {
 }
 
 export default function EventCard({ event }: EventCardProps) {
-  const isShowman = event.name.toUpperCase().includes('SHOWMAN');
-  const isVurugu = event.name.toUpperCase().includes('VURUGU');
-  
+  // Determine the target route based on GROUP_CONFIG
   let targetHref = `/events/${event.id}`;
-  if (isShowman) targetHref = '/showman';
-  if (isVurugu) targetHref = '/vurugu';
+  
+  for (const [keyword, config] of Object.entries(GROUP_CONFIG)) {
+    if (event.name.toUpperCase().includes(keyword)) {
+      targetHref = config.route;
+      break;
+    }
+  }
 
   return (
     <Link href={targetHref} className="group relative bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-electric-purple/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] flex flex-col cursor-pointer hover:-translate-y-1">
