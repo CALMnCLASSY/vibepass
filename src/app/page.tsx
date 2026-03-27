@@ -37,6 +37,18 @@ export default async function Home() {
         description: 'Witness fierce warriors clash.',
         longDescription: '',
         isActive: true
+      },
+      {
+        id: 'mock-bongo',
+        name: 'OLD SCHOOL BONGO 6.0 - CAVALLI',
+        date: '2026-04-05',
+        location: 'Cavalli At The Manor',
+        imageUrl: '/images/events/bongo.png',
+        price: 2000,
+        organizer: 'MADFUN',
+        description: 'With a touch of Kenyan flavor.',
+        longDescription: '',
+        isActive: true
       }
     ];
   }

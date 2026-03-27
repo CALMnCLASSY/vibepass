@@ -71,6 +71,7 @@ export const GROUP_CONFIG: Record<string, { displayName: string, route: string, 
   'SHOWMAN': { displayName: 'NYASHINSKI SHOWMAN - THE RESIDENCY', route: '/showman', basePrice: 3500 },
   'VURUGU': { displayName: 'VURUGU BOXING - KASARANI', route: '/vurugu', basePrice: 1500 },
   'DUWARA': { displayName: 'DUWARA - AFROHOUSE & AMAPIANO', route: '/duwara', basePrice: 2000 },
+  'BONGO': { displayName: 'OLD SCHOOL BONGO 6.0 - CAVALLI', route: '/bongo', basePrice: 2000 },
 };
 
 export async function getGroupedEvents(): Promise<EventType[]> {
