@@ -221,39 +221,67 @@ export default function BongoClient({ initialEvents }: { initialEvents: EventTyp
                         </div>
                     </div>
 
-                    {/* Checkout Card */}
-                    <div className="bongo-checkout-section">
-                        <h2 className="bongo-summary-title">Total</h2>
-                        <div className="bongo-summary-total">
-                            <span>Tickets</span>
-                            <strong>{totalTickets}</strong>
+                    {/* Right Side: Checkout Summary Panel */}
+                    <div className="bongo-checkout-section relative flex flex-col">
+                        <div className="bongo-summary-header hidden md:flex">
+                            <span>Summary</span>
+                            <span className="bongo-accent-text">KES {totalAmount.toLocaleString()}</span>
                         </div>
                         
-                        <div className="bongo-input-group">
-                            <label className="bongo-label">Full Name</label>
-                            <input className="bongo-input" type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Full Name" />
-                        </div>
-                        <div className="bongo-input-group">
-                            <label className="bongo-label">Email</label>
-                            <input className="bongo-input" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email Address" />
-                        </div>
-                        <div className="bongo-input-group">
-                            <label className="bongo-label">Phone</label>
-                            <input className="bongo-input" type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder="Phone Number" />
+                        <div className="p-6 md:p-8 flex-grow">
+                            {/* Cart Area */}
+                            <div className="bongo-cart-area mb-8">
+                                <div className="bongo-area-label">Cart</div>
+                                <div className="bongo-cart-count">
+                                    {totalTickets} <span className="bongo-cart-unit">Tickets</span>
+                                </div>
+                                <div className="bongo-cart-total-alt">Total KES {totalAmount.toLocaleString()}</div>
+                            </div>
+                            
+                            <hr className="bongo-divider mb-8" />
+                            
+                            {/* Details Area */}
+                            <div className="bongo-details-area">
+                                <div className="bongo-area-label mb-4">Your Details</div>
+                                <div className="space-y-5">
+                                    <div className="bongo-input-group">
+                                        <label className="bongo-label">Full Name</label>
+                                        <input className="bongo-input" type="text" placeholder="John Doe" value={name} onChange={e => setName(e.target.value)} />
+                                    </div>
+                                    <div className="bongo-input-group">
+                                        <label className="bongo-label">Email Address</label>
+                                        <input className="bongo-input" type="email" placeholder="john@example.com" value={email} onChange={e => setEmail(e.target.value)} />
+                                    </div>
+                                    <div className="bongo-input-group">
+                                        <label className="bongo-label">Phone Number</label>
+                                        <input className="bongo-input" type="tel" placeholder="+254700000000" value={phone} onChange={e => setPhone(e.target.value)} />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="bongo-summary-total" style={{ borderTop: '1px solid #eee', marginTop: '20px', paddingTop: '20px' }}>
-                            <span>Amount</span>
-                            <strong>KES {totalAmount.toLocaleString()}</strong>
+                        {/* Mobile specific sticky bottom block */}
+                        <div className="md:hidden flex p-4 bg-white border-t border-gray-200 font-bold sticky top-0 z-10 justify-between items-center mb-4 shadow-sm">
+                            <span className="text-gray-800">Total Selection</span>
+                            <span className="text-xl text-amber-600">KES {totalAmount.toLocaleString()}</span>
                         </div>
 
-                        <button 
-                            className="bongo-pay-btn" 
-                            onClick={handleCheckout}
-                            disabled={totalAmount === 0 || isProcessing}
-                        >
-                            {isProcessing ? 'Processing...' : 'Purchase tickets'}
-                        </button>
+                        <div className="p-6 md:p-8 bg-white border-t border-gray-100 mt-auto sticky bottom-0 z-20 shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.05)] md:shadow-none">
+                            <button 
+                                onClick={handleCheckout}
+                                disabled={totalTickets === 0 || isProcessing}
+                                className={`bongo-pay-btn ${
+                                    totalTickets > 0 && !isProcessing 
+                                    ? 'bg-amber-400 text-black shadow-lg' 
+                                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                                }`}
+                            >
+                                {isProcessing ? 'PROCESSING...' : `PURCHASE ${totalTickets > 0 ? totalTickets : ''} TICKET${totalTickets > 1 ? 'S' : ''}`}
+                            </button>
+                            <div className="text-[10px] text-gray-400 mt-3 text-center">
+                                By purchasing you agree to our Terms & Conditions
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
