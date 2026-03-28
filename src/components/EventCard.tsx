@@ -12,10 +12,19 @@ export default function EventCard({ event }: EventCardProps) {
   // Determine the target route based on GROUP_CONFIG
   let targetHref = `/events/${event.id}`;
   
-  for (const [keyword, config] of Object.entries(GROUP_CONFIG)) {
-    if (event.name.toUpperCase().includes(keyword)) {
-      targetHref = config.route;
-      break;
+  // First check if it's a grouped ID
+  if (event.id.startsWith('grouped-')) {
+    const keyword = event.id.replace('grouped-', '').toUpperCase();
+    if (GROUP_CONFIG[keyword]) {
+      targetHref = GROUP_CONFIG[keyword].route;
+    }
+  } else {
+    // Fallback: search for keyword in name
+    for (const [keyword, config] of Object.entries(GROUP_CONFIG)) {
+      if (event.name.toUpperCase().includes(keyword)) {
+        targetHref = config.route;
+        break;
+      }
     }
   }
 
