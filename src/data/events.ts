@@ -73,6 +73,7 @@ export const GROUP_CONFIG: Record<string, { displayName: string, route: string, 
   'DUWARA': { displayName: 'DUWARA - AFROHOUSE & AMAPIANO', route: '/duwara', basePrice: 2000 },
   'BONGO': { displayName: 'OLD SCHOOL BONGO 6.0 - CAVALLI', route: '/bongo', basePrice: 2000 },
   'MAPENZI': { displayName: 'MAPENZI WEWE - BRAEBURN THEATRE', route: '/mapenzi', basePrice: 2000 },
+  'SAFARI': { displayName: 'SAFARI RUNWAY - FASHION SHOW', route: '/safari', basePrice: 3500 },
 };
 
 export async function getGroupedEvents(): Promise<EventType[]> {
