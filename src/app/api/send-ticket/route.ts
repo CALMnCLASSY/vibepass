@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { supabase } from '@/lib/supabase';
+import { generateTicketPDF } from '@/lib/pdf-utils';
 
 export async function POST(req: Request) {
   try {
@@ -15,7 +17,10 @@ export async function POST(req: Request) {
       eventImageUrl = 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=3000&auto=format&fit=crop'
     } = body;
 
+    console.log('--- Ticket Request Received ---', { customerEmail, eventName, ticketId });
+
     if (!customerEmail || !eventName) {
+      console.log('Error: Missing required fields');
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
@@ -25,6 +30,53 @@ export async function POST(req: Request) {
     if (!smtpEmail || !brevoApiKey) {
       console.error('Brevo credentials are not set');
       return NextResponse.json({ error: 'Email service configuration error' }, { status: 500 });
+    }
+
+    // 1. Generate Ticket PDF Base64
+    console.log('Generating PDF...');
+    let pdfBase64 = '';
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${ticketId}`;
+    try {
+      pdfBase64 = await generateTicketPDF({
+        ticketId,
+        customerName,
+        eventName,
+        date,
+        location,
+        quantity,
+        totalAmount,
+        qrCodeUrl
+      });
+      console.log('PDF generation successful');
+    } catch (pdfErr) {
+      console.error('Failed to generate PDF:', pdfErr);
+      // Continue without PDF if it fails, but log it
+    }
+
+    // 2. Persist to Supabase
+    console.log('Inserting into Supabase...');
+    try {
+      const { error: dbError } = await supabase
+        .from('tickets')
+        .insert([{
+          id: ticketId,
+          event_name: eventName,
+          customer_name: customerName,
+          customer_email: customerEmail,
+          customer_phone: body.customerPhone || 'Not provided',
+          quantity: quantity,
+          total_amount: totalAmount,
+          status: 'success'
+        }]);
+
+      if (dbError) {
+        console.error('Supabase Insertion Error:', dbError);
+        // We still send the email even if DB fails, to avoid blocking the user
+      } else {
+        console.log(`Ticket ${ticketId} persisted to database successfully.`);
+      }
+    } catch (dbErr) {
+      console.error('Database connection error:', dbErr);
     }
 
     const htmlContent = `
@@ -66,6 +118,7 @@ export async function POST(req: Request) {
       </div>
     `;
 
+    console.log('Sending email via Brevo...');
     // Send email via Brevo REST API
     const response = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
@@ -79,10 +132,17 @@ export async function POST(req: Request) {
         to: [{ email: customerEmail, name: customerName }],
         subject: `Your Tickets for ${eventName} 🎟️`,
         htmlContent: htmlContent,
+        attachment: pdfBase64 ? [
+          {
+            content: pdfBase64,
+            name: `VibePass-Ticket-${ticketId}.pdf`
+          }
+        ] : []
       }),
     });
 
     const data = await response.json();
+    console.log('Brevo response:', data);
 
     if (!response.ok) {
       console.error('Brevo API Error:', data);

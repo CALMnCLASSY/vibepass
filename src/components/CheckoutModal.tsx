@@ -90,7 +90,7 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
           setStep('PAYMENT'); // Keep them on the payment screen while it loads
           setIsProcessing(true);
 
-          const res = await fetch('https://classybooks.onrender.com/api/verify-payment', {
+          const res = await fetch('https://portal.calmnclassy.com/api/verify-payment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -122,6 +122,7 @@ export default function CheckoutModal({ isOpen, onClose, event }: CheckoutModalP
                   date: event.date,
                   location: event.location,
                   ticketId: `VP-${Date.now().toString().slice(-6)}`,
+                  customerPhone: formData.phone,
                   eventImageUrl: event.imageUrl
               })
           }).catch(err => console.error('Error dispatching ticket email:', err));
