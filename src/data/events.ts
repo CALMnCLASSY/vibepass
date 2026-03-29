@@ -81,6 +81,7 @@ export const GROUP_CONFIG: Record<string, { displayName: string, route: string, 
   'MAPENZI': { displayName: 'MAPENZI WEWE - BRAEBURN THEATRE', route: '/mapenzi', basePrice: 2000 },
   'SAFARI': { displayName: 'SAFARI RUNWAY - FASHION SHOW', route: '/safari', basePrice: 3500 },
   'SUMMERTIDES': { displayName: 'SUMMERTIDES 2026 - MALINDI', route: '/summertides', basePrice: 3000 },
+  'BACKFORTH': { displayName: 'BACK & FORTH - OLD SCHOOL PARTY', route: '/backforth', basePrice: 1500 },
 };
 
 export async function getGroupedEvents(): Promise<EventType[]> {
