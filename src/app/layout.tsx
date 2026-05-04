@@ -11,8 +11,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Vibe Pass Africa",
-  description: "Your All-Access Pass to Africa's Biggest Vibes. The ultimate plug for concerts, festivals, and exclusive events.",
+  title: "Vibe Pass",
+  description: "Your All-Access Pass to the World's Biggest Vibes. The ultimate plug for concerts, festivals, and exclusive events.",
 };
 
 export default function RootLayout({

@@ -17,10 +17,10 @@ export default function About() {
             Our Mission
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight">
-            Connecting Africa to its <span className="text-transparent bg-clip-text bg-gradient-to-r from-electric-purple to-neon-pink">Biggest Vibes</span>.
+            Connecting the World to its <span className="text-transparent bg-clip-text bg-gradient-to-r from-electric-purple to-neon-pink">Biggest Vibes</span>.
           </h1>
           <p className="text-xl text-gray-400 leading-relaxed max-w-3xl mx-auto">
-            Vibe Pass Africa is the ultimate plug for concerts, festivals, and exclusive events. We bridge the gap between world-class organizers and the continent's most passionate fans.
+            Vibe Pass is the ultimate plug for concerts, festivals, and exclusive events. We bridge the gap between world-class organizers and the world's most passionate fans.
           </p>
         </div>
       </section>
@@ -54,7 +54,7 @@ export default function About() {
             </div>
             <h3 className="text-xl font-bold text-white mb-3">Community First</h3>
             <p className="text-gray-400 leading-relaxed">
-              We're more than a ticketing platform. The "Inner Circle" is a community of music lovers, party-goers, and culture drivers across the continent.
+              We're more than a ticketing platform. The "Inner Circle" is a community of music lovers, party-goers, and culture drivers across the globe.
             </p>
           </div>
         </div>
@@ -67,10 +67,10 @@ export default function About() {
             <h2 className="text-3xl md:text-5xl font-bold text-white">The Story Behind the Pass</h2>
             <div className="space-y-4 text-gray-300 text-lg leading-relaxed">
               <p>
-                Born in Nairobi out of frustration with clunky ticketing systems and ticket scalpers, Vibe Pass was created to honor the art of the party.
+                Born out of frustration with clunky ticketing systems and ticket scalpers, Vibe Pass was created to honor the art of the party.
               </p>
               <p>
-                We noticed that Africa is hosting some of the most vibrant, high-energy events globally—from the Safari Rally afterparties in Naivasha to Afro Nation. Yet, the fan experience often started with a stressful checkout.
+                We noticed that the world is hosting some of the most vibrant, high-energy events globally—from Tomorrowland to the Monaco Grand Prix. Yet, the fan experience often started with a stressful checkout.
               </p>
               <p className="font-semibold text-white">
                 We fixed that. Our mission is to make sure your great experience starts the moment you decide to buy the ticket.
@@ -92,7 +92,7 @@ export default function About() {
 
       {/* Footer */}
       <footer className="mt-auto py-8 border-t border-white/10 text-center text-gray-500 text-sm">
-        <p>&copy; {new Date().getFullYear()} Vibe Pass Africa. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Vibe Pass. All rights reserved.</p>
       </footer>
     </main>
   );

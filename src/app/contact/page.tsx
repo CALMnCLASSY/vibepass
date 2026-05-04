@@ -96,7 +96,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-white mb-1">Office Location</h3>
-                  <p className="text-gray-400">B201 <br />Sameer Business Park, Mombasa Rd<br />Nairobi, Kenya</p>
+                  <p className="text-gray-400">1st Floor <br />St. Martin's Court<br />London, UK</p>
                 </div>
               </div>
             </div>
@@ -149,7 +149,7 @@ export default function Contact() {
 
       {/* Footer */}
       <footer className="mt-auto py-8 border-t border-white/10 text-center text-gray-500 text-sm">
-        <p>&copy; {new Date().getFullYear()} Vibe Pass Africa. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Vibe Pass. All rights reserved.</p>
       </footer>
     </main>
   );

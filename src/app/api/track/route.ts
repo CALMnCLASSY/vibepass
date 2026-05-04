@@ -50,7 +50,7 @@ export async function POST(request: Request) {
         },
         {
           name: "⏰ Time",
-          value: new Date(timestamp).toLocaleString('en-US', { timeZone: 'Africa/Nairobi' }) + " (EAT)",
+          value: new Date(timestamp).toLocaleString('en-US', { timeZone: 'UTC' }) + " (UTC)",
           inline: false
         }
       ],
@@ -58,7 +58,7 @@ export async function POST(request: Request) {
         url: "https://vibepass.africa/logo.png" // Fallback aesthetic
       },
       footer: {
-        text: "VibePass Africa Analytics • System Notification"
+        text: "VibePass Global Analytics • System Notification"
       },
       timestamp: new Date().toISOString()
     };

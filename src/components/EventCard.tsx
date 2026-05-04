@@ -64,7 +64,7 @@ export default function EventCard({ event }: EventCardProps) {
 
         <div className="mt-auto flex items-center justify-between">
           <div className="font-bold text-lg text-white">
-            Kes {event.price.toLocaleString()}
+            USD ${event.price.toLocaleString()}
           </div>
           <div className="flex items-center gap-1 text-sm font-semibold text-electric-purple group-hover:text-neon-pink transition-colors">
             Get Ticket

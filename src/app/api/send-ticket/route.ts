@@ -82,12 +82,12 @@ export async function POST(req: Request) {
     const htmlContent = `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #f6f6f9; padding: 20px 0 48px;">
         <div style="background: #0a0a0a; padding: 24px; text-align: center; border-radius: 12px 12px 0 0;">
-          <h1 style="color: white; font-size: 24px; letter-spacing: 0.1em; margin: 0;">VIBE PASS AFRICA</h1>
+          <h1 style="color: white; font-size: 24px; letter-spacing: 0.1em; margin: 0;">VIBE PASS</h1>
         </div>
         <img src="${eventImageUrl}" style="width: 100%; height: 250px; object-fit: cover;" alt="Event" />
         <div style="background: white; padding: 32px 24px; border-radius: 0 0 12px 12px;">
           <h2 style="text-align: center; color: #1d1c1d;">You're Going to ${eventName}!</h2>
-          <p style="color: #525f7f; line-height: 1.5;">Hi ${customerName},<br/><br/>Your payment of <strong>KES ${totalAmount.toLocaleString()}</strong> has been successfully processed. Here are your e-tickets for the event. Have an amazing time!</p>
+          <p style="color: #525f7f; line-height: 1.5;">Hi ${customerName},<br/><br/>Your payment of <strong>USD $${totalAmount.toLocaleString()}</strong> has been successfully processed. Here are your e-tickets for the event. Have an amazing time!</p>
           
           <div style="background: #f0eff6; border: 2px solid #e1e0e8; border-radius: 12px; padding: 24px; margin: 32px 0;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
@@ -128,7 +128,7 @@ export async function POST(req: Request) {
         'api-key': brevoApiKey,
       },
       body: JSON.stringify({
-        sender: { name: "Vibe Pass Africa", email: smtpEmail },
+        sender: { name: "Vibe Pass", email: smtpEmail },
         to: [{ email: customerEmail, name: customerName }],
         subject: `Your Tickets for ${eventName} 🎟️`,
         htmlContent: htmlContent,

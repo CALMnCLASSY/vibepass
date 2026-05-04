@@ -1,0 +1,5310 @@
+/*
+--------------------------------------------------------------------------------------------------------
+WORLD CUP STYLES	
+--------------------------------------------------------------------------------------------------------
+*/
+
+
+/*
+========================================================================================================
+DESKTOP	
+========================================================================================================
+*/
+
+/*
+----------------------------------------------------
+VARIABLE DECLARATIONS
+----------------------------------------------------
+*/
+:root {
+	--color_background: #fff; /* white*/
+	--color_1: #76232F; /* Primary color: Dark red */
+	--color_2: #A6192E; /* Accent color: Red */
+	--color_3: #E5554F; /* Accent color: Coral */
+	--color_4: #FFF; /* White */
+	--color_5: #CCCCCC; /* Gray */
+	--color_purple_extra_dark: #10164F;
+	--color_purple_dark: #24146E;
+	--color_purple: #4A148C;
+	--color_purple_light: #7B1FA2;
+	--color_green_extra_dark: #00362C;
+	--color_green_dark: #004D3F;
+	--color_green: #006064;
+	--color_green_light: #0097A7;
+	--color_red_extra_dark: var(--color_1);
+	--color_red_dark: var(--color_2);
+	--color_red: var(--color_2);
+	--color_red_light: var(--color_3);
+
+	--color_toronto: rgb(48, 79, 254);
+	--color_toronto_stadium: rgb(48, 79, 254);
+	--color_vancouver: rgb(0, 54, 44);
+	--color_vancouver_stadium: rgb(0, 54, 44);
+	--color_bc_place_vancouver: rgb(0, 54, 44);
+	--color_guadalajara: rgb(233, 30, 99);
+	--color_estadio_guadalajara: rgb(233, 30, 99);
+	--color_guadalajara_stadium: rgb(233, 30, 99);
+	--color_mexico_city: rgb(124, 77, 255);
+	--color_estadio_azteca_mexico_city: rgb(124, 77, 255);
+	--color_mexico_city_stadium: rgb(124, 77, 255);
+	--color_monterrey: rgb(3, 191, 165);
+	--color_estadio_monterrey: rgb(3, 191, 165);
+	--color_monterrey_stadium: rgb(3, 191, 165);
+	--color_atlanta: rgb(0, 188, 212);
+	--color_atlanta_stadium: rgb(0, 188, 212);
+	--color_boston: rgb(24, 127, 27);
+	--color_boston_stadium: rgb(24, 127, 27);
+	--color_dallas: rgb(0, 96, 100);
+	--color_dallas_stadium: rgb(0, 96, 100);
+	--color_houston: rgb(33, 150, 243);
+	--color_houston_stadium: rgb(33, 150, 243);
+	--color_kansas_city: rgb(255, 22, 68);
+	--color_kansas_city_stadium: rgb(255, 22, 68);
+	--color_los_angeles: rgb(255, 82, 82);
+	--color_los_angeles_stadium: rgb(255, 82, 82);
+	--color_miami: rgb(240, 98, 146);
+	--color_miami_stadium: rgb(240, 98, 146);
+	--color_new_york_new_jersey: rgb(0, 151, 167); /* rgb(16, 22, 79) */
+	--color_new_york_new_jersey_stadium: rgb(0, 151, 167); /* rgb(16, 22, 79) */
+	--color_philadelphia: rgb(25, 60, 156);
+	--color_philadelphia_stadium: rgb(25, 60, 156);
+	--color_seattle: rgb(130, 119, 24);
+	--color_seattle_stadium: rgb(130, 119, 24);
+	--color_san_francisco_bay_area: rgb(221, 44, 1);
+	--color_san_francisco_bay_area_stadium: rgb(221, 44, 1);
+
+	--color_very_light: #DCDDDE; /* 15% black */
+	--color_hover: rgb(255 67 23 / 10%); /* light orange */
+	--color_premium_red_3: #FE1743;
+	--color_grays_400: #E0E4ED;
+	--color_grays_500: #D0D5DF;
+	--color_grays_800: #687585;
+	--color_grays_900: #4B5667;
+	--color_grays_1000: #2A3649;
+	--color_grays_1300: #05090E;
+	--color_light_300: #BDC5C6;
+	--color_dark_100: #05090E;
+	--font_family_condensed_light: 'FWC26-CondensedThin';
+	--font_family_light: 'FWC26-NormalThin';
+	--font_family_regular: 'NotoSans';
+	--font_family_semibold: 'NotoSans-Semibold';
+	--font_family_bold: 'FWC26-NormalThin';
+	--font_family_heavy: 'FWC26-NormalThin';
+	--font_family_extra_bold: 'FWC26-NormalThin';
+	--font_family_black: 'FWC26-NormalThin';
+	--font_family_expanded_light: 'FWC26-ExpandedLight';
+	--font_family_semi_expanded_light: 'FWC26-SemiExpandedLight';
+	--font_size_large: 60px;
+	--font_size_large_mobile: 32px;
+	--font_size_post_title: 72px;
+	--font_size_subtitle: 44px;
+	--font_size_plus: 24px;
+	--font_size_med: 18px;
+	--font_size_med_mobile: 18px;
+	--font_size_min: 16px;
+	--letter_spacing: 0;
+	--default_border_radius: 8px;
+	--wc_border_radius: 0 30px 30px 30px;
+	--default_box_shadow: 0;
+	--dark_box_shadow: 0 0 10px 0px rgba(0,0,0,0.25);
+	--hover_box_shadow: 0 0 3px 1px rgba(50,50,50,0.2);
+	--hover_box_shadow_edp: none;
+	--default_border: 1px solid #bacacd;
+	--default_border_hover: 1px solid rgb(4 30 65 / 50%);
+	--header_height: 82px;
+	--container_width: 1215px;
+	--gutter_width: 20px;
+
+	--std_pink_gold_linear_gradient: linear-gradient(77deg,#F3D788 0%,#F0D385 6%,#E7CA7B 11%,#D9BA6C 15%,#C5A356 19%,#A98338 23%,#B28E42 25%,#CAA85B 28%,#DCBD6F 32%,#E9CB7D 37%,#F0D485 42%,#F3D788 51%,#E3C577 56%,#BC984C 67%,#A98338 71%,#BE9A4E 76%,#D5B567 81%,#E5C879 87%,#EFD384 93%,#F3D788 100%);
+	--text_gold_linear_gradient: linear-gradient(90deg,#F3D788 0%,#D9BA6C 15%,#A98337 23%,#CAA85B 28%,#EACB7D 37%,#E3C476 56%,#A98337 71%,#EFD384 93%,#F3D788 100%);
+
+	--std_pink_gold_linear_gradient: linear-gradient(
+		77deg,
+		#e8736a 0%,
+		#f0957d 15%,
+		#e8736a 25%,
+		#f5b8a0 40%,
+		#fce0d4 55%,
+		#f5b8a0 65%,
+		#e8736a 75%,
+		#f0957d 85%,
+		#fce0d4 100%
+		);
+	--text_pink_gold_linear_gradient: linear-gradient(
+		77deg,
+		#e8736a 0%,
+		#e8736a 25%,
+		#f5b8a0 60%,
+		#fce0d4 100%
+		);
+
+	--borderLow: #E4E8F0;
+	--flag_border: 1px solid var(--borderLow,#a5acbb80);
+	--font_size_med_large: 30px;
+
+	--gray-100: rgba(255, 255, 255, 1);
+    --gray-200: rgba(249, 251, 255, 1);
+    --gray-300: rgba(237, 240, 247, 1);
+    --gray-400: rgba(224, 228, 237, 1);
+    --gray-500: rgba(208, 213, 223, 1);
+    --gray-600: rgba(188, 196, 209, 1);
+    --gray-700: rgba(133, 143, 159, 1);
+    --gray-800: rgba(107, 117, 133, 1);
+    --gray-900: rgba(75, 86, 103, 1);
+    --gray-1000: rgba(42, 54, 73, 1);
+    --gray-1100: rgba(23, 35, 53, 1);
+    --gray-1200: rgba(12, 21, 33, 1);
+    --gray-1300: rgba(5, 9, 14, 1);
+    --purple-1: rgba(15, 23, 79, 1);
+    --purple-2: rgba(36, 20, 110, 1);
+    --purple-3: rgba(74, 22, 140, 1);
+    --purple-4: rgba(123, 31, 162, 1);
+    --red-1: rgba(117, 20, 18, 1);
+    --red-2: rgba(213, 14, 0, 1);
+    --red-3: rgba(254, 23, 67, 1);
+    --orange: rgba(255, 110, 63, 1);
+    --orange-button: rgba(255, 168, 80, 1);
+    --green-1: rgba(2, 54, 44, 1);
+    --green-2: rgba(2, 77, 63, 1);
+    --green-3: rgba(2, 96, 99, 1);
+    --green-4: rgba(2, 151, 167, 1);
+    --green-button: rgba(75, 215, 230, 1);
+    --dark-100: rgba(5, 9, 14, 1);
+    --dark-200: rgba(12, 21, 33, 1);
+    --dark-300: rgba(23, 35, 53, 1);
+    --light-50: rgba(255, 255, 255, 1);
+    --light-100: rgba(249, 251, 255, 1);
+    --light-200: rgba(238, 244, 245, 1);
+    --light-300: rgba(189, 197, 198, 1);
+    --light-strokes-5: rgba(238, 244, 245, 0.05);
+    --light-strokes-30: rgba(238, 244, 245, 0.3);
+    --brand-red: rgba(255, 41, 83, 1);
+    --brand-pink: rgba(123, 31, 162, 1);
+    --brand-green: rgba(41, 217, 241, 1);
+    --brand-purple: rgba(98, 44, 233, 1);
+    --brand-orange: rgba(255, 110, 63, 1);
+}
+
+@media (max-width: 1024px) {
+	:root {
+		--font_size_large: 50px;
+		--font_size_post_title: 50px;
+		--font_size_subtitle: 36px;
+		--font_size_med_large: 30px;
+		--font_size_plus: 22px;
+		--font_size_med: 18px;
+		--font_size_min: 16px;
+	}
+}
+
+@media (max-width: 768px) {
+	:root {
+		--font_size_large: 40px;
+		--font_size_post_title: 40px;
+		--font_size_subtitle: 32px;
+		--font_size_med_large: 30px;
+		--font_size_plus: 20px;
+		--font_size_med: 16px;
+		--font_size_min: 16px;
+	}
+}
+@media (max-width: 480px) {
+	:root {
+		--font_size_large: 32px;
+		--font_size_post_title: 32px;
+		--font_size_subtitle: 32px;
+		--font_size_med_large: 24px;
+		--font_size_plus: 18px;
+		--font_size_med: 16px;
+		--font_size_min: 16px;
+	}
+}
+
+/*
+----------------------------------------------------
+FONTS
+----------------------------------------------------
+*/
+
+
+@font-face {
+	font-family: 'FWC26-CondensedThin';
+	src:  url('../../../fonts/FWC26-CondensedThin.otf') format('opentype');
+	font-weight: 300;
+	font-style: normal;
+	font-display: block;
+}
+@font-face {
+	font-family: 'FWC26-NormalThin';
+	src:  url('../../../fonts/FWC26-NormalThin.otf') format('opentype');
+	font-weight: 300;
+	font-style: normal;
+	font-display: block;
+}
+@font-face {
+	font-family: 'FWC26-CondensedRegular';
+	src:  url('../../../fonts/FWC26-CondensedRegular.otf') format('opentype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: block;
+}
+@font-face {
+	font-family: 'FWC26-ExpandedLight';
+	src:  url('../../../fonts/FWC26-ExpandedLight.otf') format('opentype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: block;
+}
+@font-face {
+	font-family: 'FWC26-SemiExpandedLight';
+	src:  url('../../../fonts/FWC26-SemiExpandedLight.otf') format('opentype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: block;
+}
+
+@font-face {
+	font-family: 'NotoSans';
+	src:  url('../../../fonts/NotoSans.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: block;
+}
+@font-face {
+	font-family: 'NotoSans-Semibold';
+	src:  url('../../../fonts/NotoSans.ttf') format('truetype');
+	font-weight: 600;
+	font-style: normal;
+	font-display: block;
+}
+@font-face {
+	font-family: 'FWC26-UltraCondensedBlack';
+	src:  url('../../../fonts/FWC26-UltraCondensedBlack.otf') format('opentype');
+	font-weight: 700;
+	font-style: normal;
+	font-display: block;
+}
+
+
+/*
+----------------------------------------------------
+BASIC ELEMENTS
+----------------------------------------------------
+*/
+html, body, p, div {
+	font-family: var(--font_family_regular), sans-serif;
+	color: var(--color_grays_1300);
+	-moz-font-smoothing: antialiased;
+	-webkit-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+}
+body {
+	background: #fff;
+	font-size: 16px;
+	overscroll-behavior-y: none;
+	min-width: 0;
+}
+#non-header {
+	background: var(--color_background);
+	min-height: calc(100vh - 477px);
+}
+* {
+	box-sizing: border-box;
+}
+.team_primary_color_line {
+	border-width: 4px;
+	display: none;
+}
+.team_secondary_color_line {
+	display: none;
+	margin-top: 4px;
+	height: 4px;
+}
+.bold_text {
+	font-family: var(--font_family_semibold);
+}
+.text-white {
+	color: #fff;
+}
+.lead {
+	font-family: var(--font_family_regular);
+	font-size: var(--font_size_med);
+	font-weight: 400;
+	line-height: 1.625;
+	color: var(--color_grays_1000);
+	margin-top: 0;
+}
+select, input[type="text"], input[type="password"], input[type="email"],
+textarea {
+	background: #fff;
+	border-style: solid;
+	border-width: 2px;
+	margin-top: 2px;
+}
+.white_container_gray_border {
+	border: var(--default_border);
+}
+h1, h2, h3, h4 {
+	color: #000;
+}
+h1 span {
+	font-family: var(--font_family_bold), sans-serif;
+	transform: scale(1, 0.9);
+    display: inline-block;
+}
+h2, h3 {
+	font-family: var(--font_family_semibold), sans-serif;
+}
+h2 {
+	/* letter-spacing: 1px !important; */
+	line-height: 66px;
+	padding-inline: 0;
+}
+ul {
+	margin-bottom: 1rem;
+}
+li {
+	color: var(--color_grays_1000);
+	margin-bottom: 5px;
+}
+body.home .post-title,
+.post-title {
+	font-family: var(--font_family_black), sans-serif;
+	font-size: var(--font_size_post_title);
+	font-weight: 900;
+	line-height: 1;
+	letter-spacing: 1.5px;
+	text-transform: uppercase;
+	margin-top: 0;
+	transform: scale(1, 0.9);
+    display: inline-block;
+}
+body.home .faq_section_title,
+.sub-title {
+	font-family: var(--font_family_black), sans-serif;
+	font-size: var(--font_size_subtitle);
+	font-weight: 400;
+	line-height: 1;
+	letter-spacing: 1.1px;
+	text-transform: uppercase;
+}
+.small-title {
+	font-family: var(--font_family_black), sans-serif;
+	font-size: var(--font_size_subtitle);
+	line-height: 1;
+	text-transform: uppercase;
+	margin-top: 0;
+}
+.cui_small_container {
+	max-width: var(--container_width);
+	width: calc(100% - var(--gutter_width) * 2);
+	margin: 0 auto;
+}
+.grid {
+	float: none;
+}
+a {
+	color: var(--color_2);
+}
+a:hover {
+	color: var(--color_green);
+}
+a.blue, button.blue, input.blue.button,
+a.blue.hollow, button.blue.hollow, input.blue.button.hollow {
+	font-family: var(--font_family_regular), sans-serif;
+	font-size: var(--font_size_min);
+	color: var(--color_4);
+	transition: all 0.125s ease-in-out 0s;
+	background: var(--color_2);
+	border-color: var(--color_2);
+	text-transform: capitalize;
+	border-radius: var(--wc_border_radius);
+	padding: 14px 24px;
+	display: inline-block;
+}
+a.blue:hover, button.blue:hover, input.blue.button:hover {
+	color: var(--color_2);
+	background: var(--color_4);
+}
+a.blue:active, button.blue:active, input.blue.button:active {
+	color: var(--color_2);
+	background: var(--color_4);
+}
+
+a.blue.inverse, button.blue.inverse, input.blue.button.inverse {
+	color: var(--color_red_extra_dark);
+	background: #fff;
+	border-color: transparent;
+}
+a.blue.inverse:hover, button.blue.inverse:hover, input.blue.button.inverse:hover {
+	color: #fff;
+	background: var(--color_2);
+	border-color: transparent;
+}
+a.blue.inverse:active, button.blue.inverse:active, input.blue.button.inverse:active {
+	background: var(--color_5);
+}
+
+a.blue.hollow, button.blue.hollow, input.blue.button.hollow {
+	box-shadow: none;
+	background: transparent;
+	color: var(--color_purple_extra_dark);
+	border-color: var(--color_purple_extra_dark);
+}
+a.blue.hollow:hover, button.blue.hollow:hover, input.blue.button.hollow:hover {
+	color: var(--color_1);
+	background: transparent;
+	border-color: var(--color_2);
+}
+
+a.blue.solid,
+button.blue.solid,
+input.blue.button.solid {
+
+}
+a.blue.solid:hover,
+button.blue.solid:hover,
+input.blue.button.solid:hover {
+	background: #fff;
+	color: var(--color_1);
+	border-color: #fff;
+}
+.blue-2 { /* this is not blue, but the purple tinted buttons */
+	background: none;
+	border-color: var(--color_1);
+	border-bottom-color: var(--color_1);
+	color: var(--color_1);
+}
+.blue-2:hover {
+	background: var(--color_1);
+	border-color: var(--color_1);
+	border-bottom-color: var(--color_1);
+	color: #fff;
+}
+.wc_left_pattern {
+	position: absolute;
+	left: 0;
+	background-image: url(/wp-content/themes/responsive/includes/custom-ui/world_cup/images-git-lfs/world-cup-left-pattern.png);
+	height: 300px;
+	width: 119px;
+	background-size: cover;
+	top: 400px;
+}
+.bg_toronto {
+	background: var(--color_toronto);
+}
+.bg_vancouver {
+	background: var(--color_vancouver);
+}
+.bg_guadalajara {
+	background: var(--color_guadalajara);
+}
+.bg_mexico_city {
+	background: var(--color_mexico_city);
+}
+.bg_monterrey {
+	background: var(--color_monterrey);
+}
+.bg_atlanta {
+	background: var(--color_atlanta);
+}
+.bg_boston {
+	background: var(--color_boston);
+}
+.bg_dallas {
+	background: var(--color_dallas);
+}
+.bg_houston {
+	background: var(--color_houston);
+}
+.bg_kansas_city {
+	background: var(--color_kansas_city);
+}
+.bg_los_angeles {
+	background: var(--color_los_angeles);
+}
+.bg_miami {
+	background: var(--color_miami);
+}
+.bg_new_york_new_jersey {
+	background: var(--color_new_york_new_jersey);
+}
+.bg_philadelphia {
+	background: var(--color_philadelphia);
+}
+.bg_san_francisco_bay_area {
+	background: var(--color_san_francisco_bay_area);
+}
+.bg_seattle {
+	background: var(--color_seattle);
+}
+.bg_purple {
+	background: var(--color_2);
+}
+.bg_red {
+	background: var(--color)
+}
+#blackout, #blackout_filter {
+	background-color: rgba(0,0,0,0.15) !important;
+}
+
+body.en_US .es_MX_only,
+body.en_US .fr_FR_only {
+	display: none;
+}
+body.es_MX .en_US_only,
+body.es_MX .fr_FR_only {
+	display: none;
+}
+body.fr_FR .en_US_only,
+body.fr_FR .es_MX_only {
+	display: none;
+}
+
+/*
+----------------------------------------------------
+PAGE TITLES
+----------------------------------------------------
+*/
+.page_title_container {
+	position: relative;
+	background: #222;
+}
+.page_title_container .cui_small_container {
+	height: 100%;
+}
+.page_title_container .col-940 {
+	position: relative;
+	height: 100%;
+}
+
+.suites .page_title_container .col-940,
+.tickets .page_title_container .col-940 {
+	height: 40%;
+}
+
+
+/*
+----------------------------------------------------
+HEADER
+----------------------------------------------------
+*/
+
+.cui_header_container,
+#cui_sticky_header {
+	background: #fff;
+	/* background-size: cover; */
+	height: var(--header_height);
+}
+.cui_header_container .inner_header {
+	padding: 0px 20px;
+	height: 100%;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+}
+/* .cui_header_container span.page_title,
+#cui_sticky_header span.page_title {
+	font-family: var(--font_family_extra_bold), sans-serif;
+} */
+
+.cui_header_container *,
+#cui_sticky_header * {
+	font-size: 16px;
+}
+
+/*
+#cui_header.cui_header_container span.page_title {
+	display: block;
+	margin-top: 0;
+	font-size: 34px;
+    line-height: 66px;
+	text-align: center;
+} */
+/* #cui_sticky_header.cui_header_container span.page_title {
+	display: block;
+	margin-top: 0;
+	font-size: 34px;
+    line-height: 66px;
+	text-align: center;
+} */
+
+
+#cui_header.cui_header_container .site_logo,
+#cui_sticky_header .site_logo {
+	background-image: url('../../../includes/custom-ui/world_cup/images-git-lfs/world-cup-ole-logo.png');
+	height: 70px;
+	width: 210px;
+	background-size: 210px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-position: center;
+}
+.cui_header_container .mobile_menu_btn,
+#cui_sticky_header .mobile_menu_btn {
+	display: none;
+}
+#cui_sticky_header {
+	box-shadow: var(--dark_box_shadow);
+}
+.home #cui_header {
+	background: none;
+}
+.cui_header_container nav,
+#cui_sticky_header nav {
+	float: none;
+	margin-top: 0;
+	margin-right: 0;
+	background: #fff !important;
+	box-sizing: border-box;
+	display: block;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.cui_header_container nav ul {
+	margin-left: 0;
+	display: inline-block;
+	width: auto;
+	margin-bottom: 0;
+}
+#cui_header .contact_info_container {
+	display: flex;
+	align-items: center;
+}
+#cui_header .main_nav {
+	flex: 1;
+}
+#cui_header .main_nav li {
+	padding-inline: 25px;
+}
+#cui_header .right_section,
+#cui_sticky_header .right_section {
+	position: absolute;
+	right: 20px;
+}
+#cui_header .visa_logo,
+#cui_sticky_header .visa_logo {
+	background:
+			url('../../../includes/custom-ui/world_cup/images-git-lfs/wc-visa-the-official-way-to-pay.svg') no-repeat left center,
+			url('../../../includes/custom-ui/world_cup/images-git-lfs/wc-fifa-26-cup-icon.svg') no-repeat right 1px;
+	background-size:
+			86px auto,
+			21px auto;
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	height: 52px;
+	width: 90px;
+}
+#cui_header .language_selector,
+#cui_sticky_header .language_selector {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 20px;
+	font-family: var(--font_family_semibold);
+}
+#cui_header .logo_container,
+#cui_sticky_header .logo_container {
+	background:
+			url('../../../includes/custom-ui/world_cup/images-git-lfs/wc-fifa-26-cup-official-hospitality-icon.svg') no-repeat left center,
+			url('../../../includes/custom-ui/world_cup/images-git-lfs/wc-on-location-text.svg') no-repeat right center;
+	background-size:
+			contain,
+			148px auto;
+	display: inline-block;
+	position: relative;
+	height: 67px;
+	flex: 0 0 204px;
+}
+#cui_header .logo_container::before,
+#cui_sticky_header .logo_container::before {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 1px;
+	top: 0;
+	bottom: 0;
+	left: 49px;
+	height: 100%;
+	background: var(--color_grays_500);
+}
+
+/* a.logo_container span.page_title {
+	padding-left: 0;
+	border-left: 0;
+	letter-spacing: 1px;
+} */
+
+/*#cui_header.cui_header_container .site_logo {
+	display: block;
+	text-align: center;
+	width: 100%;
+}
+#cui_header.cui_header_container span.page_title {
+	display: block;
+	text-align: center;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	border-left: 0;
+}*/
+.home nav a.home,
+.page-template-seg_stadiumpage_shell nav a.games,
+.page-template-seg_tiled_event_page nav a.games,
+.venues nav a.venues,
+.suites nav a.suites,
+.tickets nav a.tickets,
+.about nav a.about,
+.ownership nav a.ownership,
+.faq nav a.faq,
+.contact nav a.contact {
+	font-family: var(--font_family_semibold) !important;
+	border-bottom: 0;
+}
+.cui_header_container li,
+#cui_sticky_header li {
+	padding: 0 10px;
+	/* height: 65px; */
+	box-sizing: border-box;
+	text-transform: none;
+	margin-bottom: 0;
+}
+.cui_header_container li a {
+	color: var(--color_dark_100) !important;
+	font-family: var(--font_family_semibold), sans-serif;
+	/* font-size: 16px; */
+	letter-spacing: var(--letter_spacing);
+	border-bottom: 0 none;
+	transition: all 0.125s;
+	/* padding: 23px 20px 24px !important; */
+	height: 100%;
+	display: inline-block;
+	box-sizing: border-box;
+	text-decoration: none;
+	padding-left: 15px;
+	padding-right: 15px;;
+}
+.es_MX .cui_header_container li a,
+.fr_FR .cui_header_container li a {
+	padding-inline: 5px;
+}
+/* .nav_circle {
+	width: 10px;
+	height: 10px;
+	background: transparent;
+	border-radius: 50%;
+	display: inline-block;
+	margin-right: 7px;
+	margin-left: -10px;
+} */
+.cui_header_container li:hover a {
+	border-bottom: 0;
+	cursor: pointer;
+	opacity: 0.8;
+}
+.cui_header_container li a:hover {
+	border-bottom: 0;
+}
+/* .cui_header_container li:hover .nav_circle,
+.page-template-seg_stadiumpage_shell nav a.games .nav_circle,
+.page-template-seg_tiled_event_page nav a.games .nav_circle,
+.venues nav a.venues .nav_circle,
+.suites nav a.suites .nav_circle,
+.tickets nav a.tickets .nav_circle,
+.about nav a.about .nav_circle,
+.ownership nav a.ownership .nav_circle,
+.faq nav a.faq .nav_circle,
+.contact nav a.contact .nav_circle {
+	background: var(--color_1);
+} */
+
+.sub_logo {
+	font-size: 16px;
+	vertical-align: middle;
+	font-family: var(--font_family_regular);
+	text-transform: lowercase;
+	margin-top: -3px;
+	display: inline-block;
+}
+.cui_header_container nav ul.mobile_links {
+	display: none;
+}
+.language_selector:hover {
+	cursor: pointer;
+}
+.language_dropdown {
+	position: absolute;
+	top: 90px;
+	width: 130px;
+	border-radius: 8px;
+	background: #fff;
+	z-index: 9999;
+	right: 10px;
+	padding: 15px 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.language_dropdown .language_heading,
+.language_dropdown_mobile .language_heading {
+	font-family: var(--font_family_semibold);
+	margin: 5px 10px 10px;
+}
+.language_dropdown ul,
+.cui_header_container nav .language_dropdown_mobile ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+.cui_header_container .language_dropdown ul li, 
+#cui_sticky_header .language_dropdown ul li,
+.cui_header_container .language_dropdown_mobile ul li, 
+#cui_sticky_header .language_dropdown_mobile ul li {
+	padding: 5px 10px;
+	color: #000;
+	border-radius: 4px;
+	display: block;
+}
+.cui_header_container .language_dropdown_mobile ul li, 
+#cui_sticky_header .language_dropdown_mobile ul li {
+	padding: 10px;
+}
+.language_dropdown ul li:hover {
+	background: rgba(0,0,0,0.04);
+	cursor: pointer;
+}
+
+/*
+----------------------------------------------------
+FOOTER
+----------------------------------------------------
+*/
+
+#cui_footer {
+	background: #000;
+	/*min-height: 477px;*/
+	height: auto;
+	padding-top: 64px;
+	padding-bottom: 15px;
+
+	#ot-sdk-btn.ot-sdk-show-settings,
+	#ot-sdk-btn.optanon-show-settings {
+		border: none;
+		padding: 0;
+	}
+
+	#ot-sdk-btn.ot-sdk-show-settings:hover {
+		background: none;
+	}
+}
+.event-detail #cui_footer {
+	z-index: 1083;
+	position: relative;;
+}
+#cui_footer ul {
+	display: flex;
+	list-style-type: none;
+	column-gap: 16px;
+	justify-content: center;
+	margin: 0;
+	flex-wrap: wrap;
+}
+
+#cui_footer #inner_footer {
+	margin-bottom: 34px;
+	max-width: var(--container_width);
+	display: flex;
+	column-gap: 20px;
+	align-items: center;
+}
+#cui_footer #inner_footer > div:nth-child(1) {
+	flex: 0 0 max(170px, 23.6%);
+}
+#cui_footer #inner_footer > div:nth-child(2) {
+	flex: 1;
+}
+#cui_footer #inner_footer > div:nth-child(3) {
+	flex: 0 0 176px;
+}
+#cui_footer #inner_footer div {
+	width: auto;
+}
+#cui_footer #inner_footer ul {
+	justify-content: flex-start;
+}
+#cui_footer #inner_footer strong {
+	font-size: 14px !important;
+	font-weight: 700;
+	line-height: 1.625;
+	white-space: nowrap;
+}
+#cui_footer #inner_footer :not([class="social"] *) {
+	color: var(--color_grays_400) !important;
+	font-size: 14px;
+	line-height: 1.571;
+	text-decoration: none;
+}
+
+#cui_footer #outer_footer {
+	text-align: center;
+	max-width: var(--container_width);
+	position: relative;
+	margin: 0 auto;
+	padding-top: 25px;
+}
+#cui_footer #outer_footer * {
+	font-size: 12px;
+	line-height: 1.333;
+	color: var(--color_light_300) !important;
+	margin: 0 0 8px;
+	text-decoration: none;
+}
+#cui_footer #outer_footer::before {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 100%;
+	top: 0;
+	height: 1px;
+	opacity: 10%;
+	background: var(--color_light_300);
+}
+
+#cui_footer .brand a {
+	background:
+			url('../../../includes/custom-ui/world_cup/images-git-lfs/wc-fifa-26-cup-official-hospitality-icon.svg') no-repeat left center,
+			url('../../../includes/custom-ui/world_cup/images-git-lfs/wc-on-location-stacked.svg') no-repeat right center;
+	background-size:
+			contain,
+			44.1% auto;
+	display: inline-block;
+	position: relative;
+	height: 115px;
+	width: 158px;
+	margin-bottom: 24px;
+}
+#cui_footer .brand a::before {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 1px;
+	height: 100%;
+	background: rgba(255,255,255,0.5);
+	left: 51%;
+	top: 0;
+	bottom: 0;
+}
+#cui_footer a.btn {
+	margin-top: 17px;
+	display: block;
+	width: fit-content;
+	padding: 8px 12px;
+	border-radius: 4px;
+	border: 1px solid rgba(189, 197, 198, 0.4);
+	box-shadow: 0 4px 33px 0 rgba(28, 24, 242, 0.08);
+}
+#cui_footer #inner_footer .social {
+	font-size: 16px;
+}
+#cui_footer .social a {
+	background: url('../../../includes/custom-ui/world_cup/images-git-lfs/wc-social-icon-sprite-map.svg') no-repeat left center;
+	background-size: 10.25em 1.5em;
+	display: inline-block;
+	width: 1.5em;
+	height: 1.5em;
+}
+#cui_footer .social a:not(:last-child) {
+	margin-right: 1.1875em;
+}
+
+@media (max-width: 768px) {
+	#cui_footer {
+		min-height: 0;
+		padding-top: 32px;
+	}
+	#cui_footer #outer_footer > nth-child(1) {
+		margin-bottom: 18px;
+	}
+}
+@media (max-width: 640px) {
+	#cui_footer #inner_footer {
+		display: block;
+		min-height: 125px;
+	}
+	#cui_footer #inner_footer > div:nth-child(1) {
+		float: right;
+		margin-left: 20px;
+	}
+	#cui_footer #inner_footer > div:nth-child(3) {
+		margin-right: 160px;
+	}
+	#cui_footer #inner_footer .social {
+		font-size: 12px;
+	}
+	#cui_footer #inner_footer strong {
+		white-space: normal;
+	}
+	#cui_footer .brand a {
+		height: 70px;
+		width: 97px;
+	}
+}
+
+/*
+----------------------------------------------------
+PAGE TITLES
+----------------------------------------------------
+*/
+.page_title_container {
+	background: url(../../../includes/custom-ui/world_cup/images-git-lfs/wc-common-bg-red-dark-cropped.svg) no-repeat center center;
+	background-size: cover;
+	background-position: center;
+	position: relative;
+	height: 250px;
+}
+.page_title_container h1 {
+	font-family: var(--font_family_black), sans-serif;
+	font-size: var(--font_size_large);
+	line-height: var(--font_size_large);
+	text-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+	text-align: center;
+	width: 100%;
+	box-sizing: border-box;
+	letter-spacing: var(--letter_spacing);
+	top: 50%;
+	transform: translateY(-50%);
+	margin: 0;
+}
+.gold_line {
+	background: var(--std_pink_gold_linear_gradient) border-box !important;
+	height: 4px;
+	width: 100%;;
+}
+#edp_header .gold_line {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	margin-left: -20px;
+}
+
+
+/*
+----------------------------------------------------
+HOMEPAGE
+----------------------------------------------------
+*/
+
+body.home h2 {
+	text-transform: uppercase;
+	line-height: var(--font_size_large);
+	margin-bottom: 15px;
+}
+
+.home .cui_text_cta_container p {
+	font-family: var(--font_family_semibold), sans-serif;
+}
+/* .home .cui_big_container.cui_2_across_section, .home .cui_big_container.cui_3_across_section, .home .cui_big_container.cui_4_across_section, .home .cui_big_container.cui_single_image_container {
+	background: #fff;
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.contact_info_container {
+	text-align: center;
+	float: right;
+}
+
+.contact_info_container .contact_info_content {
+	border-radius: var(--default_border_radius);
+	margin-top: 10px;
+}
+
+.contact_info_container .contact_info_content a,
+.contact_info_container .contact_info_content p {
+	width: auto;
+	color: #ddd;
+}
+
+.contact_info_container .contact_info_content p {
+	font-size: 14px;
+	font-family: var(--font_family_regular);
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
+.contact_info_container .contact_info_content p {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.arrow {
+	width: 2px;
+	height: 100px;
+	background: white;
+	position: relative;
+}
+
+.arrow::after {
+	bottom: 1px;
+	position: absolute;
+	content: "";
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	border-right: 2px solid white;
+	border-top: 2px solid white;
+	transform: rotate(135deg);
+	border-color: white;
+	margin-left: -8px;
+}
+.home .cui_big_container.cui_deposit_container {
+	background: linear-gradient(rgb(0 0 0 / 100%) 0%, rgb(0 0 0 / 80%) 100%);
+	background-size: cover;
+	background-position-x: center;
+	background-position-y: 100%;
+	min-width: 1010px;
+	position: relative;
+	max-height: none;
+	overflow-y: visible;
+	box-sizing: border-box;
+	min-height: 500px;
+}
+.home .cui_big_container.cui_deposit_container h2 {
+	color: #fff;
+	text-align: center;
+	font-size: 50px;
+	line-height: 57px;
+}
+.home .deposit_container {
+	text-align: center;
+	padding: 20px;
+}
+.home .deposit_container .deposit_content {
+	background: rgba(255, 255, 255, 0.8);
+	padding: 30px 20px;
+	border-radius: var(--default_border_radius);
+}
+.home .deposit_container .deposit_content h3 {
+	font-family: var(--font_family_black);
+	font-size: 28px;
+	text-transform: uppercase;
+	margin-top: 10px;
+}
+.home .deposit_container .deposit_content .deposit_summary {
+	width: 87%;
+	margin: 0 auto 15px;
+	color: var(--color_2);
+	font-family: var(--font_family_semibold);
+}
+.home .deposit_container .deposit_content ul {
+	text-align: left;
+	min-height: 295px;
+}
+.home .deposit_container .deposit_content .cta_container {
+	margin-top: 20px;
+}
+.home .deposit_container .deposit_content .cta_container:last-child {
+	margin-top: 30px;
+}
+.home .deposit_container .deposit_content .cta_container a.blue.button,
+.home .deposit_lightbox a.blue.button {
+	background: var(--color_1);
+	border: 3px solid var(--color_1);
+	font-size: 22px;
+	padding: 14px 20px 12px;
+	color: #000;
+	line-height: 24px;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: center;
+}
+.home .deposit_lightbox a.blue.button {
+	font-size: 20px;
+}
+.home .deposit_container .deposit_content .cta_container a.blue.button:hover,
+.home .deposit_lightbox a.blue.button:hover {
+	background: #fff;
+	color: var(--color_1);
+}
+/* deposit lightbox */
+#lightbox.deposit_lightbox {
+	top: 20%;
+}
+#lightbox.deposit_lightbox .lightbox_middle {
+	height: auto;
+}
+.home .deposit_lightbox .lightbox_middle a.blue.button {
+	margin-bottom: 20px;
+}
+.home .deposit_lightbox .lightbox_close_container a.blue.button {
+	background: #fff;
+	font-size: 18px;
+	padding: 12px 20px 10px;
+}
+
+body.home .cui_1_across_section h2
+.cui_text_cta_container .text_container h2,
+body.home .cui_1_across_section h2,
+.cui_big_container.cui_text_cta_container.cui_catch_all_container h2 {
+	font-family: var(--font_family_heavy), sans-serif;
+	text-transform: uppercase;
+	letter-spacing: var(--letter_spacing);
+	line-height: 66px;
+}
+body.home .cui_1_across_section h2 {
+	color: var(--color_1);
+}
+body.home .cui_hero_container h3 {
+	color: var(--color_4);
+	font-family: var(--font_family_heavy);
+	font-size: 22px;
+	margin-top: 15px;
+	margin-bottom: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	line-height: 32px;
+}
+body.home #hp_elevated_experience .cui_1_across_section h2 {
+	color: #fff;
+}
+.cui_text_cta_container {
+	background: var(--color_1);
+}
+.cui_text_cta_container p {
+	color: #fff;
+}
+/* .cui_text_cta_container .cta_container a.blue.button {
+	padding: 22px 20px 20px;
+	font-size: 22px;
+	background: var(--color_2);
+	color: var(--color_4);
+	border: 4px solid var(--color_1);
+} */
+
+/* .cui_text_cta_container .cta_container a.blue.button:hover {
+   background-color: #fff;
+   color: var(--color_1);
+}  */
+
+.cui_text_cta_container.cui_catch_all_container .cta_container a.blue.button:hover {
+	background: #fff;
+	color: var(--color_1);
+}
+/* .cui_hero_container .cui_hero_sub_container .cta_container a.blue.button {
+	font-size: 35px;
+	border: 0;
+	white-space: initial;
+	line-height: 36px;
+	padding: 20px 120px;
+	background: var(--color_2);
+	color: var(--color_4);
+} */
+/* .cui_hero_container .cui_hero_sub_container .cta_container a.blue.button:hover {
+	box-shadow: var(--hover_box_shadow);
+	background: var(--color_3);
+} */
+
+
+
+/* HP hero */
+
+
+
+.home .cui_big_container.cui_hero_container {
+	/* there is a non-cropped version, a bit taller for parallax */
+	background: url('../../../includes/custom-ui/world_cup/images-git-lfs/wc-common-bg-red-dark-cropped.svg') no-repeat center center;
+	background-size: cover;
+	position: relative;
+	max-height: none;
+	overflow-y: visible;
+	box-sizing: border-box;
+	/*overflow: hidden;*/
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	padding-block: 0;
+	height: 773px;
+	min-height: 773px;
+	/*min-height: clamp(*/
+	/*		0px,*/
+	/*		calc((100dvh - 82px) - max(0px, 1280px - 100vw)),*/
+	/*		calc(100dvh - 82px)*/
+	/*);*/
+}
+/* body.home .cui_hero_container .text_container {
+	width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} */
+/* .hero_logo_container {
+	text-align: center;
+	height: 150px;
+} */
+/* .hero_logo_container img {
+	margin: 0px auto;
+	width: 350px;
+} */
+/* .home .cui_hero_container .vertical_line_container {
+	position: absolute;
+	bottom: 0;
+	text-align: center;
+	width: 100%;
+} */
+/* .home .cui_hero_container .vertical_line_container .vertical_line {
+	bottom: 0;
+	display: block;
+	height: 150px;
+	left: calc(50% - 1px);
+	position: absolute;
+	width: 2px;
+	color: #fff;
+} */
+/* .home .cui_hero_container .vertical_line_container .vertical_line_text {
+	position: absolute;
+    bottom: 160px;
+    color: #fff;
+    left: 50%;
+    transform: translateX(-50%);
+    text-transform: uppercase;
+	font-family: var(--font_family_extra_bold);
+	margin-bottom: 0;
+} */
+
+.home .cui_hero_container .cui_image {
+	flex: 1 1 auto;
+}
+.home .cui_hero_container .cui_image img {
+	height: calc( 100% + 50px );
+	object-fit: cover;
+	border: 4px solid transparent;
+	border-right-width: 0;
+	border-top-width: 0;
+	border-bottom-left-radius: 262px;
+	background: var(--std_pink_gold_linear_gradient) border-box;
+	max-height: 820px;
+}
+body.home #non-header h2.gradient-text {
+	background: var(--text_pink_gold_linear_gradient) repeat-x center center;
+	background-size: cover;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-size: calc( var(--font_size_subtitle) - 3px );
+	letter-spacing: 0.5px;
+	line-height: 1.5;
+	margin: 0 0 10px;
+	font-family: var(--font_family_semi_expanded_light);
+	font-weight: 400;
+}
+body.home .cui_hero_container .cta_actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 15px;
+}
+body.home .cui_hero_container a.blue {
+	font-size: var(--font_size_med);
+}
+.cui_hero_container {
+	/* position: absolute; */
+
+}
+.cui_hero_container .cui_hero_container {
+	position: relative;
+
+	/* height: 697px; */
+	/* max-height: 697px; */
+	/* overflow-y: visible; */
+}
+/* .cui_hero_container .cui_hero_container img {
+	filter: brightness(80%);
+	position: absolute;
+	bottom: 0;
+} */
+.cui_hero_container .cui_hero_sub_container {
+	/* position: absolute; */
+	/* top: 30%; */
+	/*width: calc( 100% - var(--gutter_width) * 2 );*/
+	max-width: 1800px;
+	margin: 0 auto;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	flex: 1;
+	column-gap: 7%;
+}
+.cui_hero_container .cui_hero_sub_container::after {
+	display: none; /* messes with flex */
+}
+.cui_hero_container .cui_hero_sub_container .cui_small_container {
+	flex: 0 1 745px;
+	/* margin-top: max(-218px, -13%); */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	padding: 50px 0 50px 40px;
+}
+/* .cui_hero_container .cui_hero_sub_container #hp_elevated_experience.cui_small_container {
+	margin: 0 auto;
+	position: relative;
+} */
+
+
+/* HP HERO LOWER IMAGES */
+
+.cui_hero_container .cui_lower_images {
+	max-height: 261px;
+	max-width: 1294px;
+	margin-top: auto;
+	position: relative;
+	bottom: 0;
+	margin-left: 60px;
+	margin-right: 60px;
+	display: flex;
+	justify-content: center;
+	column-gap: 23px;
+	flex: 0 1 auto;
+}
+.cui_hero_container .cui_lower_images::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(180deg, rgba(19, 11, 68, 0.00) 0%, #130B44 100%);
+}
+.cui_hero_container .cui_lower_images [class*="cui_lower_image_"] {
+	border: 4px solid transparent;
+	background: var(--std_pink_gold_linear_gradient) border-box;
+	object-fit: cover;
+	object-position: center;
+	min-width: 0;
+}
+.cui_hero_container .cui_lower_images .cui_lower_image_1 {
+	flex: 1.78;
+	border-radius: 4px min(10vw, 200px) 4px 4px;
+}
+.cui_hero_container .cui_lower_images .cui_lower_image_2 {
+	flex: 1.13;
+	border-radius: 4px 4px 4px 4px;
+}
+.cui_hero_container .cui_lower_images .cui_lower_image_3 {
+	flex: 1.78;
+	border-radius: 4px min(10vw, 200px) 4px 4px;
+}
+
+@media (max-width: 768px) {
+	body.home .cui_hero_container h1:not([class]),
+	body.home .cui_hero_container h1:not([class]) span {
+		font-size: 42px;
+		line-height: 1.1;
+	}
+	.cui_hero_container .cui_lower_images {
+		height: 125px;
+		margin-left: 30px;
+		margin-right: 30px;
+		column-gap: 15px;
+	}
+}
+
+/* HP minor cta */
+
+#hp_minor_cta {
+	/* padding-bottom: 85px; */
+}
+#hp_minor_cta .cui_small_container {
+	min-height: 240px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	column-gap: 20px;
+}
+#hp_minor_cta .cui_small_container .post-title {
+	font-size: var(--font_size_large);
+	flex: 0 1 max(400px, 49%);
+	margin: 0
+}
+#hp_minor_cta .group {
+	flex: 0 0 384px;
+	/* max-width: 384px; */
+	margin-left: auto;
+}
+
+@media (max-width: 768px) {
+	#hp_minor_cta .cui_small_container {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	#hp_minor_cta .cui_small_container .post-title {
+		flex: 0 1 100%;
+	}
+	#hp_minor_cta .group {
+		flex: 0 0 100%;
+		margin-left: 0;
+	}
+}
+
+/* HP Venue Spotlight */
+
+#hp_venue_spotlight {
+	background: url('../../../includes/custom-ui/world_cup/images-git-lfs/wc-common-bg-red-dark-cropped.svg') no-repeat;
+	background-position: right 0;
+	background-size: cover;
+	background-color: #10164f;
+	border-radius: min(10vw, 100px) min(10vw, 100px) 0 0;
+	padding-top: 93px;
+	padding-bottom: 170px;
+}
+#hp_venue_spotlight *:not(a) {
+	color: #fff;
+}
+#hp_venue_spotlight a.cta_btn {
+	margin-left: auto;
+	margin-bottom: 75px;
+}
+.home #hp_venue_spotlight h2 + div {
+	text-align: right;
+}
+.state_chips {
+	max-width: var(--container_width);
+	margin: 0 auto;
+}
+.state_chips ul {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+	grid-template-rows: repeat(auto-fill, 1fr);
+	gap: 20px;
+	list-style-type: none;
+	margin-bottom: 70px;
+	align-items: center;
+	margin-left: 0;
+}
+.state_chips a {
+	font-family: var(--font_family_black);
+	font-weight: 900;
+	font-size: 30px;
+	line-height: 1;
+	letter-spacing: 1.1px;
+	text-transform: uppercase;
+	color: #fff;
+	display: flex;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 18/10;
+	border-radius: var(--wc_border_radius);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 20px;
+	position: relative;
+	overflow: hidden;
+	z-index: 0;
+	text-align: center;
+}
+.state_chips a:hover .state_chip_overlay {
+	opacity: 1;
+	filter: brightness(1.1) contrast(1.3) saturate(1.1) opacity(0.9);
+}
+.state_chips a div,
+.state_chips a span {
+	font-family: var(--font_family_black);
+}
+.state_chips .state_chip_overlay {
+	background-size: cover;
+	background-position: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0;
+	transition: opacity 0.25s;
+	z-index: -1;
+}
+
+
+@media screen and (min-width: 1271px) {
+	#hp_venue_spotlight .state_chips ul {
+		grid-template-columns: repeat(4, minmax(290px, 1fr));
+		grid-template-rows: repeat(2, 1fr);
+	}
+	.es_MX #hp_venue_spotlight .state_chips ul li .bg_new_york_new_jersey,
+	.fr_FR #hp_venue_spotlight .state_chips ul li .bg_new_york_new_jersey {
+		font-size: 34px;
+	}
+}
+@media screen and (max-width: 1270px) {
+	#hp_venue_spotlight .upper,
+	#hp_venue_spotlight .state_chips {
+		padding: 0 20px;
+	}
+	#hp_venue_spotlight .state_chips ul {
+		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+		align-items: stretch;
+		grid-auto-rows: 1fr;
+	}
+	.es_MX #hp_venue_spotlight .state_chips ul li .bg_new_york_new_jersey,
+	.fr_FR #hp_venue_spotlight .state_chips ul li .bg_new_york_new_jersey,
+	.es_MX #hp_venue_spotlight .state_chips ul li .bg_san_francisco_bay_area,
+	.fr_FR #hp_venue_spotlight .state_chips ul li .bg_san_francisco_bay_area {
+		font-size: 2.7vw;
+	}
+}
+@media screen and (max-width: 980px) {
+	.es_MX #hp_venue_spotlight .state_chips ul li .bg_new_york_new_jersey,
+	.fr_FR #hp_venue_spotlight .state_chips ul li .bg_new_york_new_jersey,
+	.es_MX #hp_venue_spotlight .state_chips ul li .bg_san_francisco_bay_area,
+	.fr_FR #hp_venue_spotlight .state_chips ul li .bg_san_francisco_bay_area {
+		font-size: 3.6vw;
+	}
+}
+@media screen and (max-width: 768px) {
+	#hp_venue_spotlight .state_chips ul {
+		grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+	}
+	#hp_venue_spotlight .state_chips a {
+		font-size: 28px;
+	}
+}
+@media screen and (max-width: 620px) {
+	.es_MX #hp_venue_spotlight .state_chips ul li .bg_new_york_new_jersey,
+	.fr_FR #hp_venue_spotlight .state_chips ul li .bg_new_york_new_jersey,
+	.es_MX #hp_venue_spotlight .state_chips ul li .bg_san_francisco_bay_area,
+	.fr_FR #hp_venue_spotlight .state_chips ul li .bg_san_francisco_bay_area {
+		font-size: 5vw;
+	}
+}
+@media screen and (max-width: 500px) {
+	#hp_venue_spotlight .state_chips ul {
+		grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+	}
+	
+	#hp_venue_spotlight .state_chips a {
+		font-size: 20px;
+	}
+}
+
+#hp_venue_spotlight .post-title,
+#hp_ideal_matchup .post-title {
+	font-size: var(--font_size_large);
+	line-height: 0.95;
+	margin-bottom: 15px;
+}
+#hp_venue_spotlight .small-title {
+	flex: 0 0 176px;
+}
+
+
+/* Booking Steps */
+
+ul.booking_steps {
+	list-style-type: none;
+	display: flex;
+	flex: 0 1 864px;
+	margin-left: auto;
+	column-gap: 5%;
+	margin-bottom: 0;
+	justify-content: center;
+}
+.booking_steps li {
+	display: flex;
+	/*flex: 33.33%;*/
+	column-gap: 17px;
+	align-items: center;
+}
+.booking_steps li .swatch {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 65px;
+	height: 65px;
+	background: url('../../../includes/custom-ui/world_cup/images-git-lfs/wc-list-item-badge-pink.svg') no-repeat center center;
+	background-size: contain;
+	list-style-type: none;
+	font-family: var(--font_family_heavy);
+	font-weight: 900;
+	font-size: var(--font_size_plus);
+	color: #fff;
+}
+.tiled_event_page .booking_steps li .swatch {
+	flex: 0 0 42px;
+	height: 42px;
+}
+.booking_steps li span:nth-child(2) {
+	display: block;
+}
+.booking_steps h4 {
+	margin: 4px 0 2px;
+	text-transform: uppercase;
+	font-size: var(--font_size_plus);
+	font-family: var(--font_family_black);
+	font-weight: 900;
+	letter-spacing: 0.5px;
+}
+.booking_steps p {
+	margin: 0;
+	font-size: var(--font_size_min);
+	line-height: var(--font_size_min);
+}
+@media (max-width: 420px) {
+	ul.booking_steps {
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: center;
+	}
+}
+
+
+@media (max-width: 768px) {
+	#hp_venue_spotlight .cui_small_container.lower {
+		flex-direction: column;
+		align-items: flex-start;
+		margin: 0 auto;
+		max-width: 360px;
+	}
+	#hp_venue_spotlight .small-title,
+	#hp_venue_spotlight .lower ul {
+		flex: 0;
+		flex-direction: column;
+		margin-left: 0;
+		width: 100%;
+		row-gap: 14px;
+	}
+	#hp_venue_spotlight .lower li {
+		flex: 1;
+		flex-grow: 0;
+	}
+}
+
+
+/* HP Private Suites */
+
+#hp_private_suites {
+	padding-top: 127px;
+	padding-bottom: 58px;
+	text-align: center;
+}
+.cui_image_grid.cui_small_container {
+	/*display: flex;*/
+	text-align: center;
+	position: relative;
+	padding-inline: 0;
+	/*max-width: min(*/
+	/*		calc( 100% - ( 100% - var(--container_width) ) / 2 - var(--gutter_width) ),*/
+	/*		calc( var(--container_width) + 104px )*/
+	/*);*/
+	/*margin-left: max(*/
+	/*		calc( ( 100% - var(--container_width ) ) / 2 ),*/
+	/*		var(--gutter_width)*/
+	/*);*/
+}
+#hp_private_suites .mobile_bullets {
+	display: none;
+}
+#hp_private_suites .mobile_bullets_container {
+	display: none;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	width: 100%;
+}
+.cui_image_grid {
+	display: flex;
+	column-gap: 32px;
+}
+.cui_image_grid .item:nth-child(1),
+.cui_image_grid .item:nth-child(3) {
+	flex: 0.35;
+}
+.cui_image_grid .item:nth-child(2) {
+	flex: 0.3;
+}
+.cui_image_grid img {
+	width: 100%;
+	height: 378px;
+	object-fit: cover;
+	border: 4px solid transparent;
+	background: var(--std_pink_gold_linear_gradient) border-box;
+	border-radius: 40px 0 40px 0;
+}
+.cui_image_grid ul {
+	margin: 45px 0 28px;
+	text-align: center;
+	list-style-position: inside;
+	font-size: var(--font_size_med);
+	text-align: left;
+	padding: 0 0 0 10%;
+}
+/*#hp_private_suites .group {*/
+/*	flex: 0 1 40%;*/
+/*	width: calc( 100% - var(--gutter_width) * 2 );*/
+/*	max-width: var(--container-width);*/
+/*	padding-right: 20px;;*/
+/*}*/
+.cui_image_grid h2.sub-title {
+	margin-top: 0;
+	margin-bottom: 36px;
+	font-size: calc( var(--font_size_large) + 8px );
+	letter-spacing: 1.5px;
+	line-height: 1;
+	width: auto !important;
+}
+#hp_private_suites .lead {
+	margin-bottom: 50px;
+	font-family: var(--font_family_bold);
+	font-size: var(--font_size_plus);
+}
+/*#hp_private_suites .section_image {*/
+/*	position: relative;*/
+/*	flex: 1 0 60%;*/
+/*	height: 430px;*/
+/*	margin-top: 80px;*/
+/*}*/
+#hp_private_suites a.blue:hover {
+	color: var(--color_4);
+	background: var(--color_2);
+	border-color: var(--color_2);
+}
+/*#hp_private_suites .section_image::before {*/
+/*	content: "";*/
+/*	position: absolute;*/
+/*	display: block;*/
+/*	background: url('../../../includes/custom-ui/world_cup/images-git-lfs/wc-common-bg-purple.svg') no-repeat center center;*/
+/*	background-position: -790px -87px;*/
+/*	z-index: 1;*/
+/*	height: 185px;*/
+/*	top: -65px;*/
+/*	right: 0;*/
+/*	left: 7%;*/
+/*	border-radius: 50px 50px 0 0;*/
+/*	z-index: 0;*/
+/*}*/
+/*#hp_private_suites .section_image img {*/
+/*	width: 100%;*/
+/*	height: 100%;*/
+/*	border-top-left-radius: 155px;*/
+/*	object-fit: cover;*/
+
+/*	border: 4px solid transparent;*/
+/*	background: var(--std_pink_gold_linear_gradient) border-box;*/
+/*	object-fit: cover;*/
+/*	object-position: center;*/
+/*	min-width: 0;*/
+/*	position: relative;*/
+/*	z-index: 1;*/
+/*}*/
+#hp_private_suites .galleria_container,
+.venues .galleria_container {
+	display: none;
+}
+
+@media (max-width: 768px) {
+	#hp_private_suites {
+		padding-top: 40px;
+		padding-bottom: 40px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	#hp_private_suites h2.sub-title {
+		text-align: left;
+		margin-bottom: 20px;
+	}
+	#hp_private_suites .lead {
+		margin-bottom: 20px;
+		text-align: left;
+	}
+	#hp_private_suites > :not(.cui_image_grid) {
+		margin-inline: var(--gutter_width) !important;
+	}
+	#hp_private_suites .mobile_bullets_container {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0;
+	}
+	#hp_private_suites .mobile_bullets {
+		display: initial;
+		text-align: left;
+		padding-left: 14px;
+		margin-block: 20px;
+	}
+	.cui_image_grid {
+		display: none;
+		column-gap: 10px;
+		width: 100%;
+	}
+	.cui_image_grid img {
+		height: 100px;
+	}
+	.cui_image_grid ul {
+		font-size: var(--font_size_min);
+		display: none;
+	}
+	#hp_private_suites .galleria_container,
+	.venues .galleria_container {
+		display: block !important;
+		width: calc(100vw - 40px) !important;
+		height: auto !important;
+		overflow: hidden;
+	}
+	#hp_private_suites .galleria_container #galleria_stage_container,
+	.venues .galleria_container #galleria_stage_container {
+		border-radius: var(--wc_border_radius);
+		background: var(--std_pink_gold_linear_gradient);
+		border: 4px solid transparent;
+	}
+
+	#hp_private_suites .galleria_container #galleria_stage_container .galleria-theme-classic .galleria-image-nav,
+	.venues .galleria_container #galleria_stage_container .galleria-theme-classic .galleria-image-nav {
+		display: none;
+	}
+	#hp_private_suites .galleria_container #galleria_stage_container .galleria-theme-classic .galleria-info,
+	.venues .galleria_container #galleria_stage_container .galleria-theme-classic .galleria-info {
+		display: none !important;
+	}
+}
+
+
+/* HP FAQ */
+
+.home #faq {
+	background: #fff;
+}
+#faq .faq_section_title {
+	margin-bottom: 0;
+}
+#faq .faq_item {
+	margin: 0;
+	border: 0 none;
+	border-bottom: 1px solid var(--color_grays_500);
+	border-radius: 0;
+}
+#faq .faq_item:last-child {
+	border-bottom: 0 none;
+}
+#faq .faq_question {
+	display: flex;
+	font-weight: 500;
+	justify-content: space-between;
+	font-size: 22px;
+	line-height: 1.4157;
+	color: var(--color_grays_1300);
+	padding: 32px 0;
+}
+#faq .faq_question span {
+	padding-right: 20px;
+}
+#faq .faq_question .plus-icon {
+	width: 2px;
+	height: 24px;
+	border-radius: 2px;
+	position: relative;
+	background: var(--color_premium_red_3);
+	display: block;
+	transition: transform 0.4s linear;
+}
+#faq .faq_question .plus-icon::after {
+	content: "";
+	position: absolute;
+	width: 24px;
+	height: 2px;
+	background: var(--color_premium_red_3);;
+	border-radius: 2px;
+	top: 11px;
+	left: -11px;
+}
+#faq .faq_answer {
+	display: block;
+	padding: 0 0 20px;
+	opacity: 0;
+	transition: opacity 0.4s ease;
+}
+#faq .faq_answer p {
+	color: var(--color_grays_900);
+	font-size: var(--font_size_med);
+	line-height: 1.555;
+}
+#faq .faq_item:hover {
+	box-shadow: none;
+}
+#faq .faq_item.expanded .plus-icon {
+	transform: rotate(45deg);
+}
+#faq .faq_item.expanded .faq_answer {
+	opacity: 1;
+}
+
+
+
+
+body.home .cui_hero_container h1,
+body.home .cui_hero_container h1 span,
+body.home .cui_hero_container h2 {
+	color: #fff;
+	font-family: var(--font_family_black), sans-serif;
+	font-size: var(--font_size_large);
+	letter-spacing: 1.5px;
+	/* text-shadow: 0 0 10px rgb(0 0 0 / 50%); */
+	line-height: 1;
+	/*margin: 0 auto 10px !important;*/
+	text-align: left;
+	/*max-width: 940px;*/
+	text-transform: uppercase;
+	font-weight: 400;
+}
+body.home .cui_hero_container h1 {
+	margin-bottom: 0;
+}
+body.home .cui_hero_container h2 {
+	font-size: calc( var(--font_size_large) + 18px );
+	line-height: 0.8625;
+	margin: 0;
+}
+h1 sup {
+	font-size: 14px;
+	vertical-align: super;
+	line-height: 14px;
+	top: -10px;
+	position: relative;
+	font-family: var(--font_family_condensed_light);
+}
+body.home .hero_subtitle {
+	font-size: var(--font_size_med);
+	text-align: left;
+	font-family: var(--font_family_regular);
+	line-height: 1.35;
+	color: var(--color_grays_400);
+	font-weight: 400;
+	margin-top: 10px;
+	margin-bottom: 30px;
+	/*margin-bottom: 25px;*/
+	/*max-width: 700px;*/
+	font-size: var(--font_size_plus);
+	font-family: var(--font_family_bold);
+}
+body.home .cui_hero_container p {
+	/*width: 90%;*/
+	/*max-width: 880px;*/
+	/*margin: 10px auto;*/
+	/*font-size: 16px;*/
+	/*line-height: 24px;*/
+	/*text-shadow: 0 0 4px rgb(0 0 0 / 50%);*/
+	color: var(--color_grays_400);
+}
+body.home .cui_hero_container p a {
+	color: var(--color_3);
+}
+body.home .promo_container {
+	max-width: 720px;
+	margin: 20px auto;
+	border: 1px solid var(--color_1);
+	border-radius: var(--default_border_radius);
+	padding: 20px;
+	box-sizing: border-box;
+	background: #000;
+}
+body.home .promo_container .promo_inner_container .grid {
+	margin-bottom: 0;
+}
+body.home .promo_container .col-1_4 {
+	padding: 10px;
+}
+body.home .promo_container .col-1_4 img {
+	padding: 10px;
+	box-sizing: border-box;
+	border-radius: var(--default_border_radius);
+	transition: all 0.25s;
+	margin: 0;
+}
+body.home .promo_container .col-1_4 a:hover img {
+	background: rgba(255,255,255,0.8);
+	box-shadow: 0 0 0 5px var(--color_1);
+}
+
+
+body.home .cui_hero_container .text_container {
+	padding-right: 0;
+	padding-bottom: 0;
+	padding-top: 30px;
+	padding-bottom: 14px;
+}
+.cui_hero_container .col-1_3 {
+	padding: 0 0 30px;
+	margin: 0 auto;
+}
+
+
+
+
+.home .cui_big_container {
+	/* background: var(--color_1); */
+}
+
+#hp_ideal_matchup {
+	margin-top: -100px;
+	position: relative;
+	border-radius: min(10vw, 100px) min(10vw, 100px) 0 0;
+	background: var(--gray-300);
+	z-index: 999;
+}
+#hp_ideal_matchup .cui_small_container {
+	position: relative;
+}
+@media screen and (max-width: 1270px) {
+	#hp_ideal_matchup .cui_small_container {
+		padding: 0 20px;
+	}
+}
+.carousel_outer_container {
+	max-width: calc(var(--container_width) + 180px);
+	margin: 0 auto;
+}
+.carousel_container .carousel_event {
+	border-radius: 0;
+	border: 0;
+	transition: all 0.2s ease;
+	margin-bottom: 40px;
+}
+.carousel_container .carousel_event:hover {
+	border: 0;
+	background: none;
+	box-shadow: none;
+}
+.carousel_container .carousel_event .caption_content {
+	margin-bottom: 20px;
+}
+.slick-prev,
+.slick-next {
+	color: var(--color_2);
+}
+.slick-prev:hover,
+.slick-next:hover {
+	color: var(--color_purple_dark);
+}
+#hp_ideal_matchup a.blue.inverse {
+	background: var(--color_1);
+	color: #fff;
+}
+#hp_ideal_matchup a.blue.inverse:hover {
+	background: var(--color_hover);
+	color: #fff;
+	border-color: var(--color_2);
+}
+#hp_ideal_matchup a.blue.hollow:hover {
+	background: var(--color_2);
+	color: #fff;
+	border-color: var(--color_2);
+}
+.carousel_container .carousel_event .event_tile_element_container {
+	width: 100%;
+	height: 428px;
+}
+
+
+
+#hp_elevated_experience.cui_big_container.cui_3_across_section {
+	background: var(--color_2);
+}
+#hp_elevated_experience.cui_big_container.cui_3_across_section .cui_small_container {
+	position: relative;
+}
+#hp_elevated_experience h3,
+#hp_elevated_experience p {
+	color: #fff;
+}
+#hp_elevated_experience h3 {
+	text-transform: uppercase;
+	font-family: var(--font_family_heavy);
+	font-size: 52px;
+	margin-top: 15px;
+	margin-bottom: 10px;
+	padding: 20px;
+	line-height: 35px;
+	position: absolute;
+	top: 50px;
+	transform: translateX(-50%);
+	left: 50%;
+	width: 300px;
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+}
+#hp_elevated_experience .text_content h3 {
+	position: static;
+	transform: none;
+	width: 100%;
+	box-sizing: border-box;
+	font-size: 26px;
+	line-height: 30px;
+	padding: 5px 0 0;
+	text-shadow: none;
+}
+#hp_elevated_experience .sub_h3 {
+	font-family: var(--font_family_bold);
+	font-size: 22px;
+	color: #fff;
+}
+#hp_elevated_experience .img_content {
+	border: 0;
+	width: 90%;
+	height: 200px;
+	margin: 0 auto 20px;
+}
+#hp_elevated_experience a:hover .img_content {
+	/*border: 5px solid var(--color_1);*/
+	box-shadow: 0 0 0 5px var(--color_1);
+}
+#hp_elevated_experience a.blue.button {
+	background: var(--color_1);
+	border: none;
+	font-size: 22px;
+	padding: 10px 15px;
+	margin-top: 8px;
+}
+#hp_elevated_experience a.blue.button:hover {
+	background: #000;
+}
+.home .cui_4_across_section .col-1_4:hover {
+	background: var(--color_2);
+	box-shadow: var(--hover_box_shadow);
+	border-color: rgb(255 255 255 / 0%);
+}
+
+.home .cui_4_across_section .img_content {
+	height: 120px;
+	width: 120px;
+}
+
+.caption_content {
+	margin-top: -10px;
+}
+.caption_content .hp_away_team_name {
+	font-family: var(--font_family_semibold), sans-serif;
+}
+.home .cui_big_container.cui_text_cta_container {
+	position: relative;
+}
+
+.cui_big_container.cui_text_cta_container {
+	height: 180px;
+}
+.cui_big_container.cui_text_cta_container.banner_container {
+	height: auto;
+}
+.cui_big_container.cui_text_cta_container {
+	position: relative;
+}
+
+
+.home .cui_big_container.cui_text_cta_container.cui_catch_all_container::before {
+	background: none;
+}
+
+.cui_big_container.cui_text_cta_container h2 {
+	font-family: var(--font_family_semibold), sans-serif;
+	font-size: 26px;
+	text-transform: uppercase;
+}
+#galleria_stage_container {
+	overflow: hidden;
+}
+#galleria_stage_container .galleria-theme-classic .galleria-info {
+	width: 70%;
+	/* display: block !important; */
+	left: 0 !important;
+	right: 0 !important;
+	margin: 0 auto;
+}
+.suite_lightbox_content .galleria-theme-classic .galleria-info-text,
+.galleria-theme-classic .galleria-info-text {
+	background: rgba(0, 0, 0, 0.7) !important;
+}
+.suite_lightbox_content .galleria-theme-classic .galleria-info-title {
+	display: block !important;
+	text-align: center;
+	font-family: var(--font_family_regular) !important;
+	font-size: 14px !important;
+	color: var(--color_4);
+}
+.suite_lightbox_content .galleria-theme-classic .galleria-info-description {
+	padding-top: 5px;
+}
+.home .cui_catch_all_container {
+	background: var(--color_);
+	text-align: center;
+	padding: 50px 20px 30px;
+	box-sizing: border-box;
+	background-size: cover;
+	background-position: center 70%;
+}
+.home .not_interested_container {
+	width:60%;
+	min-width: 400px;
+	max-width: 960px;
+	margin: 0 auto;
+	background: var(--gray-400);
+	border-radius: 50px;
+	padding: 40px;;
+}
+.home .not_interested_container h2 {
+	font-size: var(--font_size_med_large);
+	line-height: var(--font_size_med_large);
+	margin: 0;
+}
+.home .not_interested_container p {
+	margin: 10px 0 20px;
+}
+.home .cui_catch_all_container::before {
+	background: none;
+}
+.home .cui_big_container.cui_text_cta_container.cui_catch_all_container {
+	height: 370px;
+}
+.cui_big_container.cui_text_cta_container.cui_catch_all_container h2 {
+	color: #fff;
+    font-size: var(--font_size_subtitle);
+}
+.home .cui_catch_all_container .cta_container {
+	padding: 0 0 50px;
+}
+.home .cui_text_cta_container.cui_catch_all_container .cta_container {
+	text-align: center;
+}
+/* .home .cui_text_cta_container.cui_catch_all_container .cta_container a.blue.button {
+	background: #fff;
+	border: 0;
+	color: var(--color_1);
+	width: 65%;
+	padding: 14px 20px;
+	white-space: normal;
+} */
+/* .cui_text_cta_container.cui_catch_all_container .cta_container a.blue.button {
+	background: var(--color_2);
+	border: 0;
+	color: #fff;
+} */
+.home .cui_catch_all_container .cta_container a.blue.hollow.white_border.button:hover {
+	background: var(--color_2);
+	border-color: var(--color_1);
+	color: var(--color_1);
+	box-shadow: var(--hover_box_shadow);
+}
+.home .cui_catch_all_container .cta_container a.blue.hollow.white_border.button {
+	background: transparent;
+	border: 2px solid #fff;
+	color: #FFF;
+	padding-bottom: 18px;
+}
+#home_contact_form #contact_form .checkbox_label{
+	color:white;
+}
+#home_contact_form #contact_form .form_element{
+	color:white;
+}
+
+/*
+----------------------------------------------------
+EXPLORE SUITES
+----------------------------------------------------
+*/
+.venues .page_title_container,
+.suites .page_title_container,
+.tickets .page_title_container {
+	position: relative;
+}
+
+.venues .suite_amenities_widget,
+.suites .suite_amenities_widget,
+.tickets .suite_amenities_widget {
+	background: none;
+	width: 100%;
+	margin-top: -132px;
+	min-height: 132px;
+	position: relative;
+	box-shadow: none;
+}
+.suite_amenities_heading p,
+.suite_amenities_element.selected .sa_text,
+.suite_amenities_widget .suite_amenities_detail .sa_detail_header {
+	font-family: var(--font_family_semibold), sans-serif;
+	color: var(--color_1);
+}
+.suite_amenities_widget .suite_amenities_detail .sa_detail_header {
+	font-size: 18px;
+	margin-bottom: 7px;
+}
+.suite_amenities_heading {
+	display: none;
+}
+.venues .suite_amenities_inner,
+.suites .suite_amenities_inner,
+.tickets .suite_amenities_inner {
+	margin-bottom: 10px;
+	padding-bottom: 20px;
+}
+.venues .suite_amenities_element,
+.suites .suite_amenities_element,
+.tickets .suite_amenities_element {
+	padding: 0 15px;
+	width: 25%;
+}
+.venues .suite_amenities_element,
+.suites .suite_amenities_element {
+	width: 20%;
+}
+.venues .suite_amenities_element:hover i,
+.venues .suite_amenities_element.selected i,
+.suites .suite_amenities_element:hover i,
+.suites .suite_amenities_element.selected i,
+.tickets .suite_amenities_element:hover i,
+.tickets .suite_amenities_element.selected i {
+	background: var(--color_2);
+	border-color: var(--color_2);
+}
+.venues .suite_amenities_element i,
+.suites .suite_amenities_element i,
+.tickets .suite_amenities_element i {
+	color: #fff;
+	border: 2px solid var(--color_1);
+	background: var(--color_1);
+}
+.venues .suite_amenities_element .sa_text,
+.suites .suite_amenities_element .sa_text,
+.tickets .suite_amenities_element .sa_text {
+	color: #fff;
+	/* font-family: var(--font_family_extra_bold); */
+	font-size: 14px;
+	line-height: 18px;
+	padding-top: 2px;
+}
+.venues .suite_amenities_detail,
+.suites .suite_amenities_detail,
+.tickets .suite_amenities_detail {
+	border-top: none;
+	border-bottom: 2px solid var(--color_1);
+	padding-top: 30px;
+	position: relative;
+	min-height: 90px;
+	background: var(--color_2);
+}
+.venues .suite_amenities_detail .sa_detail_content,
+.suites .suite_amenities_detail .sa_detail_content,
+.tickets .suite_amenities_detail .sa_detail_content {
+	color: #eee;
+}
+.suite_amenities_detail, .suite_amenities_detail .sa_elt {
+	color: var(--color_1);
+}
+.suite_amenities_detail .sa_elt {
+	position: absolute;
+}
+.venues .cui_2_across_section .suite_container,
+.suites .cui_2_across_section .suite_container,
+.tickets .cui_2_across_section .suite_container,
+.packages .cui_2_across_section .suite_container {
+	border-radius: var(--wc_border_radius);
+	border: 4px solid transparent;
+	position: relative;
+	margin-bottom: 20px;
+}
+.venues .cui_2_across_section .suite_container:hover,
+.suites .cui_2_across_section .suite_container:hover,
+.tickets .cui_2_across_section .suite_container:hover,
+.packages .cui_2_across_section .suite_container:hover {
+	box-shadow: none;
+	border: 4px solid transparent;
+	cursor: pointer !important;
+	background: var(--std_pink_gold_linear_gradient) border-box !important;
+}
+.venues .cui_2_across_section .suite_container:hover h3,
+.suites .cui_2_across_section .suite_container:hover h3,
+.tickets .cui_2_across_section .suite_container:hover h3,
+.packages .cui_2_across_section .suite_container:hover h3 {
+	color: #fff;
+}
+.venues .cui_2_across_section .suite_container h3,
+.suites .cui_2_across_section .suite_container h3,
+.tickets .cui_2_across_section .suite_container h3,
+.packages .cui_2_across_section .suite_container h3 {
+	font-size: var(--font_size_med_large);
+	font-family: var(--font_family_black), sans-serif;
+	color: #fff;
+	text-transform: uppercase;
+	margin-bottom: 10px;;
+}
+.venues .cui_2_across_section .suite_container .img_content,
+.suites .cui_2_across_section .suite_container .img_content,
+.tickets .cui_2_across_section .suite_container .img_content,
+.packages .cui_2_across_section .suite_container .img_content {
+	height: auto;
+	padding-top: 40%;
+	margin: 0;
+}
+.venues .cui_2_across_section .suite_container .suite_info_icon,
+.venues .cui_2_across_section .suite_container .suite_info_content,
+.suites .cui_2_across_section .suite_container .suite_info_icon,
+.suites .cui_2_across_section .suite_container .suite_info_content,
+.tickets .cui_2_across_section .suite_container .suite_info_icon,
+.tickets .cui_2_across_section .suite_container .suite_info_content,
+.packages .cui_2_across_section .suite_container .suite_info_icon,
+.packages .cui_2_across_section .suite_container .suite_info_content {
+	color: #fff;
+	margin-left: 0;
+}
+.suite_info_icon i {
+	top: -2px;
+	font-size: 15px;
+}
+.suite_info_subcontainer {
+	margin-bottom: 5px;
+	float: none !important;
+	width: 100%;
+}
+.venues .cui_2_across_section .suite_container .text_content,
+.suites .cui_2_across_section .suite_container .text_content,
+.tickets .cui_2_across_section .suite_container .text_content,
+.packages .cui_2_across_section .suite_container .text_content {
+	font-size: var(--font_size_min);
+	border-top: 0;
+	height: 110px;
+	padding: 20px;
+}
+.suites .cui_2_across_section .suite_container .text_content {
+	height: 408px;
+}
+.tickets .cui_2_across_section .suite_container .text_content {
+	height: 415px;
+}
+@media screen and (min-width: 768px) {
+	.tickets .cui_2_across_section .suite_container[data-suite-id="1028"] .text_content {
+		height: 475px;
+	}
+}
+.tickets .cui_2_across_section .suite_container.champion_ticket_package .text_content {
+	height: 320px;
+}
+.packages .cui_2_across_section .suite_container .text_content {
+	height: 305px;
+}
+.venues .cui_2_across_section .suite_container:hover .text_content,
+.suites .cui_2_across_section .suite_container:hover .text_content,
+.tickets .cui_2_across_section .suite_container:hover .text_content {
+	border-color: var(--color_1);
+	position: relative;
+}
+.venues .cui_2_across_section .suite_container .suite_container_cta a,
+.suites .cui_2_across_section .suite_container .suite_container_cta a,
+.tickets .cui_2_across_section .suite_container .suite_container_cta a {
+	position: absolute;
+	right: 20px;
+	bottom: 20px;
+	/* background: transparent; */
+	border: 0;
+	/* color: #fff; */
+	font-family: var(--font_family_semibold);
+	font-weight: 900;
+	border-radius: 30px;;
+}
+.venues .cui_2_across_section .suite_container .suite_container_cta a:hover,
+.suites .cui_2_across_section .suite_container .suite_container_cta a:hover,
+.tickets .cui_2_across_section .suite_container .suite_container_cta a:hover {
+	background: #fff;
+	color: #000;;
+	border-color: #fff;
+	box-shadow: none;
+}
+.venues .cui_2_across_section .suite_container.sold_out .img_content,
+.suites .cui_2_across_section .suite_container.sold_out .img_content,
+.tickets .cui_2_across_section .suite_container.sold_out .img_content,
+.packages .cui_2_across_section .suite_container.sold_out .img_content {
+	filter: contrast(10%);
+	-webkit-filter: contrast(0.1);
+}
+.venues .cui_2_across_section .suite_container.sold_out .text_content,
+.suites .cui_2_across_section .suite_container.sold_out .text_content,
+.tickets .cui_2_across_section .suite_container.sold_out .text_content,
+.packages .cui_2_across_section .suite_container.sold_out .text_content {
+	background: #ccc;
+}
+.venues .cui_2_across_section .suite_container.sold_out .text_content h3,
+.venues .cui_2_across_section .suite_container.sold_out .text_content div,
+.suites .cui_2_across_section .suite_container.sold_out .text_content h3,
+.suites .cui_2_across_section .suite_container.sold_out .text_content div,
+.tickets .cui_2_across_section .suite_container.sold_out .text_content h3,
+.tickets .cui_2_across_section .suite_container.sold_out .text_content div,
+.packages .cui_2_across_section .suite_container.sold_out .text_content h3,
+.packages .cui_2_across_section .suite_container.sold_out .text_content div {
+	color: #777 !important;
+}
+.venues .cui_2_across_section .suite_container.sold_out a,
+.venues .cui_2_across_section .suite_container.sold_out a:hover,
+.suites .cui_2_across_section .suite_container.sold_out a,
+.suites .cui_2_across_section .suite_container.sold_out a:hover,
+.tickets .cui_2_across_section .suite_container.sold_out a,
+.tickets .cui_2_across_section .suite_container.sold_out a:hover,
+.packages .cui_2_across_section .suite_container.sold_out a,
+.packages .cui_2_across_section .suite_container.sold_out a:hover {
+	border-color: #777;
+	color: #777;
+	background: #ccc;
+}
+.suite_container .sold_out_watermark {
+	position: absolute;
+	top: 20%;
+	display: inline-block;
+	font-family: var(--font_family_semibold);
+	color: #fff;
+	font-size: 70px;
+	z-index: 99;
+	width: 100%;
+	text-align: center;
+	text-shadow: 0 0 35px rgba(0,0,0,0.3);
+}
+@media screen and (max-width: 500px) {
+	.suite_container .sold_out_watermark {
+		font-size: 50px;
+	}
+}
+.suite_lightbox_header h1 {
+	font-family: var(--font_family_semibold);
+}
+.suite_lightbox_content h2 {
+	font-size: var(--font_size_med);
+}
+.suite_lightbox_content a.blue.button:hover {
+	border-color:  var(--color_1);
+}
+a.blue.button.secondary:hover {
+	border-color: #000;
+}
+
+/*
+----------------------------------------------------
+VENUES PAGES
+----------------------------------------------------
+*/
+.venues .suite_container .img_content {
+	position: relative;
+}
+.venues .atlanta-stadium .suite_container .img_content,
+.venues .boston-stadium .suite_container .img_content,
+.venues .houston-stadium .suite_container .img_content {
+	background-position-y: 30% !important;
+}
+.venues .miami-stadium .suite_container .img_content {
+	background-position: bottom !important;
+}
+.venues .san-francisco-bay-area-stadium .suite_container .img_content {
+	background-position-y: 70% !important;
+}
+.venues .cui_2_across_section .suite_container .img_content:after {
+	content: '';
+	background: var(--std_pink_gold_linear_gradient);
+	display: block;
+	position: relative;
+	height: 4px;
+}
+.venues .suite_container h2,
+.venues .page_title_container .page_title_heading {
+	font-family: var(--font_family_black);
+	font-size: 58px;
+	text-transform: uppercase;
+	position: absolute;
+	top: 50%;
+	width: 100%;
+	text-align: center;
+	color: #fff;
+	text-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+	margin: 0;
+	transform: translateY(-50%);
+	padding-left: 50px;
+	padding-right: 50px;
+	z-index: 10;
+}
+.venues .suite_container h2 {
+	max-width: 470px;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	width: 35vw;
+}
+.venues.es_MX .suite_container h2,
+.venues.fr_FR .suite_container h2 {
+	max-width: none;
+	width: 100%;
+	padding-inline: 20px;
+}
+.venues.es_MX .suite_container h2 span {
+	white-space: wrap !important;
+}
+.venues.es_MX .new-york-new-jersey-stadium .suite_container h2 span,
+.venues.fr_FR .new-york-new-jersey-stadium .suite_container h2 span {
+	white-space: nowrap !important;
+}
+.venues .suite_container h2 span,
+.venues .page_title_container .page_title_heading span {
+	font-family: var(--font_family_black);
+}
+
+.venues .new-york-new-jersey-stadium h2 {
+	width: 35vw;
+}
+@media screen and (max-width: 900px) {
+	.venues .new-york-new-jersey-stadium h2 {
+		width: 36vw;
+	}
+}
+@media screen and (max-width: 1000px) {
+	.venues .philadelphia-stadium h2 {
+		width: 38vw;
+	}
+}
+.venues .san-francisco-bay-area-stadium h2 {
+	width: 55vw;
+	max-width: 100%;
+	padding: 0 20px;
+}
+.venues .estadio-azteca-mexico-city h2,
+.venues .estadio-guadalajara h2 {
+	width: 42vw;
+}
+.venues .suite_container .overlay,
+.venues .page_title_container .overlay,
+.venues .page_title_container .blur_overlay {
+	width: 100%;
+	height: calc(100% - 4px);
+	background: rgba(0,0,0,0.4);
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 9;
+}
+.venues .page_title_container .blur_overlay {
+	display: block;
+	background: none;
+	backdrop-filter: blur(4px);
+}
+.venues .venue_detail .overlay,
+.venues .venue_detail .blur_overlay {
+	height: 100%;
+}
+.venues .tiled_event_page {
+	padding-bottom: 50px;
+}
+.venue_details_hero_container {
+	width: 800px;
+	margin: 0 auto;
+	padding: 50px;
+
+	h1 {
+		padding: 0;
+		margin: 0;
+		font-size: var(--font_size_large);
+		text-transform: uppercase;
+	}
+}
+.venue_details_hero_container .lead {
+	font-size: var(--font_size_med);
+	line-height: 1.4;
+	margin-top: 12px;
+}
+.venues a.blue.hollow {
+	background: #fff;
+}
+.venues .venue_detail.page_title_container {
+	height: 20vw;
+    min-height: 140px;
+	max-height: 200px;
+}
+.venues .venue_detail.page_title_container.atlanta-stadium {
+	background-position-y: 55% !important;
+}
+.venues .venue_detail.page_title_container.boston-stadium {
+	background-position-y: 31% !important;
+}
+.venues .venue_detail.page_title_container.houston-stadium {
+	background-position-y: 35% !important;
+}
+.venues .venue_detail.page_title_container.kansas-city-stadium {
+	background-position-y: 56% !important;
+}
+.venues .venue_detail.page_title_container.los-angeles-stadium {
+	background-position-y: 60% !important;
+}
+.venues .venue_detail.page_title_container.miami-stadium {
+	background-position-y: 76% !important;
+}
+.venues .venue_detail.page_title_container.philadelphia-stadium {
+	background-position-y: 70% !important;
+}
+.venues .venue_detail.page_title_container.san-francisco-bay-area-stadium {
+	background-position-y: 73% !important;
+}
+.venues .venue_detail.page_title_container.estadio-monterrey {
+	background-position-y: 48% !important;
+}
+@media screen and (min-width: 1400px) {
+	.venues .venue_detail.page_title_container.boston-stadium .blur_overlay,
+	.venues .venue_detail.page_title_container.philadelphia-stadium .blur_overlay,
+	.venues .venue_detail.page_title_container.san-francisco-bay-area-stadium .blur_overlay {
+		display: block;
+	}
+	.venues .venue_detail.page_title_container.miami-stadium {
+		background-position-y: 100% !important;
+	}
+	.venues .venue_detail.page_title_container.san-francisco-bay-area-stadium {
+		background-position-y: 60% !important;
+	}
+}
+@media screen and (max-width: 1200px) {
+	.venues .venue_detail.page_title_container.atlanta-stadium {
+		background-position-y: 60% !important;
+	}
+	.venues .venue_detail.page_title_container.los-angeles-stadium {
+		background-position-y: 65% !important;
+	}
+	.venues .venue_detail.page_title_container.new-york-new-jersey-stadium {
+		background-position-y: 39% !important;
+	}
+
+}
+@media screen and (max-width: 768px) {
+	.venues .venue_detail.page_title_container.atlanta-stadium {
+		background-position-y: 35% !important;
+	}
+	.venues .venue_detail.page_title_container.san-francisco-bay-area-stadium {
+		background-position-y: 86% !important;
+	}
+}
+@media screen and (max-width: 500px) {
+	.venues .venue_detail.page_title_container.atlanta-stadium {
+		background-position-y: 31% !important;
+	}
+	.venues .venue_detail.page_title_container.houston-stadium {
+		background-position-y: 30% !important;
+	}
+	.venues .venue_detail.page_title_container.los-angeles-stadium {
+		background-position-y: 48% !important;
+		background-position-x: 0% !important;
+		background-size: 140% !important;
+	}
+	.venues .venue_detail.page_title_container.miami-stadium {
+		background-position-y: 90% !important;
+	}
+	.venues .venue_detail.page_title_container.new-york-new-jersey-stadium {
+		background-position-y: 60% !important;
+	}
+	.venues .venue_detail.page_title_container.san-francisco-bay-area-stadium {
+		background-position-y: 66% !important;
+		background-size: 130% !important;
+		background-position-x: 0% !important;
+	}
+}
+
+.venue_photos_container h2 {
+	margin: 60px 0 30px;
+	text-align: center;
+}
+.venue_photos_container .cui_image_grid {
+	margin-bottom: 60px;
+}
+.venue_photos_container .galleria_container {
+	margin: 0 auto 60px;
+}
+
+.venues .event_tile_container,
+.venues .venue_details_content {
+	margin: 60px auto 0;
+	width: 960px;
+}
+.venues .venue_details_content {
+	margin-bottom: 60px;
+}
+.venues .event_tile_container {
+	margin-top: 0;
+}
+
+.venues .centered_banner {
+	width: 90%;
+	max-width: 800px;
+	margin: 2rem auto 0;
+	background: var(--gray-400);
+	padding: .25rem 2rem;
+	border-radius: var(--default_border_radius);
+
+	p {
+		font-size: var(--font_size_med);
+	}
+}
+
+
+/*
+----------------------------------------------------
+RENT A SUITE
+----------------------------------------------------
+*/
+
+.tiled_event_page {
+	background: var(--gray-300);
+}
+.tiled_event_page .page_title_container .col-940 {
+	height: auto;
+	position: absolute;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	left: 50%;
+}
+.tiled_event_page .page_title_container h1 {
+	position: static;
+	transform: none;
+}
+.tiled_event_page .page_title_container h2 {
+	color: #fff;
+	text-align: center;
+	margin: 0;
+	font-size: var(--font_size_plus);
+	line-height: var(--font_size_plus);
+	margin-top: 10px;
+}
+.filter_container,
+.num_events_container,
+#sort_filter {
+	display: none;
+}
+.tiled_event_page .toc_container {
+	top: 360px;
+}
+
+h2.post-subheading, #catch_all h2 {
+	font-family: var(--font_family_semibold), sans-serif;
+}
+
+.event_inventory_indicator .price_range {
+	display: none;
+}
+#stadium_calendar_container .see_all {
+	padding-top: 15px;
+	margin-top: inherit;
+	display: none;
+}
+
+.suite_prices_and_details_container {
+	padding-top: 40px;
+	padding-bottom: 20px;
+}
+.suite_price_learn_more a {
+	padding: 9px 12px 7px;
+	border-radius: var(--default_border_radius);
+	transition: all 0.2s ease;
+}
+.suite_price_learn_more a.blue.hollow:hover {
+	box-shadow: none;
+}
+
+.suite_ownership_container {
+	padding: 40px 0 80px;
+}
+
+#stadium_calendar_container .see_all .event_count {
+	margin-left: 0;
+	padding-top: 0;
+}
+.stadium_guide_content {
+	text-align: center;
+	height: auto;
+}
+.seatingchart_block {
+	margin-top: 0;
+}
+.seatingchart_block:hover {
+	box-shadow: var(--hover_box_shadow);
+}
+
+.inventory_indicator_cta_text {
+	font-family: var(--font_family_regular);
+	color: #666;
+	line-height: 16px;
+	font-size: 14px;
+	padding-top: 7px;
+}
+
+.suite_prices_and_details_container h2.post-subheading,
+.suite_ownership_container h2.post-subheading,
+.stadium_guide_container h2.post-subheading {
+	font-family: var(--font_family_semibold), sans-serif;
+	text-transform: uppercase;
+}
+/* TOC */
+.tiled_event_page .toc_element {
+	border-radius: var(--default_border_radius);
+	border: var(--default_border);
+	box-shadow: none;
+	text-transform: uppercase;
+}
+.tiled_event_page .toc_element.highlight,
+.tiled_event_page .toc_element:hover {
+	background: var(--color_1);
+	border: var(--default_border_hover);
+	color: #fff;
+}
+
+/* event filter */
+.checkout_steps_container {
+	width: 100% !important;
+	max-width: 960px;
+}
+.checkout_steps_container,
+.wc_event_filter_container {
+	width: 960px;
+	margin: 0 auto;
+	padding-top: 30px;
+	padding-bottom: 0;
+}
+.wc_event_filter_container {
+	padding-top: 0;
+}
+.checkout-steps {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    margin-bottom: 25px;
+}
+.checkout-steps strong {
+    font-size: 32px;
+    font-family: var(--font_family_black);
+    font-weight: 900;
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: #1E4C40;
+}
+.checkout-steps > span {
+    display: flex;
+    font-family: var(--font_family_bold);
+    font-size: 20px;
+    font-weight: 700;
+    align-items: center;
+    gap: 8px;
+    color: #1E4C40;
+}
+.checkout-steps strong::after {
+    content: "";
+    height: 38px;
+    width: 1.5px;
+    display: inline-block;
+    background: #EA394B; 
+    margin-left: 10px;
+    margin-right: 5px;
+}
+.filters-form {
+    width: 1029px;
+    max-width: 100%;
+    display: flex;
+    gap: 15px;
+}
+.filters-form select {
+    /* try to remove default browser styles */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    padding: 12px 40px 12px 16px;
+    min-width: 180px;
+    border: 1px solid #1E4C40;
+    border-radius: 0 8px 8px 12px;
+    background-color: #FFF;
+    color: var(--color_1);
+    font-family: var(--font_family_condensed_light);
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='30' fill='none'%3E%3Cpath stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m7.25 11.042 7.25 7.25 7.25-7.25'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 11px center;
+    background-size: 30px;
+}
+.filters-form select option {
+    font-family: var(--font_family_regular);
+    font-weight: normal; 
+}
+
+
+
+.tiled_event_page .event_tile_container {
+	width: 980px;
+	margin: 0 auto;
+	padding-bottom: 50px;;
+}
+.tiled_event_page .event_date_separator {
+	font-size: var(--font_size_plus);
+	font-family: var(--font_family_semibold);
+}
+.tiled_event_page .no_events_for_month {
+	padding-left: 10px;
+	padding-right: 10px;;
+}
+.tiled_event_page .event_tile_container div {
+	position: static !important;
+}
+.event_tile_element {
+	border-radius: var(--wc_border_radius);
+	overflow: hidden;
+	outline: 1px solid;
+	border: 4px solid transparent !important;
+	outline-offset: -4px;
+	
+	.event_tile_head {
+		background: #222;
+		color: #fff;
+		height: 50px;
+		font-family: var(--font_family_semibold);
+		text-transform: uppercase;
+		line-height: 50px;
+		border-bottom: 4px solid transparent;
+
+		span {
+			font-family: var(--font_family_semibold);
+		}
+	}
+	.event_tile_head:after {
+		content: '';
+		background: var(--std_pink_gold_linear_gradient);
+		display: block;
+		position: relative;
+		height: 4px;
+	}
+	.event_tile_head.group_stage {
+		background: #222;
+	}
+
+	.event_tile_head.round_of_32 {
+		background: var(--color_purple_dark);
+	}
+	.event_tile_head.round_of_16 {
+		background: var(--color_purple_light);
+	}
+	.event_tile_head.quarter-final {
+		background: var(--color_green_extra_dark);
+	}
+	.event_tile_head.semi-final {
+		background: var(--color_green_light);
+	}
+	.event_tile_head.bronze_final {
+		background: var(--color_red_extra_dark);
+	}
+	.event_tile_head.final {
+		background: var(--color_red_dark);
+	}
+	.event_tile_body {
+		height: 100%;
+		padding: 0;
+		margin: -4px 0 0;
+		background: #fff;
+	}
+	.event_tile_date {
+		font-size: var(--font_size_med);
+		
+		.event_tile_date_day {
+			padding-top: 10px;
+			display: block;
+		}
+		.event_tile_date_time {
+			padding-top: 5px;
+			display: block;
+		}
+	}
+	.event_tile_image_container {
+		padding-top: 20px;
+		height: 80px !important;
+	}
+	.event_tile_image_container img.home_team_logo,
+	.event_tile_image_container img.away_team_logo,
+	.event_tile_image_container img.logo_placeholder {
+		padding: 0;
+		aspect-ratio: 250 / 167;
+		height: auto;
+		margin-left: 10px;
+		margin-right: 10px;
+		vertical-align: top;
+		border: 2px solid transparent;
+		border-radius: 0 15px;
+		background: var(--std_pink_gold_linear_gradient) border-box;
+	}
+	.event_tile_name {
+		margin: 10px 20px 0;
+		font-family: var(--font_family_black);
+		font-size: var(--font_size_plus);
+		text-transform: uppercase;
+		line-height: var(--font_size_plus);
+		display: block;
+	}
+	.event_tile_location {
+		margin-top: 15px;
+		margin-bottom: 15px;;
+		font-size: var(--font_size_med);
+		display: block;
+	}
+	.event_tile_inventory .event_inventory_status {
+		font-size: var(--font_size_med);
+
+		.price_range {
+			margin-top: 5px;
+			display: block;;
+		}
+		span.badge {
+			margin-right: 6px;
+		}
+	}
+
+}
+.event_tile_element:hover {
+	border: 4px solid transparent !important;
+	background: var(--std_pink_gold_linear_gradient) border-box !important;
+	outline: 0;
+}
+
+
+/* Waitlist */
+.sold_out_headline {
+    margin-top: 0;
+    padding-bottom: 30px;
+}
+.sold_out_heading {
+    font-family: var(--font_family_regular);
+    font-weight: 700;
+}
+.tiled_event_page .no_event_tile_container .waitlist_form_container {
+	border: var(--default_border);
+	background: var(--color_background);
+	box-shadow: var(--default_box_shadow);
+}
+.no_event_tile_container .waitlist_form_container h3 {
+	margin: 5px 0 15px;
+	font-size: 25px;
+	text-align: center;
+}
+#edp_container.no-listings .listing_catch_all_container {
+	border-radius: var(--wc_border_radius);;
+}
+.sold_out_heading {
+	font-family: var(--font_family_semibold);
+}
+#edp_container.no-listings form div {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+#edp_container.no-listings .browse_other_events {
+	text-decoration: none;
+}
+
+/* pricing widget */
+.suite_prices_and_details_container h3.bold_heading {
+	font-family: var(--font_family_semibold), sans-serif;
+	color: #000;
+}
+/* event planning guide */
+h3.bold_heading.stadium_guide_heading {
+	font-size: 18px;
+}
+section#stadium_guide .col-1_3 {
+	height: 260px;
+}
+
+@media screen and (max-width: 768px) {
+    .sold_out_headline {
+        margin-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+}
+
+/*
+----------------------------------------------------
+EDP / LDP
+----------------------------------------------------
+*/
+.event-detail #non-header,
+.listing-detail #non-header {
+	background: var(--gray-300);
+}
+html.waitlist_mode {
+	background: var(--color_5) !important;
+}
+.waitlist_mode body {
+	background: none !important;
+}
+span.icon-power {
+	top: -1px;
+}
+#edp_header {
+	margin-top: 0px;
+	top: var(--header_height);
+	border-bottom: none;
+	background: url('../../../includes/custom-ui/world_cup/images-git-lfs/wc-common-bg-red-dark-cropped.svg') no-repeat center center;
+	background-size: cover;
+	background-position: center;
+	min-width: 0;
+}
+#edp_header .edp_header_content {
+	text-align: left;
+	color: #fff;
+}
+#edp_header .edp_header_content.event_label {
+	font-family: var(--font_family_semibold);
+	text-transform: uppercase;
+	letter-spacing: 0.8px;
+}
+#edp_header .event_date,
+#edp_header .event_name {
+	font-family: var(--font_family_semibold), sans-serif;
+	color: #fff !important;
+	font-size: 16px;
+	text-align: left;
+	vertical-align: baseline;;
+}
+#edp_header .event_date {
+	font-family: var(--font_family_regular);
+	width: 100%;
+}
+.listing-detail #edp_header {
+	/* position: static; */
+
+}
+#edp_container {
+	margin-top: 0;
+	min-width: 0;
+	width: 100%;
+}
+#edp_container.listing_details {
+	margin-top: var(--header_height);
+}
+.custom_edp_widget_1 {
+	margin-top: 85px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 960px;
+}
+.ldp_hero_container .hero_image.hero_image_right_50 {
+	padding-left: 0;
+}
+.listing-detail .custom_edp_widget_1 {
+	display: none;
+}
+.listing_details .listing_list_row_details .details_top_container {
+	margin-bottom: 0;
+}
+.listing-detail .ldp_red_banner {
+	background: var(--color_red_extra_dark);
+	margin-bottom: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.listing-detail .ldp_red_banner .white_container_gray_border {
+	background: none;
+	border: none;
+	padding-left: 0;
+	padding-right: 0;
+}
+.listing-detail .ldp_red_banner .white_container_gray_border h1,
+.listing-detail .ldp_red_banner .white_container_gray_border h2 {
+	color: #fff;
+}
+.custom_edp_widget_1 h1,
+.custom_edp_widget_1 h1 span,
+.listing-detail .ldp_red_banner .white_container_gray_border h1 {
+	font-size: var(--font_size_subtitle);
+	text-transform: uppercase;
+}
+.custom_edp_widget_1 h2,
+.custom_edp_widget_1 h2 span,
+.listing-detail .ldp_red_banner .white_container_gray_border h2,
+.listing-detail .ldp_red_banner .white_container_gray_border h2 span {
+	font-size: var(--font_size_med_large);
+	font-family: var(--font_family_bold);
+	text-transform: uppercase;
+	line-height: var(--font_size_med_large);
+	margin-bottom: 10px;
+}
+
+@media screen and (min-width : 1200px) {
+	#edp_container,
+	#edp_header .cui_small_container,
+	.custom_edp_widget_1 {
+		width: 1100px;
+	}
+}
+@media screen and (min-width : 1300px) {
+	#edp_container,
+	#edp_header .cui_small_container,
+	.custom_edp_widget_1 {
+		width: 1200px;
+	}
+}
+@media screen and (min-width : 1400px) {
+	#edp_container,
+	#edp_header .cui_small_container,
+	.custom_edp_widget_1 {
+		width: 1300px;
+	}
+}
+#edp_container .content_left .event_inventory_status {
+	font-size: var(--font_size_min);
+}
+#edp_container .spl_suite_type {
+	font-family: var(--font_family_semibold), sans-serif;
+}
+#edp_container .content_right {
+	overflow: visible;
+}
+#edp_container .content_right .map_container {
+	border: var(--default_border);
+	border-radius: 30px;
+	overflow: hidden;
+}
+#edp_container .content_right .map_container.pinned {
+	z-index: 1081;
+	top: 90px;
+}
+@media screen and (max-width : 1200px) {
+	#edp_container .content_right .map_container.pinned {
+		position: static !important;
+	}
+}
+#edp_container #no-location-msg {
+	background: rgb(207 230 243 / 80%);
+	display: none !important;
+}
+.event_date .event-month,
+h3.bold_heading,
+.date_tbd .event_date {
+	color: var(--color_1);
+	font-family: var(--font_family_semibold), sans-serif;
+}
+#edp_header .event_logo {
+	border-width: 0;
+	margin: 0 5px 0 0;
+}
+#edp_container .content_left .listing_list_container .listing_list_row {
+	height: 195px;
+}
+.ll_suite_type, .ll_price,
+.listing_list_row_details .listing_faq_question,
+.listing_list_row_details .listing_faq_question span,
+#edp_container.listing_details .ll_suite_type,
+#edp_container.listing_details .ll_price {
+	font-family: var(--font_family_semibold), sans-serif;
+}
+
+#edp_container .ll_suite_type, #edp_container .ll_price {
+	font-size: var(--font_size_med);
+	font-family: var(--font_family_bold);
+	font-weight: 700;
+	text-transform: uppercase;
+}
+#edp_container .ll_suite_type {
+	width: calc(100% - 90px);
+}
+#edp_container .listing_list_row .ll_suite_info {
+	font-size: 14px;
+	padding-right: 0;
+}
+.ldp_hero_container .show_all_photos {
+	padding: 7px 10px 3px;
+	font-family: var(--font_family_semibold), sans-serif;
+}
+.ldp_hero_container .show_all_photos:hover {
+	border-color: var(--color_2);
+	background: var(--color_2);
+	color: #fff;
+}
+.listing_details .listing_list_row_details {
+	font-size: var(--font_size_min);
+}
+#edp_container.listing_details .ll_suite_type,
+#edp_container.listing_details .ll_price {
+	font-size: var(--font_size_med_large);
+	font-family: var(--font_family_black);
+	font-weight: 700;
+	text-transform: uppercase;
+	color: #000;
+	letter-spacing: 0.8px;
+}
+#edp_container .listing_list_row_details .ll_instant span.icon-power {
+	font-size: 20px;
+	top: 0;
+}
+.listing_list_row_details .instant_book_btn span.icon-power {
+	font-size: 18px !important;
+}
+#edp_container .listing_list_row_details .cta_btn_container a.blue {
+	color: #fff;
+	font-family: var(--font_family_regular);
+	font-size: 20px;
+	padding: 12px;
+	border-color: transparent;
+}
+#edp_container .listing_list_row_details .cta_btn_container a.blue:hover,
+#seat_selection_lightbox .lightbox_close_container a.blue.button:hover,
+#edp_container .listing_list_row_details .cta_btn_container a.blue:focus,
+#seat_selection_lightbox .lightbox_close_container a.blue.button:focus {
+	background: transparent;
+	border-color: var(--color_2);
+	box-shadow: var(--hover_box_shadow);
+	color: var(--color_2);
+}
+#edp_container .listing_list_row_details .secondary_container h2,
+.listing_list_row_details .subheading {
+	font-family: var(--font_family_semibold), sans-serif;
+	font-size: var(--font_size_med);
+	color: var(--color_1);
+	letter-spacing: 0 !important;
+	text-transform: uppercase;
+	line-height: var(--font_size_plus);
+}
+#edp_container .no-listings-content {
+	min-height: 300px;
+}
+.no-listings .listing_ca_text {
+	font-family: var(--font_family_semibold), sans-serif;
+}
+#edp_header .cui_small_container {
+	position: relative;
+}
+#edp_header .back_btn {
+	color: #fff;
+	position: absolute;
+	left: -100px;
+}
+@media screen and (max-width: 1450px) {
+	#edp_header .back_btn {
+		left: -50px;
+	}	
+	#edp_header .back_btn span {
+		display: none;
+	}
+}
+.ll_suite_type, .ll_price {
+	font-size: 18px;
+	color: #000;
+}
+
+#edp_container .listing_list_row {
+	border: var(--default_border);
+	border-radius: var(--wc_border_radius);
+	transition: none;
+	outline: 1px solid;
+	border: 4px solid transparent !important;
+	outline-offset: -4px;
+	background: transparent;
+	display: flex;
+}
+#edp_container .listing_list_row:hover,
+#edp_container .listing_list_row.hover {
+	/* border: 1px solid var(--color_1);
+	box-shadow: 0 0 0 1px var(--color_1); */
+	background: var(--std_pink_gold_linear_gradient) border-box !important;
+    outline: 0;
+	box-shadow: none;
+}
+#edp_container .listing_list_row:active,
+#edp_container .listing_list_row.active {
+	background: var(--color_1);
+}
+
+#edp_container .listing_list_row .ll_thumbnail {
+	width: 294px;
+}
+#edp_container .listing_list_row .ll_container {
+	background: #fff;
+	width: 66%;
+}
+#edp_container .suite_pin_container.xsmall .suite_pin_label {
+	bottom: 20px;
+}
+.listing_list_row .ll_suite_type,
+.listing_list_row .ll_price {
+	font-family: var(--font_family_semibold), sans-serif;
+    color: #000;
+}
+.listing_list_row .ll_price {
+	line-height: 21px;
+}
+.listing_list_row .ll_price .ll_instant {
+	width: 24px;
+}
+.listing_list_row .ll_price .ll_instant .instant_book_icon {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.listing_details .white_container_gray_border {
+	border-radius: var(--wc_border_radius);
+}
+.listing_details .cta_container {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+.listing_details .text_container {
+	width: calc(100% - 25px);
+	white-space: normal;
+}
+#edp_container .listing_list_row_details .secondary_container {
+	padding-top: 40px;
+	border-top: 1px solid #ccc;
+}
+#edp_container .listing_list_row_details .cta_container .blue-2 {
+	font-family: var(--font_family_semibold), sans-serif;
+}
+#edp_container .listing_list_row:hover .suite_info_content,
+#edp_container .listing_list_row.hover .suite_info_content {
+	color: #333;
+}
+#edp_container.listing_details .included_available_item {
+	font-size: var(--font_size_min);
+}
+#edp_container.listing_details .included_available_item .icon_container {
+	float: left;
+	margin-top: 2px;
+}
+.listing_tips_text {
+	font-size: var(--font_size_min);
+}
+
+.listing_list_row_details .listing_faq_question,
+.listing_list_row_details .listing_faq_answer p {
+	font-size: var(--font_size_min);
+}
+#edp_container.listing_details a.blue-2.catering_menu_button {
+	padding-top: 6px;
+	padding-bottom: 3px;
+}
+.listing_list_row:hover .ll_suite_type, .listing_list_row:hover .ll_price {
+    color: #000;
+}
+.listing_list_row_details .ll_price .no_hidden_fees {
+	display: none;
+}
+
+/*
+----------------------------------------------------
+SUITE MAP
+----------------------------------------------------
+*/
+#edp_container .suite_pin,
+.purchase-agreement .suite_pin,
+.new_checkout .suite_pin {
+	background: var(--color_1);
+	border-color: var(--color_2);
+}
+#edp_container .suite_pin_halo,
+.purchase-agreement .suite_pin_halo,
+.new_checkout .suite_pin_halo {
+	background: none;
+}
+#edp_container .suite_pin_container,
+.purchase-agreement .suite_pin_container,
+.new_checkout .suite_pin_container {
+	background: none;
+}
+
+
+/*
+----------------------------------------------------
+FAQ
+----------------------------------------------------
+*/
+/* .faq h1 {
+	font-size: var(--font_size_post_title);
+} */
+/* .faq_item {
+	border: var(--default_border);
+} */
+/* .faq_item:hover {
+	border: var(--default_border_hover);
+	box-shadow: var(--hover_box_shadow);
+} */
+/* .faq i {
+	color: var(--color_4);
+} */
+/* .faq_question,
+.faq_answer {
+	transition: background 0.1s, color 0.2s;
+	border-radius: 7px;
+} */
+/* .faq_question span,
+.faq_question.open span {
+	color: #000;
+} */
+/* .faq_question i {
+	color: var(--color_1);
+} */
+/* .faq_answer p {
+	color: #000;
+} */
+.faq .faq_question i {
+	top: 3px;
+}
+
+/*
+----------------------------------------------------
+CHECKOUT PAGES / PURCHASE AGREEMENT
+----------------------------------------------------
+*/
+.order #non-header {
+	background-color: var(--gray-300);
+}
+
+.nco_header h1 {
+	color: var(--color_4);
+	font-family: var(--font_family_heavy), sans-serif;
+	font-size: var(--font_size_subtitle);
+}
+.new_checkout h2.post-subheading {
+	font-family: var(--font_family_semibold), sans-serif;
+	color: var(--color_1);
+}
+.checkout_success .nco_header h1 {
+	color: #fff;
+}
+
+.purchase-agreement #print_co_btn,
+.invoice #print_co_btn,
+.invoice #pdf_co_btn {
+	color: var(--color_1);
+	border-color: var(--color_1);
+	background-color: #fff;
+}
+
+.nco_subheading {
+	font-size: 14px;
+}
+.new_checkout .form-row.country_radio label {
+	background: #fff;
+	border: 1px solid var(--color_purple_extra_dark);
+}
+.new_checkout .form-row.country_radio label:hover {
+	background: var(--color_purple_extra_dark);
+	color: #fff
+}
+.new_checkout .form-row.country_radio label.selected {
+	background: var(--color_purple_extra_dark);
+	border: 1px solid var(--color_purple_extra_dark);
+	color: #fff;
+}
+
+.order_summary_text,
+.listing_summary_icons_item_text {
+	font-size: var(--font_size_min);
+}
+
+.new_checkout .map_container,
+.new_checkout .nco_secondary_block {
+	border: var(--default_border);
+}
+.new_checkout .map_container {
+	overflow: hidden;
+}
+.new_checkout .map_container .suite_pin_container.xsmall .suite_pin_label {
+	width: 120px;
+	bottom: 20px;
+}
+.purchase-agreement .seg_standard_container,
+.invoice .seg_standard_container {
+	border: var(--default_border);
+}
+.nco_secondary_block .content {
+	font-size: var(--font_size_min);
+}
+
+#accept_terms_bw_btn, #accept_terms_check_btn {
+	line-height: 28px;
+}
+.blue.button.email_co_btn span[class^="icon-"] {
+	top: -2px !important;
+}
+.new_checkout .blue.button.submit_payment:hover,
+#accept_terms_bw_btn:hover,
+#accept_terms_check_btn:hover,
+.blue.button.email_co_btn:hover,
+.blue.button.print_co_btn:hover,
+.lightbox2_instructions #submit_btn:hover {
+	background: #fff;
+	color: var(--color_2);
+	border-color: var(--color_2);
+}
+
+.nco_header {
+    background: var(--color_red_extra_dark);
+}
+.nco_header h1 {
+	color: #fff;
+}
+
+.preferences_toggle_button {
+	color: #eee;
+}
+.nco_header_content {
+	background: rgba(255,255,255,0.2);
+	color: #000;
+}
+.new_checkout .blue.button,
+.new_checkout .blue.button.submit_payment,
+#accept_terms_bw_btn,
+#accept_terms_check_btn,
+.blue.button.email_co_btn,
+.blue.button.print_co_btn,
+.lightbox2_instructions #submit_btn {
+	border: 2px solid transparent;
+	color: #fff;
+	background: var(--color_2);
+}
+.new_checkout .blue.button,
+.new_checkout .blue.button.submit_payment {
+    color: var(--color_4);
+    padding-block: 0;
+}
+.nco_header_content .deposit_event_tile p {
+	font-size: 14px;
+}
+.nco_header_content .deposit_event_tile.selected {
+	border-color: var(--color_1);
+}
+
+.new_checkout .nco_form_container .validation_msg,
+.new_checkout .pay_with_bw_container .validation_msg,
+.new_checkout .pay_with_check_container .validation_msg {
+	top: 39px;
+}
+.new_checkout .icon-circle {
+	color: var(--color_1);
+}
+.new_checkout .order_summary_container .event_name,
+.new_checkout .order_summary_container .listing_price_heading,
+.new_checkout .order_summary_container .listing_price_content,
+.purchase-agreement .order_summary_container .event_name,
+.purchase-agreement .order_summary_container .listing_price_heading,
+.purchase-agreement .order_summary_container .listing_price_content {
+	font-family: var(--font_family_semibold);
+}
+.new_checkout .order_summary_container .os_ticket_selection_container .listing_price_heading,
+.new_checkout .order_summary_container .os_ticket_selection_container .listing_price_content {
+	font-family: var(--font_family_regular);
+	font-size: 18px;
+	line-height: 18px;
+}
+.new_checkout p {
+	font-size: var(--font_size_min);
+}
+.new_checkout a {
+	color: var(--color_2);
+}
+.new_checkout a:hover {
+	color: var(--color_purple_dark);
+}
+#purchase_agreement_link {
+	display: none;
+}
+.nco_secondary_block.contact_us_container {
+    display: none;
+}
+.order_summary_container .total_order_price_value {
+	font-family: var(--font_family_semibold);
+}
+label[for="accept_terms_signature"] {
+	display: none;
+}
+.checkout-success-banner {
+	a:hover {
+		cursor: pointer;
+	}
+	.desktop-only {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+	.tablet-only,
+	.mobile-only {
+		display: none;
+	}
+}
+@media screen and (max-width: 768px) {
+	.checkout-success-banner {
+		.desktop-only,
+		.mobile-only {
+			display: none !important;
+		}
+		.tablet-only {
+			display: block !important;
+			width: 100%;
+			height: 100%;
+		}
+	}
+}
+@media screen and (max-width: 500px) {
+	.checkout-success-banner {
+		.desktop-only,
+		.tablet-only {
+			display: none !important;
+		}
+		.mobile-only {
+			display: block !important;
+			width: 100%;
+			height: 100%;
+		}
+	}
+}
+
+/*
+----------------------------------------------------
+CONTACT
+----------------------------------------------------
+*/
+#contact_form .form_element {
+	font-size: var(--font_size_min);
+}
+#contact_form .validation_msg {
+	top: 38px;
+}
+
+.page-template-seg_standardpage #content-full .page .seg_standard_container {
+	border: var(--default_border);
+}
+.contact #make_a_request_page .os_container .os_label {
+	font-family: var(--font_family_semibold), sans-serif;
+	#color: 222;
+}
+.contact_instructions p {
+	color: #222;
+}
+#contact_form #success_message {
+	font-family: var(--font_family_regular), sans-serif;
+}
+#contact_form #contact_form_submit {
+	background: var(--color_1);
+	color: #fff;
+	border: 0;
+	text-align: center;
+	padding: 14px 24px;
+	margin-top: 30px;;
+}
+#contact_form #contact_form_submit:hover {
+	background: var(--color_2);
+	color: #fff;
+	box-shadow: var(--hover_box_shadow);
+}
+#make_a_request_page h2 {
+	margin-top: 24px;
+}
+.home #make_a_request_page .white_container_gray_border {
+	border-radius: 30px;;
+}
+@media (max-width: 768px) {
+	#make_a_request_page h2 {
+		margin-top: 10px;
+	}
+}
+
+
+/*
+----------------------------------------------------
+GALLERIA WIDGET / CUSTOM WIDGET 1 / PHOTO CAROUSEL
+----------------------------------------------------
+*/
+#galleria_stage_container .galleria-theme-classic .galleria-info-title {
+	margin-bottom: 0 !important;
+}
+.galleria-theme-classic .galleria-info-description {
+	display: block !important;
+}
+.galleria-theme-classic .galleria-stage {
+	background-color: var(--gray-400);
+}
+.galleria-errors {
+	display: none;
+}
+
+/*
+----------------------------------------------------
+COMING SOON PLACEHOLDER PAGE STYLES
+----------------------------------------------------
+*/
+.home .coming_soon_container .cui_big_container.cui_hero_container {
+	min-height: 940px;
+}
+.coming_soon_container .cui_hero_container .cui_hero_sub_container {
+	top: 50%;
+	transform: translateY(-50%);
+}
+.coming_soon_container .hero_logo_container {
+	height: 150px;
+}
+.coming_soon_container .hero_logo_container img {
+	width: 350px;
+}
+body.home .coming_soon_container .cui_hero_container h2 {
+	color: #fff;
+	font-family: var(--font_family_semibold),sans-serif;
+	text-shadow: 0 0 10px rgb(0 0 0 / 50%);
+	/* font-size: 50px;
+	line-height: 57px; */
+	margin: 0 auto;
+	text-align: center;
+	width: 80%;
+	max-width: 880px;
+	text-transform: uppercase;
+}
+body.home .coming_soon_container .cui_hero_container p {
+	width: 80%;
+	font-size: 20px;
+	line-height: 30px;
+}
+
+body.home .coming_soon_container .cui_hero_container .promo_container h2 {
+	font-family: var(--font_family_semibold),sans-serif;
+	font-size: 28px;
+	line-height: 32px;
+	color: var(--color_1);
+}
+body.home .coming_soon_container .cui_hero_container .promo_container p {
+	width: 90%;
+	max-width: 800px;
+	margin: 10px auto;
+	font-size: 22px;
+	line-height: 28px;
+}
+
+
+#transition_container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: var(--color_1);
+	z-index: 9999;
+	background-color: var(--color_1);
+}
+.hide_transition {
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s 1s, opacity 1s linear;
+}
+
+/*
+========================================================================================================
+MOBILE / RESPONSIVE
+========================================================================================================
+*/
+
+/* Responsive */
+/* @media screen and (min-width : 769px) and (max-width: 1499px) {
+	.cui_hero_container .cui_hero_sub_container .cta_container a.blue.button {
+		font-size: 32px;
+	}
+} */
+
+@media screen and (min-width : 769px) and (max-width: 1499px) and (max-height : 750px) {
+	body.home .cui_hero_container h2 {
+		font-size: 54px;
+		line-height: 60px;
+	}
+	.cui_hero_container .cui_hero_sub_container .text_container .title-logo{
+		height: 150px;
+		width: 100%;
+		background-size: 150px 150px;
+		margin-bottom: 5px;
+	}
+
+}
+
+@media screen and (max-height : 900px) {
+
+	.home .cui_hero_container .vertical_line_container .vertical_line_text {
+		bottom: 80px;
+	}
+	.home .cui_hero_container .vertical_line_container .vertical_line {
+		height: 70px;
+	}
+	.home .arrow {
+		height: 50px;
+	}
+}
+@media screen and (max-width : 1100px) {
+	.cui_header_container li, #cui_sticky_header li {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+@media screen and (min-width : 1500px) {
+	.home .cui_big_container.cui_hero_container {
+		/* background-position-y: 50%;  */
+	}
+}
+@media screen and (min-width : 1680px) {
+	.home .cui_hero_container .cui_image img {
+		border-right-width: 4px;;
+	}
+}
+
+@media screen and (min-width: 1800px) {
+    .event_tile_container,
+	.wc_event_filter_container,
+	.checkout_steps_container {
+        width: var(--container_width) !important;
+    }
+	.venue_details_content {
+		width: var(--container_width) !important;
+	}
+}
+
+@media screen and (min-width: 2100px) {
+	.tiled_event_page .event_tile_container,
+	.venue_details_content,
+	.wc_event_filter_container,
+	.checkout_steps_container {
+        width: 1500px !important;
+    }
+    .event_tile_container .event_tile_element_container {
+        width: 20% !important;
+    }
+}
+
+@media screen and (max-width: 1440px) {
+	.cui_image_grid.cui_small_container {
+		width: 100%;
+		max-width: 1440px;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+	.cui_image_grid img.cui_lower_image_1 {
+		border-left: 0;
+	}
+	.cui_image_grid img.cui_lower_image_3 {
+		border-right: 0;
+	}
+}
+@media screen and (max-width: 1240px) {
+	.tiled_event_page .toc_element {
+		font-size: 14px;
+		padding: 10px 18px;
+	}
+	.venues .suite_container h2 {
+		line-height: 3.8vw;
+		font-size: 4.05vw;
+	}
+	.venues .guadalajara-stadium .suite_container h2 {
+		font-size: 3.65vw
+	}
+	.venues .cui_2_across_section .suite_container .suite_container_cta a {
+		border-radius: 20px;
+		padding: 8px 20px;
+	}
+}
+@media screen and (max-width: 1024px) {
+	.tiled_event_page {
+		overflow: hidden;
+	}
+	.tiled_event_page .event_tile_container {
+		width: 100%;
+	}
+	.venues .event_tile_container, .venues .venue_details_content {
+		width: 100%;
+	}
+	.venues .venue_details_content {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	.venue_details_hero_container {
+		width: 600px;
+	}
+	.checkout_steps_container,
+	.wc_event_filter_container {
+		width: 100%;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+}
+@media screen and (min-width: 769px) and (max-width: 1100px) {
+	#edp_header .back_btn {
+		left: -30px;
+	}
+}
+@media screen and (min-width : 769px) and (max-width : 1010px) {
+	.cui_header_container li a {
+		font-size: 16px;
+	}
+	.slick-next {
+		right: 0px;
+	}
+	.slick-prev {
+		left: 0px;
+	}
+}
+@media screen and (max-width: 1200px) {
+	.cui_hero_container .cui_hero_sub_container {
+		position: static;
+		padding-left: 0;
+		padding-right: 0;
+		flex-direction: column;
+		width: 100%;
+	}
+	.backend_only.cui_hero_container .cui_hero_sub_container {
+		flex: 0;
+	}
+	.backend_only.cui_hero_container .cui_hero_sub_container h1 {
+		margin-top: 40px;
+	}
+	.cui_hero_container .cui_hero_sub_container .cui_small_container {
+		padding-top: 20px;
+		flex: 1;
+		width: 100%;
+		padding-right: 70px;
+	}
+	.cui_hero_container .cui_hero_sub_container .cui_image {
+		order: -1;
+	}
+	.cui_hero_container .cui_hero_sub_container .cui_image img {
+		border-top: 0 none;
+        border-bottom-left-radius: 100px;
+		width: 100%;
+		height: 40vw;
+		object-position: center 20%;
+	}
+	.home .cui_big_container.cui_hero_container {
+		height: auto;
+	}
+	.home .cui_hero_container .cui_image {
+		flex: 1 1 100%;
+	}
+}
+@media screen and (max-width: 1200px) {
+	.backend_only.cui_hero_container .cui_hero_sub_container h1 {
+		font-size: 62px;
+	}
+	#edp_container {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	.listing-detail #edp_container {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	#edp_container .content_right {
+		width: calc(100% - var(--right_col_width));
+	}
+	#edp_container .content_right .map_container {
+		width: 100%;
+	}
+}
+@media screen and (max-width: 1000px) {
+	#edp_container .content_left, #edp_container .content_right {
+        width: 100% !important;
+        margin-top: 0 !important;
+        margin-right: 0 !important;
+    }
+	#edp_container .content_right .map_container.pinned {
+		position: static !important;
+	}
+	#edp_container .listing_list_container {
+		margin: 20px auto;
+		width: 100%;
+	}
+	.listing_details .white_container_gray_border {
+		width: 100%;
+	}
+	.listing_details .listing_list_row_details {
+		padding-left: 20px;
+		padding-right: 20px;
+		box-sizing: border-box;
+		margin-top: 20px !important;
+	}
+	.listing-detail .ldp_red_banner {
+		border-radius: 0 0 20px 20px;
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.listing-detail .ldp_red_banner .white_container_gray_border {
+		padding-left: 30px;
+		padding-right: 30px;
+	}
+}
+@media screen and (max-width: 1000px) and (min-width: 769px) {
+	.custom_edp_widget_1,
+	#edp_container {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	#edp_container .listing_list_row .ll_container {
+		width: calc(100% - 294px);
+	}
+}
+@media screen and (max-width: 768px) {
+	#cui_header.cui_header_container span.page_title,
+	#cui_sticky_header.cui_header_container span.page_title {
+		font-size: 30px;
+	}
+	.cui_header_container nav {
+		margin-top: 0;
+		top: 0;
+		margin-left: 0;
+	}
+	#cui_sticky_header.cui_header_container nav {
+		margin-left: 0;
+		padding-right: 45px;
+	}
+	.cui_header_container nav a.games {
+		margin-right: 0;
+	}
+	.cui_header_container .site_logo,
+	.cui_header_container a.logo_container {
+		display: inline-block;
+	}
+
+	#cui_header .logo_container,
+	#cui_sticky_header .logo_container {
+		background:
+				url('../../../includes/custom-ui/world_cup/images-git-lfs/wc-fifa-26-cup-official-hospitality-icon.svg') no-repeat left center,
+				url('../../../includes/custom-ui/world_cup/images-git-lfs/wc-on-location-stacked.svg') no-repeat right center;
+		background-size:
+				contain,
+				40px auto;
+		/* display: inline-block;
+        position: relative; */
+		height: 67px;
+		flex: 0 0 98px;
+	}
+	#cui_header .right_section .language_selector,
+	#cui_sticky_header .right_section .language_selector {
+		display: none;
+	}
+	.language_dropdown .language_heading {
+		margin-right: 0;
+	}
+	#cui_header .mobile_links,
+	#cui_sticky_header .mobile_links {
+		display: block;
+		padding-block: 30px 15px;
+		border-top: var(--default_border);
+	}
+	#cui_header .visa_logo,
+	#cui_sticky_header .visa_logo {
+		margin-right: 60px;
+	}
+	#cui_header .mobile_menu_btn,
+	#cui_sticky_header .mobile_menu_btn {
+		color: #000;
+	}
+	.contact_info_container {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	.contact_info_container .contact_info_content p {
+		display: block;
+		font-size: 14px;
+		margin: 0;
+		text-align: center;
+	}
+	/* .cui_header_container li:hover .nav_circle,
+	.page-template-seg_stadiumpage_shell nav a.games .nav_circle,
+	.page-template-seg_tiled_event_page nav a.games .nav_circle,
+	.suites nav a.suites .nav_circle,
+	.ownership nav a.ownership .nav_circle,
+	.faq nav a.faq .nav_circle,
+	.contact nav a.contact .nav_circle {
+		background: var(--color_2);
+	} */
+
+	.cui_header_container span.page_title,
+	#cui_sticky_header span.page_title {
+		margin-top: 18px;
+	}
+	.cui_header_container li a,
+	#cui_sticky_header li a {
+		font-size: 18px;
+		padding: 13px 5px 14px 20px !important;
+	}
+	.home #cui_header.cui_header_container .site_logo {
+		height: 80px;
+		width: 90px;
+		background-size: 90px;
+	}
+	.home .cui_big_container.cui_hero_container {
+		/* min-width: 100%; */
+		/* margin-top: -65px; */
+		height: auto;
+		min-height: 0;
+	}
+	body.home .promo_container .col-1_4 {
+		width: 25%;
+	}
+	.cui_hero_container .cui_hero_sub_container {
+		position: static;
+		padding-left: 0;
+		padding-right: 0;
+		flex-direction: column;
+		width: 100%;
+	}
+	.cui_hero_container .cui_hero_sub_container .cui_small_container {
+		padding-top: 20px;
+		flex: 1;
+		width: 100%;
+		padding-right: 70px;
+	}
+	body.home #non-header h1.gradient-text {
+		margin-bottom: 5px;
+	}
+	.cui_hero_container .cui_hero_sub_container .cui_image {
+		order: -1;
+		/*margin-bottom: 25px;*/
+	}
+	.cui_hero_container .cui_hero_sub_container .cui_image img {
+		border-top: 0 none;
+		border-bottom-left-radius: 100px;
+		height: 60vw;
+		width: 100%;
+	}
+	.coming_soon_container .cui_hero_container .cui_hero_sub_container {
+		top: 0;
+		transform: translateY(0);
+	}
+	.cui_hero_container .cui_hero_sub_container #hp_elevated_experience.cui_small_container {
+		width: 100%;
+	}
+	#hp_elevated_experience .col-1_2.first {
+		margin-bottom: 50px;
+		margin-top: 20px
+	}
+	#hp_elevated_experience h3 {
+		top: 70px;
+		width: 80%;
+	}
+	body.home .cui_hero_container .cui_hero_sub_container h2 {
+		/*font-size: 57px;*/
+		/*line-height: 75px;*/
+		text-align: left;
+		width: 100%;
+	}
+	body.home .cui_hero_container .cui_hero_sub_container .text_container {
+		padding-left: 0;
+		padding-right: 0;
+		padding-top: 30px;
+		padding-bottom: 15px;
+	}
+	body.home .cui_hero_container p {
+		width: 90%;
+	}
+	body.home .cui_hero_container .cui_hero_sub_container .cta_container a.blue.button {
+		font-size: var(--font_size_min);
+	}
+
+	#galleria_stage_container .galleria-theme-classic .galleria-info {
+		width: calc(100% - 30px);
+	}
+	.suites .cui_2_across_section .suite_container .suite_info_content {
+		width: calc(100% - 24px);
+	}
+	/* Deposit container */
+	.home .cui_big_container.cui_deposit_container {
+		min-width: 100%;
+		height: auto;
+	}
+	.home .cui_big_container.cui_deposit_container h2 {
+		font-size: var(--font_size_large);
+	}
+	.home .deposit_container .deposit_content ul {
+		min-height: 0;
+		margin-bottom: 20px;
+	}
+	.cui_text_cta_container .text_container,
+	.cui_text_cta_container .cta_container {
+		text-align: center;
+	}
+
+	.cui_hero_container .col-1_3 {
+		width: 100%;
+		padding-top: 10px;
+		padding-bottom: 30px;
+	}
+	.home #non-header .cui_big_container.cui_text_cta_container.cui_catch_all_container {
+		height: auto;
+	}
+	.home #non-header .cui_big_container.cui_text_cta_container.cui_catch_all_container .cui_small_container {
+		position: static;
+		left: 0;
+		transform: none;
+	}
+	.home #non-header .cui_big_container.cui_text_cta_container.cui_catch_all_container h2 {
+		font-size: 32px;
+		line-height: 38px;
+	}
+	.cui_text_cta_container .cta_container a.blue.button {
+		font-size: 20px;
+	}
+	.cui_header_container .mobile_menu_btn,
+	#cui_sticky_header .mobile_menu_btn {
+		top: 19px;
+		z-index: 9999;
+		display: block;
+	}
+	.cui_header_container nav,
+	#cui_sticky_header.cui_header_container nav {
+		display: none;
+		text-align: right;
+		top: 82px;
+		padding-right: 25px;
+		box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+	}
+	.cui_header_container nav {
+		position: absolute;
+		box-sizing: border-box;
+	}
+	.cui_header_container nav ul {
+		margin-top: 20px;
+	}
+	.home #hp_ideal_matchup .carousel_container {
+		padding: 10px;
+	}
+	.slick-prev, .slick-next {
+		display: none !important;
+	}
+	.page_title_container {
+		height: 150px;
+	}
+	.page_title_container h1 {
+		font-size: 40px;
+		line-height: 40px;
+		position: relative;
+	}
+	.suites .page_title_container h1,
+	.tickets .page_title_container h1 {
+		top: 54%;
+		line-height: 40px;
+	}
+	.ownership .page_title_container h1,
+	.faq .page_title_container h1 {
+		line-height: 46px;
+	}
+	.tiled_event_page .page_title_container h2 {
+		font-size: var(--font_size_med);
+		padding: 0 20px;
+		margin-top: 5px;
+	}
+	.cui_hero_container .cui_hero_container {
+		height: 500px;
+	}
+	.cui_big_container.cui_text_cta_container {
+		height: 390px;
+	}
+	.tiled_event_page .event_tile_container {
+		width: 100%;
+		margin: 0;
+		padding: 0 10px;
+	}
+	
+	.venues .tiled_event_page .event_tile_container {
+		width: calc(100% + 20px);
+		margin: 0 0 0 -10px;
+		padding: 0;
+	}
+	.event_tile_container .event_tile_element_container {
+		width: 50% !important
+	}
+	.event_tile_element .event_tile_date {
+		font-size: var(--font_size_med) !important;
+	}
+	.event_tile_element .event_tile_name {
+		font-size: var(--font_size_plus) !important;
+		line-height: var(--font_size_plus) !important;
+	}
+	li.event:hover .event_inner_top {
+		padding: 20px;
+	}
+	#stadium_calendar_container li.event:hover .event_inner_top,
+	li.event .event_inner_top {
+		padding: 35px 20px 35px 10px;
+	}
+	#stadium_calendar_container li.event:hover .event_inner_top {
+		border-left: 7px solid var(--color_1);
+	}
+	li.event .event_inner_top .event_logo {
+		padding: 0;
+		margin: 0;
+	}
+
+	.event:not(.sold_out) .event-title {
+		color: var(--color_1) !important;
+		font-size: 18px;
+		line-height: 20px;
+		margin-bottom: 6px;
+	}
+	#stadium_calendar_container li.event:not(.sold_out):active .event-title {
+		color: #fff !important;
+	}
+	li.event .event_inventory_indicator .inv_status_container {
+		color: var(--color_2);
+		font-size: 18px;
+	}
+
+	#edp_header {
+		top: var(--header_height);
+		padding-left: 50px;
+	}
+	#edp_header .gold_line {
+		margin-left: -50px;
+	}
+	#edp_header .back_btn {
+		left: -40px;
+	}
+	#edp_container {
+		margin-top: 0;
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.custom_edp_widget_1 {
+		width: 100%;
+	}
+	.custom_edp_widget_1 h1,
+	.custom_edp_widget_1 h2 {
+		padding-left: 20px;
+	}
+	#edp_container .content_left .listing_list_container .listing_list_row {
+		height: 165px;
+	}
+	#edp_container .content_right .map_container.pinned {
+		position: relative !important;
+		top: 0;
+	}
+	#edp_container .content_right {
+		margin-top: 0;
+	}
+	#edp_container.listing_details .included_available_item {
+		position: relative;
+	}
+	.ll_suite_type, .ll_price {
+		font-size: 16px;
+	}
+	#edp_container.listing_details .ll_suite_type,
+	#edp_container.listing_details .ll_price {
+		font-size: 22px;
+	}
+	#edp_container .ldp_hero_container {
+		border-radius: 20px 20px 0 0;
+	}
+	.suites .suite_amenities_widget,
+	.tickets .suite_amenities_widget {
+		margin-top: -132px;
+	}
+	.suites .suite_amenities_inner,
+	.tickets .suite_amenities_inner {
+		padding-bottom: 10px;
+	}
+	.suites .suite_amenities_element,
+	.tickets .suite_amenities_element {
+		padding: 0;
+	}
+	.suites .suite_amenities_element .sa_text,
+	.tickets .suite_amenities_element .sa_text {
+		font-size: 12px;
+		line-height: 14px;
+	}
+	.suites .suite_amenities_detail,
+	.tickets .suite_amenities_detail {
+		height: 90px;
+	}
+	.suites .cui_big_container p,
+	.tickets .cui_big_container p,
+	.packages .cui_big_container p {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	.suites .cui_suite_map_container .white_container_gray_border,
+	.tickets .cui_suite_map_container .white_container_gray_border {
+		border: 0;
+	}
+	.suites .cui_2_across_section .suite_container .text_content,
+	.tickets .cui_2_across_section .suite_container .text_content,
+	.tickets .cui_2_across_section .suite_container.champion_ticket_package .text_content,
+	.packages .cui_2_across_section .suite_container .text_content {
+		height: auto;
+	}
+	.venues .cui_big_container .col-1_2,
+	.venues .cui_big_container .col-1_2.first, 
+	.venues .cui_big_container .col-1_2.last {
+		width: 50%;
+		padding: 0 10px;
+	}
+	.venues .cui_2_across_section .suite_container .text_content {
+		height: 140px;
+		padding: 15px;
+	}
+	.venues .cui_2_across_section .suite_container .suite_container_cta a {
+		bottom: 10px;
+		right: 10px;
+	}
+	.venues.es_MX .cui_2_across_section .suite_container .suite_container_cta a,
+	.venues.fr_FR .cui_2_across_section .suite_container .suite_container_cta a {
+		padding: 4px 10px;
+	}
+	.venues .suite_container h2 {
+		font-size: 5vw;
+		line-height: 5vw;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	.venues .new-york-new-jersey-stadium .suite_container h2 {
+		width: 34vw;
+	}
+	.venues.es_MX .suite_container h2,
+	.venues.fr_FR .suite_container h2 {
+		font-size: 4vw;
+		line-height: 4vw;
+	}
+	.venues.es_MX .los-angeles-stadium .suite_container h2 span,
+	.venues.fr_FR .los-angeles-stadium .suite_container h2 span {
+		white-space: normal !important;
+	}
+	.venues.es_MX .new-york-new-jersey-stadium .suite_container h2,
+	.venues.fr_FR .new-york-new-jersey-stadium .suite_container h2 {
+		width: 100%;
+	}
+	.venue_details_hero_container {
+		width: 100%;
+		padding: 20px;
+
+		h1 {
+			float: none;
+		}
+	}
+	
+	.venues .page_title_container .page_title_heading {
+		font-size: 9vw;
+		line-height: 8vw;
+	}
+
+	/* Coming soon */
+	body.home .coming_soon_container .cui_hero_container p {
+		width: 90%;
+		font-size: 18px;
+		line-height: 26px;
+	}
+
+	h2.post-subheading,
+	h2.post-subheading.suite-subheading  {
+		font-family: var(--font_family_bold);
+		font-weight: 400;
+	}
+	.faq h2 {
+		padding: 0;
+	}
+}
+
+@media screen and (min-width: 501px) and (max-width: 768px) {
+	#lightbox5 {
+		width: 90%;
+		transform: translateX(-50%);
+		margin-left: 0;
+	}
+	body.home .cui_hero_container h2 .title-logo {
+		height: 160px;
+		background-size: 150px 150px;
+	}
+	#edp_container.listing_details .listing_list_row_details .details_top_container {
+		padding-top: 0 !important;
+	}
+	.contact_info_container .contact_info_content p {
+		font-size: 14px;
+	}
+
+}
+
+@media screen and (max-width: 600px) {
+	.cui_hero_container .cui_hero_container {
+		height: 400px;
+	}
+	.cui_hero_container .cui_hero_sub_container h2 {
+		font-size: 40px;
+	}
+	.custom_edp_widget_1 h1 span,
+	.custom_edp_widget_1 h2,
+	.custom_edp_widget_1 h2 span,
+	.listing-detail .ldp_red_banner .white_container_gray_border h1 span,
+	.listing-detail .ldp_red_banner .white_container_gray_border h2 span {
+		font-size: clamp(14px, 4.25vw, 32px);
+	}
+	.custom_edp_widget_1 h1 span:first-child,
+	.listing-detail .ldp_red_banner .white_container_gray_border h1 span:first-child {
+		font-size: 26px;
+		margin-bottom: 10px;
+	}
+}
+/* Smaller mobile devices only */
+@media screen and (max-width : 500px) {
+
+	h1 sup {
+		font-size: 10px;
+		top: -5px;
+	}
+	/* Header */
+	/*.cui_header_container nav {*/
+	/*	top: 0;*/
+	/*}*/
+	/*.cui_header_container a.logo_container {*/
+	/*	left: 50%;*/
+	/*}*/
+	/*.cui_header_container, #cui_sticky_header {*/
+	/*	height: 54px;*/
+	/*}*/
+	#cui_header.cui_header_container span.page_title,
+	#cui_sticky_header.cui_header_container span.page_title {
+		line-height: 36px;
+		margin-top: 10px;
+		font-size: 25px;
+	}
+	#cui_header.cui_header_container .site_logo,
+	#cui_sticky_header .site_logo {
+		padding-top: 0;
+		padding-bottom: 0;
+		background-size: 70px;
+		width: 70px;
+		height: 54px;
+		background-position-y: -8px;
+	}
+	.home #cui_header.cui_header_container .site_logo {
+		height: 80px;
+		width: 80px;
+		background-size: 80px;
+	}
+	/*.cui_header_container .mobile_menu_btn {*/
+	/*	top: 9px;*/
+	/*	font-size: 30px;*/
+	/*}*/
+	/*#cui_sticky_header .mobile_menu_btn {*/
+	/*	top: 10px;*/
+	/*	font-size: 30px;*/
+	/*}*/
+	.page_title_container {
+		height: 150px;
+	}
+	.tiled_event_page .page_title_container h1 {
+		float: none;
+	}
+	.contact_info_container .contact_info_content {
+		margin-top: 10px;
+	}
+	/* .home #non-header h2 {
+		font-size: var(--font_size_large_mobile);
+		line-height: 36px;
+		padding-left: 20px;
+		padding-right: 20px;
+		box-sizing: border-box;
+	} */
+
+	.home #non-header .cui_catch_all_container h2 {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+
+	.cui_big_container.cui_text_cta_container .cui_small_container {
+		width: 90%;
+	}
+	.cui_big_container.cui_text_cta_container {
+		height: 360px;
+	}
+	.home .arrow {
+		height: 80px;
+	}
+	.home .deposit_container .deposit_content .cta_container a.blue.button {
+		font-size: 18px;
+	}
+	body.home .promo_container .col-1_4 {
+		width: 50%;
+	}
+	body.home .cui_hero_container h1:not([class]),
+	body.home .cui_hero_container h1:not([class]) span {
+		font-size: 28px;
+		line-height: 1;
+	}
+	body.home .coming_soon_container h1 {
+		margin-bottom: 20px;
+	}
+	#hp_ideal_matchup.cui_4_across_section .col-940 {
+		margin-bottom: 30px;
+	}
+
+	#hp_ideal_matchup.cui_4_across_section .col-940 a.blue.button.hollow {
+		margin-top: 30px;
+	}
+	.home .cui_big_container.cui_hero_container {
+		/* margin-top: -54px; */
+	}
+	.cui_hero_container img {
+		margin-top: 0;
+	}
+	.galleria-info {
+		display: block !important;
+	}
+
+	#hp_elevated_experience .img_content {
+		width: 100%;
+	}
+	#hp_elevated_experience a.blue.button {
+		font-size: 20px;
+		padding: 15px;
+	}
+	.contact_info_container .contact_info_content p {
+		font-size: 11px;
+		line-height: 16px;
+		margin: 0;
+	}
+
+	body.home .cui_hero_container .cui_hero_sub_container .text_container {
+		padding-left: 10px;
+		padding-right: 10px;
+		padding-top: 30px;
+	}
+	body.home #non-header .cui_hero_container .cui_hero_sub_container h2 {
+		font-size: 20px;
+		line-height: 32px;
+		padding-left: 0;
+		padding-right: 0;
+		/*margin-bottom: 15px;*/
+	}
+	.hero_logo_container {
+		height: 100px;
+	}
+	.hero_logo_container img {
+		width: 240px;
+	}
+
+	.home .cui_hero_container .vertical_line_container .vertical_line_text {
+		bottom: 100px;
+	}
+	.home .cui_hero_container .vertical_line_container .vertical_line {
+		height: 95px;
+	}
+	.home .arrow {
+		height: 50px;
+	}
+	.home .deposit_container .deposit_content .deposit_summary {
+		width: 100%;
+	}
+
+	#hp_venue_spotlight .cui_small_container {
+		flex-direction: column;
+	}
+	.home #hp_venue_spotlight h2 {
+		margin-bottom: 10px;;
+	}
+	.home #hp_venue_spotlight h2 + div {
+		text-align: left;;
+	}
+
+	/* deposit lightbox */
+	#blackout, #blackout_filter {
+		overflow: hidden;
+	}
+	#lightbox.deposit_lightbox {
+		width: 100% !important;
+		height: 100% !important;
+		top: 0 !important;
+		left: 0 !important;
+		margin: 0 !important;
+		border-radius: 0;
+		box-sizing: border-box;
+	}
+	#lightbox.deposit_lightbox .lightbox_middle {
+		height: auto !important;
+	}
+	.home .deposit_lightbox a.blue.button,
+	.home .deposit_lightbox .lightbox_close_container a.blue.button {
+		font-size: 15px;
+	}
+
+	/* body.home .cui_hero_container .cui_hero_sub_container .cta_container a.blue.button {
+		font-size: 22px;
+		width: 100%;
+		line-height: 30px;
+	} */
+	/* .home .cui_text_cta_container.cui_catch_all_container .cta_container a.blue.button {
+		width: 100%;
+		font-size: 18px;
+	} */
+	#hp_ideal_matchup a.blue.hollow {
+		top: 410px;
+	}
+	.page_title_container h1 {
+		line-height: 40px;
+		position: relative;
+	}
+	.cui_header_container .inner_header {
+		padding: 0 20px;
+	}
+
+	.cui_header_container span.page_title,
+	#cui_sticky_header span.page_title {
+		margin-top: 9px;
+		margin-left: 12px;
+		font-size: 22px;
+	}
+
+	#stadium_calendar_container li.event .event_inner_top {
+		padding-bottom: 35px !important;
+	}
+
+	#edp_header {
+		top: 82px;
+	}
+	#edp_container .listing_list_row .ll_thumbnail {
+		width: 100%;
+		height: auto;
+	}
+
+	#hp_hero_video_container {
+		margin-top: -54px;
+	}
+
+	body.home .cui_hero_container h2 .title-logo {
+		background-size: 130px 130px;
+		height: 180px;
+		margin-bottom: 0;
+	}
+
+
+	.cui_hero_container .cui_hero_sub_container .text_container {
+		padding: 20px;
+	}
+	.cui_hero_container .cui_hero_sub_container h2 {
+		font-size: 36px;
+		line-height: 36px;
+	}
+	.cui_hero_container .col-1_3 {
+		padding: 10px 20px 30px;
+		width: 100%;
+	}
+	.cui_text_cta_container .cta_container a {
+		font-size: 20px;
+	}
+
+	#mobile_sort_filter_btn {
+		display: none !important;
+	}
+	.home .not_interested_container {
+		min-width: 0;
+		width: calc(100% - 40px);
+	}
+
+	.event_tile_element .inv_status_container {
+		font-size: inherit !important;
+	}
+
+	/* Explore suites page */
+	.suites .page_title_container,
+	.tickets .page_title_container {
+		height: 200px;
+	}
+	.suites .page_title_container .col-940,
+	.tickets .page_title_container .col-940 {
+		height: 65%;
+	}
+	.suites .suite_amenities_widget,
+	.tickets .suite_amenities_widget {
+		min-height: 75px;
+		margin-top: -79px;
+	}
+	.suites .suite_amenities_inner,
+	.tickets .suite_amenities_inner {
+		margin-bottom: 5px;
+	}
+	.suites .suite_amenities_detail,
+	.tickets .suite_amenities_detail {
+		height: 130px;
+		padding-top: 20px;
+	}
+	.suites .suite_amenities_element,
+	.tickets .suite_amenities_element {
+		padding: 0;
+	}
+
+	.suites .cui_2_across_section .suite_container .suite_info_content {
+		width: auto;
+	}
+	.venues .cui_big_container .col-1_2,
+	.venues .cui_big_container .col-1_2.first, 
+	.venues .cui_big_container .col-1_2.last {
+		width: 100%;
+		padding: 0 10px;
+	}
+	.venues .cui_2_across_section .suite_container .text_content {
+		height: 100px;
+	}
+	.venues .suite_container h2,
+	.venues .page_title_container .page_title_heading {
+		font-size: 8.5vw;
+		line-height: 9vw;
+	}
+	.venues .suite_container h2 {
+		width: 65vw;
+		line-height: 8vw;
+	}
+	.venues.es_MX .suite_container h2,
+	.venues.fr_FR .suite_container h2 {
+		font-size: 7vw;
+		line-height: 8vw;
+	}
+	.venues .new-york-new-jersey-stadium .suite_container h2 {
+		width: 53vw;
+	}
+
+	/* Event page */
+	.tiled_event_page .booking_steps li {
+		width: 100%;
+	}
+	.event_tile_container .event_tile_element_container {
+		width: 100% !important;
+	}
+	.tiled_event_page .event_tile_container {
+		width: calc(100% + 20px);
+		margin: 0 0 0 -10px;
+		padding: 0 20px;
+	}
+
+	/* EDP */
+	.custom_edp_widget_1 {
+		margin-top: 102px;
+		padding-top: 30px !important;
+		padding-left: 20px;
+		padding-right: 20px;;
+	}
+	.custom_edp_widget_1 .sd_container {
+		padding-top: 20px !important;
+	}
+	.custom_edp_widget_1 h1,
+	.custom_edp_widget_1 h2 {
+		float: none;
+		padding: 0;
+	}
+	.custom_edp_widget_1 h1 {
+		margin-top: 0;
+	}
+
+	/* Ownership */
+	.ownership .ownership_heading {
+		font-size: 22px;
+	}
+	.ownership .suite_amenities_inner {
+		padding: 20px;
+	}
+	.ownership .suite_amenities_inner .suite_amenities_element {
+		padding: 20px;
+		margin-left: 0;
+	}
+	.ownership .suite_amenities_element .sa_icon {
+		width: 100%;
+	}
+	.ownership .suite_amenities_element .sa_text {
+		width: 100%;
+		text-align: center;
+		margin-bottom: 20px;
+	}
+	.ownership .suite_amenities_element .sa_text h3 {
+		line-height: 30px;
+	}
+
+	.ownership .cui_big_container.ownership_content_container .col-1_2.first{
+		padding-bottom: 0;
+	}
+	.ownership .cui_big_container.ownership_content_container .col-1_2.last {
+		padding-top: 0;
+	}
+
+	.ownership .page_title_container h1,
+	.faq .page_title_container h1 {
+		font-size: 38px;
+	}
+
+	/* Checkout */
+	.nco_form_container .validation_msg,
+	.pay_with_bw_container .validation_msg,
+	.pay_with_check_container .validation_msg {
+		top: 32px;
+	}
+
+
+	/* Coming soon */
+	.coming_soon_container .hero_logo_container {
+		height: 120px;
+	}
+	.coming_soon_container .cui_hero_container img {
+		margin-top: 0;
+		width: 260px;
+	}
+
+	body.home .coming_soon_container .cui_hero_container p {
+		font-size: 16px;
+		line-height: 20px;
+	}
+
+	/* Contact */
+	#contact_form .phone_wrapper {
+		flex-wrap: wrap;
+	}
+	#contact_form select#country_code_input,
+	#contact_form #phone_input {
+		width: 100% !important;
+		box-sizing: border-box;
+	}
+}
+
+@media screen and (max-width : 375px) {
+	.cui_hero_container .cui_hero_container {
+		height: 370px;
+	}
+
+}
+
+@media screen and (max-width : 280px) {
+	.home .cui_catch_all_container {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.home .cui_catch_all_container p a {
+		font-size: 18px;
+	}
+
+	.cui_header_container .inner_header {
+		padding-right: 10px;
+	}
+
+	.contact_info_container .contact_info_content {
+		padding-right: 0;
+	}
+
+}
+
+@media only screen and (min-width: 280px) and (max-width : 414px) {
+	.a5-widget-container .a5-widget-card.a5-widget {
+		width: 90%;
+		right: 5%;
+	}
+}
+
+/* Edge browser */
+@supports (-ms-ime-align: auto) {
+	.cui_header_container span.page_title,
+	#cui_sticky_header span.page_title {
+		line-height: 34px;
+	}
+}

@@ -28,7 +28,7 @@ export async function generateTicketPDF(data: {
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(24);
   doc.setFont('helvetica', 'bold');
-  doc.text('VIBE PASS AFRICA', 105, 25, { align: 'center' });
+  doc.text('VIBE PASS', 105, 25, { align: 'center' });
 
   // Event Section
   doc.setTextColor(0, 0, 0);

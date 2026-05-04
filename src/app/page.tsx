@@ -15,38 +15,14 @@ export default async function Home() {
   if (events.length === 0) {
     events = [
       {
-        id: 'mock-showman',
-        name: 'NYASHINSKI SHOWMAN - THE RESIDENCY',
-        date: '2026-03-15',
-        location: 'Sarit Expo Centre',
-        imageUrl: 'https://madfun.s3.af-south-1.amazonaws.com/Nyashinski+Showman_720.jpeg',
-        price: 3500,
-        organizer: 'Vibe Pass Africa',
-        description: 'The ultimate residency experience.',
-        longDescription: '',
-        isActive: true
-      },
-      {
-        id: 'mock-vurugu',
-        name: 'VURUGU BOXING - KASARANI',
-        date: '2026-04-04',
-        location: 'Kasarani Stadium Indoor Arena',
-        imageUrl: 'https://madfun.s3.af-south-1.amazonaws.com/Vurugu_720.jpeg',
-        price: 1500,
-        organizer: 'Vibe Pass Africa',
-        description: 'Witness fierce warriors clash.',
-        longDescription: '',
-        isActive: true
-      },
-      {
-        id: 'mock-bongo',
-        name: 'OLD SCHOOL BONGO 6.0 - CAVALLI',
-        date: '2026-04-05',
-        location: 'Cavalli At The Manor',
-        imageUrl: '/images/events/bongo.png',
-        price: 2000,
-        organizer: 'MADFUN',
-        description: 'With a touch of Kenyan flavor.',
+        id: 'mock-worldcup',
+        name: 'FIFA World Cup 2026™',
+        date: '2026-06-11',
+        location: 'Canada, Mexico, USA',
+        imageUrl: 'https://digitalhub.fifa.com/transform/2d17c91d-eb88-46c5-8ee3-cd250004ad42/FIFA-World-Cup-2026-Emblem?io=transform:fill,height:868,width:1536&quality=100',
+        price: 250,
+        organizer: 'FIFA',
+        description: 'The biggest single-sport event in the world.',
         longDescription: '',
         isActive: true
       }
@@ -64,7 +40,7 @@ export default async function Home() {
           <div className="flex flex-col md:flex-row justify-between items-end mb-12">
             <div>
               <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Trending Now</h2>
-              <p className="text-gray-400 text-lg">The most anticipated events across the continent.</p>
+              <p className="text-gray-400 text-lg">The most anticipated events across the globe.</p>
             </div>
             <Link href="/events" className="text-electric-purple font-semibold hover:text-purple-400 mt-4 md:mt-0 transition-colors">
               View All Events &rarr;
@@ -86,7 +62,7 @@ export default async function Home() {
       
       {/* Footer */}
       <footer className="py-8 border-t border-white/10 text-center text-gray-500 text-sm">
-        <p>&copy; {new Date().getFullYear()} Vibe Pass Africa. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Vibe Pass. All rights reserved.</p>
       </footer>
       
       {/* Global CSS animation rules built into this file for ease, normally in globals.css */}

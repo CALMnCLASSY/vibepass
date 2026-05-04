@@ -15,12 +15,12 @@ export default function Hero() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-pink opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-neon-pink"></span>
           </span>
-          Live in Nairobi & Beyond
+          Live Worldwide
         </div>
         
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-gray-400">
           Your All-Access Pass<br />
-          to Africa’s <span className="text-transparent bg-clip-text bg-gradient-to-r from-electric-purple to-neon-pink">Biggest Vibes.</span>
+          to the World’s <span className="text-transparent bg-clip-text bg-gradient-to-r from-electric-purple to-neon-pink">Biggest Vibes.</span>
         </h1>
         
         <p className="mt-6 text-xl text-gray-400 max-w-2xl mx-auto mb-10">

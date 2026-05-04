@@ -59,7 +59,7 @@ export default function EventPage() {
           
           <div className="hidden md:flex flex-col items-end">
             <p className="text-gray-400 mb-2">Starting at</p>
-            <p className="text-4xl font-bold text-white mb-4">Kes {event.price.toLocaleString()}</p>
+            <p className="text-4xl font-bold text-white mb-4">USD ${event.price.toLocaleString()}</p>
             <button 
               onClick={() => setIsModalOpen(true)}
               className="bg-electric-purple hover:bg-purple-600 text-white font-bold py-4 px-10 rounded-full transition-transform hover:scale-105 shadow-[0_0_30px_rgba(139,92,246,0.3)] flex items-center gap-2"
@@ -115,7 +115,7 @@ export default function EventPage() {
 
             <div className="pt-6 border-t border-white/10 md:hidden mb-6">
               <p className="text-gray-400 text-center mb-2">Starting at</p>
-              <p className="text-3xl font-bold text-white text-center mb-6">Kes {event.price.toLocaleString()}</p>
+              <p className="text-3xl font-bold text-white text-center mb-6">USD ${event.price.toLocaleString()}</p>
               <button 
                 onClick={() => setIsModalOpen(true)}
                 className="w-full bg-electric-purple hover:bg-purple-600 text-white font-bold py-4 rounded-xl transition-colors shadow-[0_0_20px_rgba(139,92,246,0.3)] flex justify-center items-center gap-2"
@@ -138,7 +138,7 @@ export default function EventPage() {
 
       {/* Footer */}
       <footer className="mt-auto py-8 border-t border-white/10 text-center text-gray-500 text-sm">
-        <p>&copy; {new Date().getFullYear()} Vibe Pass Africa. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Vibe Pass. All rights reserved.</p>
       </footer>
 
       {/* State management logic for the global animation */}

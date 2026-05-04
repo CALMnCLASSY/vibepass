@@ -74,14 +74,7 @@ export async function getEventById(id: string): Promise<EventType | null> {
 
 // Configuration for grouping events with multiple ticket tiers
 export const GROUP_CONFIG: Record<string, { displayName: string, route: string, basePrice?: number }> = {
-  'SHOWMAN': { displayName: 'NYASHINSKI SHOWMAN - THE RESIDENCY', route: '/showman', basePrice: 3500 },
-  'VURUGU': { displayName: 'VURUGU BOXING - KASARANI', route: '/vurugu', basePrice: 1500 },
-  'DUWARA': { displayName: 'DUWARA - AFROHOUSE & AMAPIANO', route: '/duwara', basePrice: 2000 },
-  'BONGO': { displayName: 'OLD SCHOOL BONGO 6.0 - CAVALLI', route: '/bongo', basePrice: 2000 },
-  'MAPENZI': { displayName: 'MAPENZI WEWE - BRAEBURN THEATRE', route: '/mapenzi', basePrice: 2000 },
-  'SAFARI': { displayName: 'SAFARI RUNWAY - FASHION SHOW', route: '/safari', basePrice: 3500 },
-  'SUMMERTIDES': { displayName: 'SUMMERTIDES 2026 - MALINDI', route: '/summertides', basePrice: 3000 },
-  'BACKFORTH': { displayName: 'BACK & FORTH - OLD SCHOOL PARTY', route: '/backforth', basePrice: 1500 },
+  'WORLDCUP': { displayName: 'FIFA World Cup 2026™', route: '/worldcup/Tickets - FIFA World Cup 2026™.html', basePrice: 250 },
 };
 
 export async function getGroupedEvents(): Promise<EventType[]> {
