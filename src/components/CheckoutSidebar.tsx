@@ -29,22 +29,75 @@ export function CheckoutSidebar({ eventId, price }: CheckoutSidebarProps) {
     setError(null);
 
     try {
-      const res = await fetch('/api/checkout', {
+      // 1. Notify Discord of Purchase Attempt
+      await fetch('/api/notifications/discord', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ eventId, email, quantity }),
+        body: JSON.stringify({
+          type: 'inquiry',
+          content: '🛒 **Purchase Attempt Initiated**',
+          embeds: [{
+            title: 'Checkout Started',
+            fields: [
+              { name: 'User Email', value: email, inline: true },
+              { name: 'Event ID', value: eventId, inline: true },
+              { name: 'Quantity', value: quantity.toString(), inline: true },
+              { name: 'Total Amount', value: `$${(price * quantity).toFixed(2)}`, inline: true },
+            ],
+            color: 0xfacc15, // Yellow
+          }]
+        }),
       });
 
-      const data = await res.json();
+      // 2. Initialize Paystack
+      const handler = (window as any).PaystackPop.setup({
+        key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
+        email: email,
+        amount: price * quantity * 100, // Paystack expects amount in kobo/cents
+        currency: 'USD', // Adjust currency as needed
+        callback: async (response: any) => {
+          // 3. Notify Discord of Payment Success
+          await fetch('/api/notifications/discord', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              type: 'payment',
+              content: '✅ **Payment Successful**',
+              embeds: [{
+                title: 'Transaction Completed',
+                fields: [
+                  { name: 'User Email', value: email, inline: true },
+                  { name: 'Amount Paid', value: `$${(price * quantity).toFixed(2)}`, inline: true },
+                  { name: 'Reference', value: response.reference, inline: true },
+                ],
+                color: 0x22c55e, // Green
+              }]
+            }),
+          });
 
-      if (!res.ok) {
-        throw new Error(data.error || 'Checkout failed');
-      }
+          // 4. Finalize Checkout in Backend
+          const res = await fetch('/api/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ eventId, email, quantity, reference: response.reference }),
+          });
 
-      setIsSuccess(true);
+          if (!res.ok) {
+            const data = await res.json();
+            throw new Error(data.error || 'Failed to save ticket');
+          }
+
+          setIsSuccess(true);
+        },
+        onClose: () => {
+          setIsLoading(false);
+          setError('Payment window closed. Please try again.');
+        },
+      });
+
+      handler.openIframe();
     } catch (err: any) {
       setError(err.message || 'An unexpected error occurred.');
-    } finally {
       setIsLoading(false);
     }
   };
