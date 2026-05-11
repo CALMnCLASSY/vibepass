@@ -28,7 +28,7 @@ export default async function Home() {
             <Link href="/events" className="bg-gradient-primary text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-xl hover:shadow-blue-500/40 transition-all hover:-translate-y-1 w-full sm:w-auto text-center">
               Explore Events
             </Link>
-            <Link href="#" className="glass text-slate-800 px-8 py-4 rounded-full font-bold text-lg hover:bg-white transition-all hover:-translate-y-1 w-full sm:w-auto text-center">
+            <Link href="/world-cup" className="glass text-slate-800 px-8 py-4 rounded-full font-bold text-lg hover:bg-white transition-all hover:-translate-y-1 w-full sm:w-auto text-center">
               FIFA World Cup
             </Link>
           </div>
@@ -50,7 +50,7 @@ export default async function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {topEvents.map((event) => (
-              <Link href={`/events/${event.id}`} key={event.id} className="group">
+              <Link href={event.is_world_cup ? '/world-cup' : `/events/${event.id}`} key={event.id} className="group">
                 <div className="glass-card rounded-3xl overflow-hidden h-full flex flex-col bg-white">
                   <div className="relative h-72 w-full overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent z-10" />
