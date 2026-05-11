@@ -14,7 +14,6 @@ export default function VenuesPage() {
             alt="World Cup Venues"
             fill
             className="object-cover opacity-20"
-            unoptimized
           />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 to-slate-900" />
         </div>
@@ -101,7 +100,6 @@ function VenueCard({
             alt={venue.name}
             fill
             className="object-cover group-hover:scale-110 transition-transform duration-700"
-            unoptimized
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent" />
           <div className="absolute top-3 right-3">

@@ -26,7 +26,6 @@ export default function HospitalityPage() {
             alt="World Cup Hospitality"
             fill
             className="object-cover opacity-20"
-            unoptimized
           />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 to-slate-900" />
         </div>
@@ -78,7 +77,6 @@ export default function HospitalityPage() {
                 alt="Premium Hospitality"
                 fill
                 className="object-cover"
-                unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
               <div className="absolute bottom-4 left-4">
@@ -111,7 +109,6 @@ export default function HospitalityPage() {
                     alt={cat.name}
                     fill
                     className="object-cover"
-                    unoptimized
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent" />
                   <div className="absolute bottom-3 left-3 right-3">
@@ -161,7 +158,6 @@ export default function HospitalityPage() {
                     alt={pkg.name}
                     fill
                     className="object-cover"
-                    unoptimized
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent md:bg-gradient-to-r" />
                   {pkg.badge && (

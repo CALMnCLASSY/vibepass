@@ -58,7 +58,6 @@ export default function MatchesPage() {
             alt="World Cup Matches"
             fill
             className="object-cover opacity-20"
-            unoptimized
           />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 to-slate-900" />
         </div>

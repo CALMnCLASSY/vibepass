@@ -166,7 +166,6 @@ export default async function MatchDetailPage({
                       alt={cat.name}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      unoptimized
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent" />
                     <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
@@ -204,13 +203,12 @@ export default async function MatchDetailPage({
         {/* Venue Info */}
         <div className="glass-card bg-white rounded-2xl p-6 md:p-8 mb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-4">
+            <div className="relative h-64 md:h-80 rounded-2xl overflow-hidden">
               <Image
                 src={venue.image}
                 alt={venue.name}
                 fill
                 className="object-cover"
-                unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
               <div className="absolute bottom-4 left-4">

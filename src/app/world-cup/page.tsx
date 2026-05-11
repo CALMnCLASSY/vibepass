@@ -32,7 +32,6 @@ export default function WorldCupPage() {
             fill
             className="object-cover opacity-40"
             priority
-            unoptimized
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 to-transparent" />
@@ -198,7 +197,7 @@ export default function WorldCupPage() {
             {ticketCategories.map((cat) => (
               <div key={cat.id} className="glass-card bg-white rounded-2xl overflow-hidden group hover:-translate-y-1 transition-all flex flex-col">
                 <div className="relative h-40 w-full overflow-hidden">
-                  <Image src={cat.image} alt={cat.name} fill className="object-cover group-hover:scale-110 transition-transform duration-700" unoptimized />
+                  <Image src={cat.image} alt={cat.name} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent" />
                   <div className="absolute bottom-3 left-3 right-3">
                     <div className="text-white font-bold text-sm">{cat.price_range}</div>
@@ -287,7 +286,7 @@ export default function WorldCupPage() {
             {featuredVenues.map((venue) => (
               <Link href="/world-cup/venues" key={venue.id} className="group">
                 <div className="relative rounded-2xl overflow-hidden aspect-square">
-                  <Image src={venue.image} alt={venue.name} fill className="object-cover group-hover:scale-110 transition-transform duration-700" unoptimized />
+                  <Image src={venue.image} alt={venue.name} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
                   <div className="absolute bottom-3 left-3 right-3">
                     <div className="text-white font-bold text-sm leading-tight">{venue.city}</div>
