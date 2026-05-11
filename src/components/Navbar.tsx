@@ -25,9 +25,7 @@ export function Navbar() {
             </Link>
           </div>
           <div className="flex items-center">
-            <button className="bg-gradient-primary text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition-all hover:-translate-y-0.5">
-              Sign In
-            </button>
+            {/* Login functionality removed for guest checkout flow */}
           </div>
         </div>
       </div>

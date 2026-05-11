@@ -15,10 +15,10 @@ export function Footer() {
             </span>
           </div>
           <div className="flex space-x-6">
-            <Link href="#" className="text-slate-500 hover:text-blue-600 transition-colors">About</Link>
-            <Link href="#" className="text-slate-500 hover:text-blue-600 transition-colors">Terms</Link>
-            <Link href="#" className="text-slate-500 hover:text-blue-600 transition-colors">Privacy</Link>
-            <Link href="#" className="text-slate-500 hover:text-blue-600 transition-colors">Contact</Link>
+            <Link href="/about" className="text-slate-500 hover:text-blue-600 transition-colors">About</Link>
+            <Link href="/terms" className="text-slate-500 hover:text-blue-600 transition-colors">Terms</Link>
+            <Link href="/privacy" className="text-slate-500 hover:text-blue-600 transition-colors">Privacy</Link>
+            <Link href="/contact" className="text-slate-500 hover:text-blue-600 transition-colors">Contact</Link>
           </div>
           <p className="text-slate-500 text-sm">
             © {new Date().getFullYear()} VibePass. All rights reserved.
