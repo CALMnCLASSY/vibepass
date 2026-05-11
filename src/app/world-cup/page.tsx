@@ -146,17 +146,15 @@ export default function WorldCupPage() {
                         <span className="text-xs font-bold text-red-500 bg-red-50 px-2 py-1 rounded-full">Sold Out</span>
                       )}
                     </div>
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="text-center flex-1">
-                        <div className="text-4xl mb-2">{match.home_flag}</div>
-                        <div className="font-bold text-slate-900 text-sm">{match.home_team}</div>
+                    <div className="flex items-center justify-between md:justify-start gap-4">
+                      <div className="flex items-center gap-3 flex-1 md:flex-initial">
+                        <span className="text-3xl" style={{ fontFamily: 'Apple Color Emoji, "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif' }}>{match.home_flag}</span>
+                        <span className="font-bold text-slate-900 hidden sm:inline">{match.home_team}</span>
                       </div>
-                      <div className="px-4">
-                        <div className="text-lg font-extrabold text-slate-300">VS</div>
-                      </div>
-                      <div className="text-center flex-1">
-                        <div className="text-4xl mb-2">{match.away_flag}</div>
-                        <div className="font-bold text-slate-900 text-sm">{match.away_team}</div>
+                      <span className="text-xl font-extrabold text-slate-300 px-2">VS</span>
+                      <div className="flex items-center gap-3 flex-1 md:flex-initial justify-end md:justify-start">
+                        <span className="font-bold text-slate-900 hidden sm:inline">{match.away_team}</span>
+                        <span className="text-3xl" style={{ fontFamily: 'Apple Color Emoji, "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif' }}>{match.away_flag}</span>
                       </div>
                     </div>
                     <div className="border-t border-slate-100 pt-4 space-y-2">

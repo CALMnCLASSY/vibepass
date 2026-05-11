@@ -1,5 +1,5 @@
 import { getEventById } from '@/data/events';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Calendar, MapPin, Info } from 'lucide-react';
 import { CheckoutSidebar } from '@/components/CheckoutSidebar';
@@ -9,10 +9,6 @@ export default async function EventDetail({ params }: { params: { id: string } }
 
   if (!event) {
     notFound();
-  }
-
-  if (event.is_world_cup) {
-    redirect('/world-cup');
   }
 
   return (

@@ -252,14 +252,14 @@ export const matches: Match[] = [
   { id: "m14", match_number: 14, date: "2026-06-15", time: "21:00", venue_id: "atlanta", stage: "Group Stage", group: "G", home_team: "IR Iran", away_team: "New Zealand", home_flag: "🇮🇷", away_flag: "🇳🇿", sold_out: false },
   { id: "m15", match_number: 15, date: "2026-06-16", time: "15:00", venue_id: "philadelphia", stage: "Group Stage", group: "H", home_team: "Spain", away_team: "Cabo Verde", home_flag: "🇪🇸", away_flag: "🇨🇻", sold_out: false },
   { id: "m16", match_number: 16, date: "2026-06-16", time: "18:00", venue_id: "philadelphia", stage: "Group Stage", group: "H", home_team: "Saudi Arabia", away_team: "Uruguay", home_flag: "🇸🇦", away_flag: "🇺🇾", sold_out: false },
-  { id: "m17", match_number: 17, date: "2026-06-16", time: "21:00", venue_id: "san-francisco", stage: "Group Stage", group: "I", home_team: "France", away_team: "Senegal", home_flag: "🇫🇷", away_flag: "🇸🇳", sold_out: true },
+  { id: "m17", match_number: 17, date: "2026-06-16", time: "21:00", venue_id: "san-francisco", stage: "Group Stage", group: "I", home_team: "France", away_team: "Senegal", home_flag: "🇫🇷", away_flag: "🇸🇳", sold_out: false },
   { id: "m18", match_number: 18, date: "2026-06-17", time: "15:00", venue_id: "san-francisco", stage: "Group Stage", group: "I", home_team: "Iraq", away_team: "Norway", home_flag: "🇮🇶", away_flag: "🇳🇴", sold_out: false },
   { id: "m19", match_number: 19, date: "2026-06-17", time: "18:00", venue_id: "houston", stage: "Group Stage", group: "J", home_team: "Argentina", away_team: "Algeria", home_flag: "🇦🇷", away_flag: "🇩🇿", sold_out: false },
   { id: "m20", match_number: 20, date: "2026-06-17", time: "21:00", venue_id: "houston", stage: "Group Stage", group: "J", home_team: "Austria", away_team: "Jordan", home_flag: "🇦🇹", away_flag: "🇯🇴", sold_out: false },
 
   // More group stage (representative)
   { id: "m25", match_number: 25, date: "2026-06-20", time: "18:00", venue_id: "mexico-city", stage: "Group Stage", group: "A", home_team: "South Africa", away_team: "Korea Republic", home_flag: "🇿🇦", away_flag: "🇰🇷", sold_out: false },
-  { id: "m30", match_number: 30, date: "2026-06-21", time: "21:00", venue_id: "los-angeles", stage: "Group Stage", group: "C", home_team: "Brazil", away_team: "Haiti", home_flag: "🇧🇷", away_flag: "🇭🇹", sold_out: true },
+  { id: "m30", match_number: 30, date: "2026-06-21", time: "21:00", venue_id: "los-angeles", stage: "Group Stage", group: "C", home_team: "Brazil", away_team: "Haiti", home_flag: "🇧🇷", away_flag: "🇭🇹", sold_out: false },
   { id: "m35", match_number: 35, date: "2026-06-22", time: "18:00", venue_id: "dallas", stage: "Group Stage", group: "D", home_team: "USA", away_team: "Australia", home_flag: "🇺🇸", away_flag: "🇦🇺", sold_out: false },
   { id: "m40", match_number: 40, date: "2026-06-23", time: "21:00", venue_id: "boston", stage: "Group Stage", group: "F", home_team: "Netherlands", away_team: "Sweden", home_flag: "🇳🇱", away_flag: "🇸🇪", sold_out: false },
   { id: "m45", match_number: 45, date: "2026-06-24", time: "18:00", venue_id: "atlanta", stage: "Group Stage", group: "G", home_team: "Belgium", away_team: "IR Iran", home_flag: "🇧🇪", away_flag: "🇮🇷", sold_out: false },
@@ -311,7 +311,7 @@ export const ticketCategories: TicketCategory[] = [
       "Stadium food & beverage options",
       "Commemorative digital ticket",
     ],
-    price_range: "$75 - $895",
+    price_range: "$75 - $950",
     image: "https://images.unsplash.com/photo-1522778119026-d647f0565c6a?q=80&w=2070&auto=format&fit=crop",
   },
   {
@@ -325,7 +325,7 @@ export const ticketCategories: TicketCategory[] = [
       "Pre- and post-match hospitality",
       "Matchday program",
     ],
-    price_range: "$1,200 - $5,500",
+    price_range: "$1,500 - $6,000",
     image: "https://images.unsplash.com/photo-1577223625816-7546f2f65e2e?q=80&w=2070&auto=format&fit=crop",
   },
   {
@@ -341,7 +341,7 @@ export const ticketCategories: TicketCategory[] = [
       "Exclusive entrance",
       "Premium parking",
     ],
-    price_range: "$3,500 - $12,000",
+    price_range: "$4,000 - $15,000",
     image: "https://images.unsplash.com/photo-1556056504-5c90e963de4c?q=80&w=2070&auto=format&fit=crop",
   },
   {
@@ -359,7 +359,7 @@ export const ticketCategories: TicketCategory[] = [
       "Pre- and post-match entertainment",
       "Commemorative gift",
     ],
-    price_range: "$8,500 - $28,000",
+    price_range: "$10,000 - $35,000",
     image: "https://images.unsplash.com/photo-1566577739112-1087c5019c84?q=80&w=2070&auto=format&fit=crop",
   },
   {
@@ -377,7 +377,7 @@ export const ticketCategories: TicketCategory[] = [
       "Dedicated hosts",
       "Pre- and post-match hospitality",
     ],
-    price_range: "$45,000 - $317,100",
+    price_range: "$50,000 - $350,000",
     image: "https://images.unsplash.com/photo-1518605348400-437b458cafe9?q=80&w=2070&auto=format&fit=crop",
   },
 ];

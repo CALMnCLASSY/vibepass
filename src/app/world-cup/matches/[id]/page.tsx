@@ -78,7 +78,7 @@ export default async function MatchDetailPage({
           {/* Match Title */}
           <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 mb-8">
             <div className="text-center">
-              <div className="text-6xl md:text-8xl mb-3">{match.home_flag}</div>
+              <div className="text-6xl md:text-8xl mb-3" style={{ fontFamily: 'Apple Color Emoji, "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif' }}>{match.home_flag}</div>
               <h2 className="text-2xl md:text-3xl font-bold text-white">{match.home_team}</h2>
             </div>
             <div className="text-center">
@@ -90,7 +90,7 @@ export default async function MatchDetailPage({
               </div>
             </div>
             <div className="text-center">
-              <div className="text-6xl md:text-8xl mb-3">{match.away_flag}</div>
+              <div className="text-6xl md:text-8xl mb-3" style={{ fontFamily: 'Apple Color Emoji, "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif' }}>{match.away_flag}</div>
               <h2 className="text-2xl md:text-3xl font-bold text-white">{match.away_team}</h2>
             </div>
           </div>

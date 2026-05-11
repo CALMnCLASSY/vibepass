@@ -41,10 +41,10 @@ export async function getEvents(): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching events:', error);
-    return [getWorldCupEvent()];
+    return [];
   }
 
-  return [getWorldCupEvent(), ...(data as Event[])];
+  return data as Event[];
 }
 
 export async function getTopEvents(limit: number = 3): Promise<Event[]> {
@@ -57,10 +57,10 @@ export async function getTopEvents(limit: number = 3): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching top events:', error);
-    return [getWorldCupEvent()];
+    return [];
   }
 
-  return [getWorldCupEvent(), ...(data as Event[])].slice(0, limit);
+  return data as Event[];
 }
 
 export async function getEventById(id: string): Promise<Event | null> {
