@@ -50,7 +50,7 @@ export default async function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {topEvents.map((event) => (
-              <Link href={`/events/${event.id}`} key={event.id} className="group">
+              <Link href={event.is_world_cup ? '/world-cup' : `/events/${event.id}`} key={event.id} className="group">
                 <div className="glass-card rounded-3xl overflow-hidden h-full flex flex-col bg-white">
                   <div className="relative h-72 w-full overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent z-10" />
