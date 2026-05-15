@@ -21,7 +21,7 @@ export function getWorldCupEvent(): Event {
     name: 'FIFA World Cup 2026™',
     date: '2026-06-11T16:00:00',
     location: 'USA, Canada & Mexico — 16 Host Cities',
-    image_url: 'https://images.unsplash.com/photo-1577223625816-7546f2f65e2e?q=80&w=2070&auto=format&fit=crop',
+    image_url: 'https://images.unsplash.com/photo-1551958219-acbc608c6377?q=80&w=2070&auto=format&fit=crop',
     price: 750,
     organizer: 'FIFA',
     description: '104 matches. 48 nations. 16 venues. The biggest World Cup ever played across three nations.',
@@ -44,7 +44,10 @@ export async function getEvents(): Promise<Event[]> {
     return [getWorldCupEvent()];
   }
 
-  return [getWorldCupEvent(), ...(data as Event[])];
+  const events = data as Event[];
+  const hasWorldCup = events.some(e => e.id === 'world-cup-2026' || e.is_world_cup);
+  
+  return hasWorldCup ? events : [getWorldCupEvent(), ...events];
 }
 
 export async function getTopEvents(limit: number = 3): Promise<Event[]> {
@@ -60,7 +63,11 @@ export async function getTopEvents(limit: number = 3): Promise<Event[]> {
     return [getWorldCupEvent()];
   }
 
-  return [getWorldCupEvent(), ...(data as Event[])].slice(0, limit);
+  const events = data as Event[];
+  const hasWorldCup = events.some(e => e.id === 'world-cup-2026' || e.is_world_cup);
+  
+  const allEvents = hasWorldCup ? events : [getWorldCupEvent(), ...events];
+  return allEvents.slice(0, limit);
 }
 
 export async function getEventById(id: string): Promise<Event | null> {

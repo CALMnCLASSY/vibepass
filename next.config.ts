@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'digitalhub.fifa.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'epbqgemnussnneutkpec.supabase.co', // In case images are stored in Supabase Storage
       }
     ]

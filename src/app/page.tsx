@@ -12,17 +12,18 @@ export default async function Home() {
       <section className="relative w-full h-[80vh] flex items-center justify-center overflow-hidden bg-slate-50">
         <div className="absolute inset-0 bg-slate-100 z-0" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100/50 via-slate-50 to-white z-10" />
-        
+
         <div className="relative z-20 text-center px-4 max-w-5xl mx-auto pt-20">
           <div className="inline-block mb-6 px-4 py-1.5 rounded-full glass border-blue-200 text-blue-700 font-semibold text-sm shadow-sm animate-bounce">
             🎉 The World's Biggest Events
           </div>
           <h1 className="text-6xl md:text-8xl font-extrabold tracking-tight text-slate-900 mb-8 leading-[1.1]">
-            Experience the <br className="hidden md:block"/>
+            Experience the <br className="hidden md:block" />
             <span className="text-gradient">Extraordinary</span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-600 mb-12 max-w-2xl mx-auto">
             Secure your access to the world's most exclusive concerts, festivals, and sporting events.
+            Buy and Sell tickets from a reliable plug and enjoy the best vibes.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/events" className="bg-gradient-primary text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-xl hover:shadow-blue-500/40 transition-all hover:-translate-y-1 w-full sm:w-auto text-center">
@@ -54,8 +55,8 @@ export default async function Home() {
                 <div className="glass-card rounded-3xl overflow-hidden h-full flex flex-col bg-white">
                   <div className="relative h-72 w-full overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent z-10" />
-                    <Image 
-                      src={event.image_url || 'https://images.unsplash.com/photo-1540039155732-687468680c14?q=80&w=2070&auto=format&fit=crop'} 
+                    <Image
+                      src={event.image_url || 'https://images.unsplash.com/photo-1540039155732-687468680c14?q=80&w=2070&auto=format&fit=crop'}
                       alt={event.name}
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
