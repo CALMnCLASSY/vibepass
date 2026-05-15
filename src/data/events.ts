@@ -44,10 +44,10 @@ export async function getEvents(): Promise<Event[]> {
     return [getWorldCupEvent()];
   }
 
-  const events = data as Event[];
-  const hasWorldCup = events.some(e => e.id === 'world-cup-2026' || e.is_world_cup);
+  // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
+  const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
   
-  return hasWorldCup ? events : [getWorldCupEvent(), ...events];
+  return [getWorldCupEvent(), ...events];
 }
 
 export async function getTopEvents(limit: number = 3): Promise<Event[]> {
@@ -63,11 +63,10 @@ export async function getTopEvents(limit: number = 3): Promise<Event[]> {
     return [getWorldCupEvent()];
   }
 
-  const events = data as Event[];
-  const hasWorldCup = events.some(e => e.id === 'world-cup-2026' || e.is_world_cup);
+  // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
+  const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
   
-  const allEvents = hasWorldCup ? events : [getWorldCupEvent(), ...events];
-  return allEvents.slice(0, limit);
+  return [getWorldCupEvent(), ...events].slice(0, limit);
 }
 
 export async function getEventById(id: string): Promise<Event | null> {

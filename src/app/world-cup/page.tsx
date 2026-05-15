@@ -27,7 +27,7 @@ export default function WorldCupPage() {
       <section className="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden bg-slate-900">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1577223625816-7546f2f65e2e?q=80&w=2070&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1551958219-acbc608c6377?q=80&w=2070&auto=format&fit=crop"
             alt="FIFA World Cup 2026 Stadium"
             fill
             className="object-cover opacity-40"
