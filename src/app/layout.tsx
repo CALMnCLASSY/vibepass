@@ -9,8 +9,8 @@ import Script from "next/script";
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
-  title: "Global Events | Premium Ticketing Platform",
-  description: "Discover and book tickets to the world's most exclusive events.",
+  title: "VibePass | Buy & Sell Event Tickets",
+  description: "The fan-first ticket marketplace. Buy from or sell to real fans for the world's biggest events — concerts, sports, and more.",
 };
 
 export default function RootLayout({

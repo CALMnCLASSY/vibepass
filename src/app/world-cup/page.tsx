@@ -49,7 +49,7 @@ export default function WorldCupPage() {
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-            104 matches. 16 venues. 48 nations. One unforgettable summer of football across North America.
+            104 matches. 16 venues. 48 nations. Buy tickets from verified fans or list your own on the VibePass marketplace.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -142,9 +142,7 @@ export default function WorldCupPage() {
                   <div className="glass-card bg-white rounded-2xl p-6 hover:shadow-xl transition-all hover:-translate-y-1">
                     <div className="flex items-center justify-between mb-4">
                       <span className="text-xs font-bold uppercase tracking-wider text-slate-400">{match.stage}</span>
-                      {match.sold_out && (
-                        <span className="text-xs font-bold text-red-500 bg-red-50 px-2 py-1 rounded-full">Sold Out</span>
-                      )}
+                      <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">Available</span>
                     </div>
                     <div className="flex items-center justify-between md:justify-start gap-4">
                       <div className="flex items-center gap-3 flex-1 md:flex-initial">
