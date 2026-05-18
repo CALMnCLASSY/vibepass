@@ -33,7 +33,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-slate-500 uppercase tracking-wider">Call Us</p>
-                  <p className="text-xl font-bold text-slate-900">+1 (800) VIBE-PASS</p>
+                  <p className="text-xl font-bold text-slate-900">+44 7400 756157</p>
                 </div>
               </div>
               <div className="flex items-center gap-5">
@@ -62,34 +62,34 @@ export default function ContactPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-700 ml-1">Full Name</label>
-                <input 
-                  type="text" 
-                  placeholder="John Doe" 
+                <input
+                  type="text"
+                  placeholder="John Doe"
                   className="w-full px-5 py-4 rounded-2xl border-2 border-slate-100 focus:border-blue-500 focus:outline-none transition-colors bg-slate-50"
                 />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-700 ml-1">Email Address</label>
-                <input 
-                  type="email" 
-                  placeholder="john@example.com" 
+                <input
+                  type="email"
+                  placeholder="john@example.com"
                   className="w-full px-5 py-4 rounded-2xl border-2 border-slate-100 focus:border-blue-500 focus:outline-none transition-colors bg-slate-50"
                 />
               </div>
             </div>
             <div className="space-y-2">
               <label className="text-sm font-semibold text-slate-700 ml-1">Subject</label>
-              <input 
-                type="text" 
-                placeholder="How can we help?" 
+              <input
+                type="text"
+                placeholder="How can we help?"
                 className="w-full px-5 py-4 rounded-2xl border-2 border-slate-100 focus:border-blue-500 focus:outline-none transition-colors bg-slate-50"
               />
             </div>
             <div className="space-y-2">
               <label className="text-sm font-semibold text-slate-700 ml-1">Message</label>
-              <textarea 
+              <textarea
                 rows={5}
-                placeholder="Tell us more about your inquiry..." 
+                placeholder="Tell us more about your inquiry..."
                 className="w-full px-5 py-4 rounded-2xl border-2 border-slate-100 focus:border-blue-500 focus:outline-none transition-colors bg-slate-50 resize-none"
               ></textarea>
             </div>

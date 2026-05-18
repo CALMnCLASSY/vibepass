@@ -22,7 +22,7 @@ export function getWorldCupEvent(): Event {
     date: '2026-06-11T16:00:00',
     location: 'USA, Canada & Mexico — 16 Host Cities',
     image_url: 'https://images.unsplash.com/photo-1551958219-acbc608c6377?q=80&w=2070&auto=format&fit=crop',
-    price: 750,
+    price: 450,
     organizer: 'FIFA',
     description: '104 matches. 48 nations. 16 venues. The biggest World Cup ever played across three nations.',
     long_description: 'The FIFA World Cup 2026™ will be the biggest tournament in FIFA history. For the first time, 48 teams will compete across 104 matches in 16 world-class venues spanning the United States, Canada, and Mexico. From the opening match on June 11 to the Final on July 19, experience football on an unprecedented scale.',

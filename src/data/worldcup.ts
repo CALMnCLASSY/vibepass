@@ -311,7 +311,7 @@ export const ticketCategories: TicketCategory[] = [
       "Stadium food & beverage options",
       "Commemorative digital ticket",
     ],
-    price_range: "$75 - $950",
+    price_range: "$120 - $1,100",
     image: "https://images.unsplash.com/photo-1522778119026-d647f0565c6a?q=80&w=2070&auto=format&fit=crop",
   },
   {
@@ -325,7 +325,7 @@ export const ticketCategories: TicketCategory[] = [
       "Pre- and post-match hospitality",
       "Matchday program",
     ],
-    price_range: "$1,500 - $6,000",
+    price_range: "$3,500 - $9,500",
     image: "https://images.unsplash.com/photo-1551958219-acbc608c6377?q=80&w=2070&auto=format&fit=crop",
   },
   {
@@ -341,7 +341,7 @@ export const ticketCategories: TicketCategory[] = [
       "Exclusive entrance",
       "Premium parking",
     ],
-    price_range: "$4,000 - $15,000",
+    price_range: "$4,500 - $15,000",
     image: "https://images.unsplash.com/photo-1556056504-5c90e963de4c?q=80&w=2070&auto=format&fit=crop",
   },
   {
@@ -359,7 +359,7 @@ export const ticketCategories: TicketCategory[] = [
       "Pre- and post-match entertainment",
       "Commemorative gift",
     ],
-    price_range: "$10,000 - $35,000",
+    price_range: "$2,500 - $8,500",
     image: "https://images.unsplash.com/photo-1566577739112-1087c5019c84?q=80&w=2070&auto=format&fit=crop",
   },
   {
@@ -377,7 +377,7 @@ export const ticketCategories: TicketCategory[] = [
       "Dedicated hosts",
       "Pre- and post-match hospitality",
     ],
-    price_range: "$50,000 - $350,000",
+    price_range: "$15,000 - $75,000",
     image: "https://images.unsplash.com/photo-1518605348400-437b458cafe9?q=80&w=2070&auto=format&fit=crop",
   },
 ];

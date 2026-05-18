@@ -52,11 +52,11 @@ type MatchCheckoutProps = {
 };
 
 const CATEGORY_PRICES: Record<string, number> = {
-  standard: 150,
-  pitchside: 2500,
-  trophy: 6500,
-  champions: 18000,
-  suite: 95000,
+  standard: 450,
+  pitchside: 6050,
+  trophy: 7800,
+  champions: 3300,
+  suite: 28500,
 };
 
 export function MatchCheckout({ match, venue, categories }: MatchCheckoutProps) {
