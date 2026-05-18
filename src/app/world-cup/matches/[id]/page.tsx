@@ -15,12 +15,15 @@ import {
   ChevronRight,
 } from "lucide-react";
 
+import { MatchCheckout } from "@/components/MatchCheckout";
+
 export default async function MatchDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const match = getMatchById(params.id);
+  const { id } = await params;
+  const match = getMatchById(id);
 
   if (!match) {
     notFound();
@@ -154,49 +157,7 @@ export default async function MatchDetailPage({
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {ticketCategories.map((cat) => (
-                <div
-                  key={cat.id}
-                  className="glass-card bg-white rounded-2xl overflow-hidden flex flex-col group"
-                >
-                  <div className="relative h-48 w-full overflow-hidden">
-                    <Image
-                      src={cat.image}
-                      alt={cat.name}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent" />
-                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                      <span className="text-white font-bold text-sm bg-white/20 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
-                        {cat.price_range}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="p-6 flex-grow flex flex-col">
-                    <h3 className="text-lg font-bold text-slate-900 mb-2">{cat.name}</h3>
-                    <p className="text-sm text-slate-500 mb-4 flex-grow">{cat.description}</p>
-
-                    <div className="space-y-2 mb-6">
-                      {cat.features.map((feature, i) => (
-                        <div key={i} className="flex items-start text-sm text-slate-600">
-                          <Check className="w-4 h-4 mr-2 text-emerald-500 mt-0.5 shrink-0" />
-                          {feature}
-                        </div>
-                      ))}
-                    </div>
-
-                    <Link
-                      href={`/events`}
-                      className="mt-auto w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-center hover:shadow-lg hover:shadow-blue-500/30 transition-all flex items-center justify-center gap-2"
-                    >
-                      Select <ChevronRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <MatchCheckout match={match} venue={venue} categories={ticketCategories} />
           )}
         </div>
 

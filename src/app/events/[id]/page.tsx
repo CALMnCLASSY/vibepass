@@ -4,8 +4,9 @@ import Image from 'next/image';
 import { Calendar, MapPin, Info } from 'lucide-react';
 import { CheckoutSidebar } from '@/components/CheckoutSidebar';
 
-export default async function EventDetail({ params }: { params: { id: string } }) {
-  const event = await getEventById(params.id);
+export default async function EventDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const event = await getEventById(id);
 
   if (!event) {
     notFound();
