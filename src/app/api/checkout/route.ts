@@ -8,7 +8,7 @@ const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder');
 
 export async function POST(request: Request) {
   try {
-    const { eventId, email, quantity, categoryName, price } = await request.json();
+    const { eventId, email, quantity, categoryName, price, matchesIncluded } = await request.json();
 
     if (!eventId || !email || !quantity || quantity < 1) {
       return NextResponse.json(
@@ -24,22 +24,32 @@ export async function POST(request: Request) {
     let isMatch = false;
     let ticket = null;
 
-    if (eventId.startsWith('m')) {
-      // 1. World Cup Match lookup
-      const match = getMatchById(eventId);
-      if (!match) {
-        return NextResponse.json({ error: 'Match not found' }, { status: 404 });
+    const isWorldCupMatch = eventId.startsWith('m');
+    const isHospitality = eventId.includes('package') || eventId.includes('series') || eventId.includes('pass');
+
+    if (isWorldCupMatch || isHospitality) {
+      // 1. World Cup Match or Hospitality Package
+      if (isWorldCupMatch) {
+        const match = getMatchById(eventId);
+        if (!match) {
+          return NextResponse.json({ error: 'Match not found' }, { status: 404 });
+        }
+        const venue = getVenueById(match.venue_id);
+        const catName = categoryName || 'Standard Match Ticket';
+        eventName = `FIFA World Cup 2026™: ${match.home_team} vs ${match.away_team} (${catName})`;
+        eventPrice = price || 450;
+        eventDate = match.date;
+        eventLocation = venue ? `${venue.name}, ${venue.city}, ${venue.country}` : 'TBA';
+      } else {
+        eventName = `FIFA World Cup 2026™ — ${categoryName || 'Hospitality Package'}`;
+        eventPrice = price || 3200;
+        eventDate = '2026-06-11';
+        eventLocation = 'Selected World Cup Host Stadiums';
       }
-      const venue = getVenueById(match.venue_id);
       
-      const catName = categoryName || 'Standard Match Ticket';
-      eventName = `FIFA World Cup 2026™: ${match.home_team} vs ${match.away_team} (${catName})`;
-      eventPrice = price || 150;
-      eventDate = match.date;
-      eventLocation = venue ? `${venue.name}, ${venue.city}, ${venue.country}` : 'TBA';
       isMatch = true;
 
-      // Create a premium mock ticket record since matches are not in Supabase events table
+      // Create a premium mock ticket record since matches/packages are not in Supabase events table
       ticket = {
         id: `t-wc-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
         event_id: eventId,
@@ -101,6 +111,15 @@ export async function POST(request: Request) {
       ...(eventDate.includes('T') && { hour: '2-digit', minute: '2-digit' })
     });
 
+    const matchesListHtml = matchesIncluded && Array.isArray(matchesIncluded)
+      ? `<div style="margin-top: 12px; padding: 12px; background-color: #f3e8ff; border-radius: 8px; border: 1px solid #e9d5ff;">
+           <p style="margin: 0 0 6px 0; font-weight: bold; color: #581c87;">Included Matches:</p>
+           <ul style="margin: 0; padding-left: 20px; color: #6b21a8;">
+             ${matchesIncluded.map((m: string) => `<li>${m}</li>`).join('')}
+           </ul>
+         </div>`
+      : '';
+
     try {
       await resend.emails.send({
         from: 'VibePass <onboarding@resend.dev>', // Resend default testing domain
@@ -123,6 +142,7 @@ export async function POST(request: Request) {
                 <p><strong>When:</strong> ${formattedDate}</p>
                 <p><strong>Where:</strong> ${eventLocation}</p>
                 <p><strong>Ticket ID:</strong> <span style="font-family: monospace; background: #f1f5f9; padding: 4px;">${ticket.id}</span></p>
+                ${matchesListHtml}
               </div>
 
               <p style="margin-top: 24px;">Please keep this email safe. Show the Ticket ID at the entrance.</p>

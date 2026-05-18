@@ -315,6 +315,19 @@ export const ticketCategories: TicketCategory[] = [
     image: "https://images.unsplash.com/photo-1522778119026-d647f0565c6a?q=80&w=2070&auto=format&fit=crop",
   },
   {
+    id: "premium",
+    name: "Premium Seating",
+    description: "Upgraded seating with excellent views of the pitch and premium stadium amenities.",
+    features: [
+      "Official premium match ticket",
+      "Access to premium food & beverage lounges",
+      "Dedicated stadium entry",
+      "Excellent mid-tier seat locations",
+    ],
+    price_range: "$800 - $2,400",
+    image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=2070&auto=format&fit=crop",
+  },
+  {
     id: "pitchside",
     name: "Pitchside Lounge",
     description: "Get closer to the action than ever before. Premium seating just above pitch level with exclusive lounge access.",

@@ -1,6 +1,10 @@
+'use client';
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { hospitalityPackages, ticketCategories, venueSeries, venues } from "@/data/worldcup";
+import { HospitalityCheckoutModal } from "@/components/HospitalityCheckoutModal";
 import {
   Crown,
   Check,
@@ -15,7 +19,19 @@ import {
   MapPin,
 } from "lucide-react";
 
+type SelectedItem = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  features: string[];
+  matchesIncluded?: string[];
+  type: 'package' | 'series';
+};
+
 export default function HospitalityPage() {
+  const [selectedItem, setSelectedItem] = useState<SelectedItem | null>(null);
+
   return (
     <div className="min-h-screen bg-slate-50 pb-24">
       {/* Header */}
@@ -180,12 +196,19 @@ export default function HospitalityPage() {
                       </li>
                     ))}
                   </ul>
-                  <Link
-                    href="/world-cup/matches"
-                    className="mt-auto inline-flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-900 text-white font-bold hover:bg-slate-800 transition-colors text-sm"
+                  <button
+                    onClick={() => setSelectedItem({
+                      id: pkg.id,
+                      name: pkg.name,
+                      description: pkg.description,
+                      price: pkg.price_from,
+                      features: pkg.features,
+                      type: 'package'
+                    })}
+                    className="mt-auto inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold hover:shadow-lg transition-all text-sm"
                   >
                     Select Package <ArrowRight className="w-4 h-4" />
-                  </Link>
+                  </button>
                 </div>
               </div>
             ))}
@@ -236,12 +259,20 @@ export default function HospitalityPage() {
                       <div className="text-xl font-extrabold text-blue-600">${series.price_from.toLocaleString()}</div>
                       <div className="text-xs text-slate-500">Starting price</div>
                     </div>
-                    <Link
-                      href="/world-cup/matches"
-                      className="px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-bold hover:bg-blue-700 transition-colors"
+                    <button
+                      onClick={() => setSelectedItem({
+                        id: series.id,
+                        name: series.name,
+                        description: series.description,
+                        price: series.price_from,
+                        features: series.packages,
+                        matchesIncluded: series.matches_included,
+                        type: 'series'
+                      })}
+                      className="px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-bold hover:bg-blue-700 hover:shadow-lg transition-all"
                     >
-                      View
-                    </Link>
+                      Book Series
+                    </button>
                   </div>
                 </div>
               );
@@ -271,6 +302,12 @@ export default function HospitalityPage() {
           </div>
         </div>
       </div>
+
+      {/* Checkout Modal */}
+      <HospitalityCheckoutModal 
+        item={selectedItem} 
+        onClose={() => setSelectedItem(null)} 
+      />
     </div>
   );
 }

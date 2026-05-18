@@ -53,6 +53,7 @@ type MatchCheckoutProps = {
 
 const CATEGORY_PRICES: Record<string, number> = {
   standard: 450,
+  premium: 1200,
   pitchside: 6050,
   trophy: 7800,
   champions: 3300,
