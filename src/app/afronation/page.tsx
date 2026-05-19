@@ -7,8 +7,8 @@ export default function AfronationHome() {
       {/* Hero Section */}
       <section className="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#feaa1e] via-[#ff651f] to-red-600 opacity-90 z-0" />
-        <div 
-          className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540039155732-d6749b932507?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay opacity-60 z-0" 
+        <div
+          className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540039155732-d6749b932507?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay opacity-60 z-0"
         />
         <div className="absolute inset-0 bg-black/30 z-10" />
 
@@ -25,8 +25,8 @@ export default function AfronationHome() {
           <p className="text-xl md:text-3xl text-white/90 mb-12 max-w-3xl mx-auto font-medium drop-shadow-md">
             Join us on the beach for an unforgettable summer.
           </p>
-          <Link 
-            href="/afronation/book-tickets" 
+          <Link
+            href="/afronation/book-tickets"
             className="bg-white text-black px-12 py-5 font-black text-xl hover:bg-[#ff651f] hover:text-white transition-all transform hover:scale-105 shadow-2xl uppercase tracking-widest"
           >
             Book Tickets Now
@@ -38,7 +38,7 @@ export default function AfronationHome() {
       <section className="py-32 bg-black relative border-t-8 border-[#feaa1e]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-5xl md:text-7xl font-black mb-16 text-white uppercase tracking-tighter">
-            Phase 1 <span className="text-[#feaa1e]">Lineup</span>
+            Main<span className="text-[#feaa1e]">Lineup</span>
           </h2>
           <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-4 max-w-4xl mx-auto">
             {['BURNA BOY', 'WIZKID', 'DAVIDO', 'REMA', 'ASAKE', 'TEMS'].map((artist, idx, arr) => (
@@ -52,11 +52,6 @@ export default function AfronationHome() {
               </span>
             ))}
           </div>
-          <div className="mt-20">
-            <button className="text-white border-b-2 border-[#feaa1e] pb-1 font-bold text-xl hover:text-[#feaa1e] transition-colors uppercase tracking-widest">
-              View Full Lineup
-            </button>
-          </div>
         </div>
       </section>
 
@@ -66,11 +61,11 @@ export default function AfronationHome() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-5xl md:text-7xl font-black mb-8 uppercase tracking-tighter leading-none">
-                The <span className="text-[#ff651f]">Ultimate</span> <br/>
+                The <span className="text-[#ff651f]">Ultimate</span> <br />
                 Experience
               </h2>
               <p className="text-xl text-zinc-400 mb-8 leading-relaxed">
-                Elevate your festival experience with our exclusive VIP Oasis. 
+                Elevate your festival experience with our exclusive VIP Oasis.
                 Enjoy priority entry, private beaches, luxury bars, and premium table service, all while experiencing the best Afrobeats acts on the planet.
               </p>
               <ul className="space-y-4 mb-12 font-bold text-lg text-zinc-300">
@@ -84,8 +79,8 @@ export default function AfronationHome() {
                   <div className="w-2 h-2 bg-[#feaa1e] rounded-full" /> Fast-track Entry
                 </li>
               </ul>
-              <Link 
-                href="/afronation/book-tickets" 
+              <Link
+                href="/afronation/book-tickets"
                 className="inline-block bg-[#ff651f] text-white px-10 py-4 font-black text-lg hover:bg-white hover:text-black transition-all uppercase tracking-widest"
               >
                 Explore Packages
@@ -93,7 +88,7 @@ export default function AfronationHome() {
             </div>
             <div className="relative aspect-square bg-zinc-900 p-4">
               <div className="absolute inset-0 border-2 border-[#feaa1e] translate-x-4 translate-y-4 -z-10" />
-              <div 
+              <div
                 className="w-full h-full bg-[url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop')] bg-cover bg-center grayscale hover:grayscale-0 transition-all duration-700"
               />
             </div>
