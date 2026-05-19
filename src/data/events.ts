@@ -86,6 +86,13 @@ export async function getTopEvents(limit: number = 3): Promise<Event[]> {
 }
 
 export async function getEventById(id: string): Promise<Event | null> {
+  if (id === 'world-cup-2026') {
+    return getWorldCupEvent();
+  }
+  if (id === 'afronation-portugal-2026') {
+    return getAfronationEvent();
+  }
+
   const { data, error } = await supabase
     .from('events')
     .select('*')

@@ -16,6 +16,10 @@ export default async function EventDetail({ params }: { params: Promise<{ id: st
     redirect('/world-cup');
   }
 
+  if (event.id === 'afronation-portugal-2026') {
+    redirect('/afronation');
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 pb-24">
       {/* Event Hero */}
