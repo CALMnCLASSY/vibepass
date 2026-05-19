@@ -1,9 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { Tag, CheckCircle, Loader2, Calendar, MapPin, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { getMatchById } from '@/data/worldcup';
+import { supabase } from '@/lib/supabase';
 
 const TICKET_CATEGORIES = [
   'General Admission',
@@ -30,6 +32,77 @@ export default function SellTicketPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  const [eventName, setEventName] = useState<string>('Your Tickets');
+  const [categories, setCategories] = useState<string[]>(TICKET_CATEGORIES);
+
+  useEffect(() => {
+    async function loadEvent() {
+      if (!eventId) return;
+
+      // 1. Check if hardcoded Afronation
+      if (eventId === 'afronation-portugal-2026') {
+        setEventName('Afro Nation Portugal 2026');
+        setCategories([
+          '2026 General Admission Ticket',
+          '2026 VIP Ticket',
+          '2026 Golden Ticket'
+        ]);
+        return;
+      }
+
+      // 2. Check if World Cup Match
+      if (eventId.startsWith('m')) {
+        const match = getMatchById(eventId);
+        if (match) {
+          setEventName(`FIFA World Cup 2026™: ${match.home_team} vs ${match.away_team}`);
+        } else {
+          setEventName('FIFA World Cup 2026 Match');
+        }
+        setCategories([
+          'Standard Match Ticket',
+          'Premium Seating',
+          'Pitchside Lounge',
+          'Trophy Lounge'
+        ]);
+        return;
+      }
+
+      // 3. Check if World Cup Hospitality
+      if (eventId.includes('package') || eventId.includes('series') || eventId.includes('pass') || eventId === 'world-cup-2026') {
+        setEventName('FIFA World Cup 2026™ Hospitality');
+        setCategories([
+          'Venue Series',
+          'Group Stage Pass',
+          'Knockout Package'
+        ]);
+        return;
+      }
+
+      // 4. Standard Event from Supabase
+      try {
+        const { data, error } = await supabase
+          .from('events')
+          .select('name')
+          .eq('id', eventId)
+          .single();
+        if (data && !error) {
+          setEventName(data.name);
+        }
+      } catch (err) {
+        console.error('Error fetching event details for sell page:', err);
+      }
+      setCategories([
+        'General Admission',
+        'Standard Seating',
+        'Premium Seating',
+        'VIP / Hospitality',
+        'Other'
+      ]);
+    }
+
+    loadEvent();
+  }, [eventId]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -103,7 +176,7 @@ export default function SellTicketPage() {
             <Tag className="w-4 h-4" /> Sell Your Tickets
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 leading-tight">
-            List Your Tickets
+            List Your Tickets for {eventName}
           </h1>
           <p className="text-slate-300 text-lg max-w-xl">
             Have original tickets you can&apos;t use? List them on VibePass and we&apos;ll connect you with verified buyers. No hassle, just vibes.
@@ -167,7 +240,7 @@ export default function SellTicketPage() {
                 className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all text-slate-900 bg-white"
               >
                 <option value="" disabled>Select a ticket category…</option>
-                {TICKET_CATEGORIES.map((cat) => (
+                {categories.map((cat) => (
                   <option key={cat} value={cat}>{cat}</option>
                 ))}
               </select>

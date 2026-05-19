@@ -20,9 +20,6 @@ export default function AfronationLayout({ children }: { children: React.ReactNo
             </div>
             <div className="hidden lg:flex items-center space-x-10 font-bold text-[15px] tracking-[0.05em]">
               <Link href="/afronation" className="hover:text-black transition-colors hover:underline underline-offset-4">LINE UP</Link>
-              <Link href="/afronation" className="hover:text-black transition-colors hover:underline underline-offset-4">HOTELS</Link>
-              <Link href="/afronation" className="hover:text-black transition-colors hover:underline underline-offset-4">SKY TERRACE</Link>
-              <Link href="/afronation" className="hover:text-black transition-colors hover:underline underline-offset-4">MERCH</Link>
               <Link href="/afronation/book-tickets" className="hover:text-black transition-colors hover:underline underline-offset-4">INFO</Link>
             </div>
             <div className="flex items-center">
