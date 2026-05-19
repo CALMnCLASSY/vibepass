@@ -14,18 +14,15 @@ export default function AfronationLayout({ children }: { children: React.ReactNo
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-24 items-center">
             <div className="flex items-center gap-4">
-              <Link href="/afronation" className="font-black text-3xl tracking-tighter text-white">
-                AFRO NATION
-              </Link>
+              <Link href="/" className="font-black text-2xl hover:text-black transition-colors hover:underline underline-offset-4">VIBEPASS HOME</Link>
             </div>
             <div className="hidden lg:flex items-center space-x-10 font-bold text-[15px] tracking-[0.05em]">
-              <Link href="/" className="hover:text-black transition-colors hover:underline underline-offset-4">VIBEPASS HOME</Link>
               <Link href="/afronation" className="hover:text-black transition-colors hover:underline underline-offset-4">LINE UP</Link>
               <Link href="/afronation/book-tickets" className="hover:text-black transition-colors hover:underline underline-offset-4">INFO</Link>
             </div>
             <div className="flex items-center">
-              <Link 
-                href="/afronation/book-tickets" 
+              <Link
+                href="/afronation/book-tickets"
                 className="bg-[#ff651f] text-white px-8 py-3.5 font-bold text-lg hover:bg-black transition-colors border-2 border-transparent hover:border-[#ff651f]"
               >
                 BUY TICKETS

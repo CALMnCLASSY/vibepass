@@ -38,7 +38,7 @@ export function getAfronationEvent(): Event {
     name: 'Afro Nation Portugal 2026',
     date: '2026-07-09T17:00:00',
     location: 'Praia da Rocha, Portimão, Portugal',
-    image_url: 'https://images.unsplash.com/photo-1540039155732-d6749b932507?q=80&w=2070&auto=format&fit=crop',
+    image_url: 'https://www.243stars.com/assets/img/2025/06/Afro-Nation-Portugal-2025-2049309486.jpeg',
     price: 479.68,
     organizer: 'Afro Nation',
     description: 'The world\'s biggest Afrobeats festival returns to the stunning beach of Portimão, Portugal.',
@@ -62,7 +62,7 @@ export async function getEvents(): Promise<Event[]> {
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
-  
+
   return [getWorldCupEvent(), getAfronationEvent(), ...events];
 }
 
@@ -81,7 +81,7 @@ export async function getTopEvents(limit: number = 3): Promise<Event[]> {
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
-  
+
   return [getWorldCupEvent(), getAfronationEvent(), ...events].slice(0, limit);
 }
 
