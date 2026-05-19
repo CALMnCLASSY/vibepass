@@ -32,6 +32,22 @@ export function getWorldCupEvent(): Event {
   };
 }
 
+export function getAfronationEvent(): Event {
+  return {
+    id: 'afronation-portugal-2026',
+    name: 'Afro Nation Portugal 2026',
+    date: '2026-07-09T17:00:00',
+    location: 'Praia da Rocha, Portimão, Portugal',
+    image_url: 'https://images.unsplash.com/photo-1540039155732-d6749b932507?q=80&w=2070&auto=format&fit=crop',
+    price: 479.68,
+    organizer: 'Afro Nation',
+    description: 'The world\'s biggest Afrobeats festival returns to the stunning beach of Portimão, Portugal.',
+    long_description: 'Afro Nation Portugal returns in July 2026 to bring the best of Afrobeats, Amapiano, dancehall, and R&B to the beautiful sands of Praia da Rocha. Enjoy three days of music, sun, culture, and high-energy performances from the world\'s biggest stars.',
+    is_active: true,
+    created_at: new Date().toISOString(),
+  };
+}
+
 export async function getEvents(): Promise<Event[]> {
   const { data, error } = await supabase
     .from('events')
@@ -41,13 +57,13 @@ export async function getEvents(): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching events:', error);
-    return [getWorldCupEvent()];
+    return [getWorldCupEvent(), getAfronationEvent()];
   }
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
   
-  return [getWorldCupEvent(), ...events];
+  return [getWorldCupEvent(), getAfronationEvent(), ...events];
 }
 
 export async function getTopEvents(limit: number = 3): Promise<Event[]> {
@@ -60,13 +76,13 @@ export async function getTopEvents(limit: number = 3): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching top events:', error);
-    return [getWorldCupEvent()];
+    return [getWorldCupEvent(), getAfronationEvent()];
   }
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
   
-  return [getWorldCupEvent(), ...events].slice(0, limit);
+  return [getWorldCupEvent(), getAfronationEvent(), ...events].slice(0, limit);
 }
 
 export async function getEventById(id: string): Promise<Event | null> {

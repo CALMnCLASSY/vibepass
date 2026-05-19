@@ -1,7 +1,13 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Ticket } from 'lucide-react';
 
 export function Footer() {
+  const pathname = usePathname();
+  if (pathname?.startsWith('/afronation')) return null;
+
   return (
     <footer className="bg-white border-t border-slate-200 mt-20 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

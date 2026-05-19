@@ -1,7 +1,13 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Ticket } from 'lucide-react';
 
 export function Navbar() {
+  const pathname = usePathname();
+  if (pathname?.startsWith('/afronation')) return null;
+
   return (
     <nav className="fixed top-0 w-full z-50 glass">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

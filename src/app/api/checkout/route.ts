@@ -26,9 +26,10 @@ export async function POST(request: Request) {
 
     const isWorldCupMatch = eventId.startsWith('m');
     const isHospitality = eventId.includes('package') || eventId.includes('series') || eventId.includes('pass');
+    const isAfronation = eventId.startsWith('afronation');
 
-    if (isWorldCupMatch || isHospitality) {
-      // 1. World Cup Match or Hospitality Package
+    if (isWorldCupMatch || isHospitality || isAfronation) {
+      // 1. World Cup Match, Hospitality Package, or Afronation
       if (isWorldCupMatch) {
         const match = getMatchById(eventId);
         if (!match) {
@@ -40,6 +41,11 @@ export async function POST(request: Request) {
         eventPrice = price || 450;
         eventDate = match.date;
         eventLocation = venue ? `${venue.name}, ${venue.city}, ${venue.country}` : 'TBA';
+      } else if (isAfronation) {
+        eventName = `Afro Nation Portugal 2026: ${categoryName || 'Standard Ticket'}`;
+        eventPrice = price || 479.68;
+        eventDate = '2026-07-09';
+        eventLocation = 'Praia da Rocha, Portimão, Portugal';
       } else {
         eventName = `FIFA World Cup 2026™ — ${categoryName || 'Hospitality Package'}`;
         eventPrice = price || 3200;
@@ -49,9 +55,10 @@ export async function POST(request: Request) {
       
       isMatch = true;
 
-      // Create a premium mock ticket record since matches/packages are not in Supabase events table
+      // Create a premium mock ticket record
+      const idPrefix = isAfronation ? 't-an' : 't-wc';
       ticket = {
-        id: `t-wc-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
+        id: `${idPrefix}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
         event_id: eventId,
         guest_email: email,
         quantity: quantity,
