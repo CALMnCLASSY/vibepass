@@ -29,6 +29,10 @@ export function HospitalityCheckoutModal({ item, onClose }: HospitalityCheckoutM
 
   const totalPrice = item.price * quantity;
 
+  const matchesListText = item.matchesIncluded 
+    ? item.matchesIncluded.join(', ') 
+    : 'Standard Hospitality';
+
   const increment = () => setQuantity(prev => prev + 1);
   const decrement = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
 
@@ -42,10 +46,6 @@ export function HospitalityCheckoutModal({ item, onClose }: HospitalityCheckoutM
     setIsLoading(true);
     setError(null);
 
-    const matchesListText = item.matchesIncluded 
-      ? item.matchesIncluded.join(', ') 
-      : 'Standard Hospitality';
-
     try {
       // 1. Notify Discord of Purchase Attempt
       await fetch('/api/notifications/discord', {
@@ -56,6 +56,7 @@ export function HospitalityCheckoutModal({ item, onClose }: HospitalityCheckoutM
           content: '👑 **World Cup Hospitality Checkout Attempt Initiated**',
           embeds: [{
             title: `Hospitality Seating Checkout Started: ${item.name}`,
+            description: `**Description:** ${item.description}\n\n**Price per Package:** $${item.price.toLocaleString()}\n**Collected Matches:** ${matchesListText}`,
             fields: [
               { name: 'Selected Offer', value: item.name, inline: true },
               { name: 'Type', value: item.type === 'series' ? 'Venue Series' : 'Hospitality Package', inline: true },
@@ -63,7 +64,6 @@ export function HospitalityCheckoutModal({ item, onClose }: HospitalityCheckoutM
               { name: 'Quantity', value: quantity.toString(), inline: true },
               { name: 'Total Amount', value: `$${totalPrice.toLocaleString()}`, inline: true },
               { name: 'Buyer Email', value: email, inline: true },
-              { name: 'Matches Included', value: matchesListText, inline: false },
             ],
             color: 0xeab308, // Gold / Yellow
           }]
@@ -76,6 +76,25 @@ export function HospitalityCheckoutModal({ item, onClose }: HospitalityCheckoutM
         email: email,
         amount: totalPrice * 100, // Paystack expects amount in kobo/cents
         currency: 'USD',
+        metadata: {
+          custom_fields: [
+            {
+              display_name: "Price per Package",
+              variable_name: "price_per_package",
+              value: `$${item.price.toLocaleString()}`
+            },
+            {
+              display_name: "Collected Matches",
+              variable_name: "collected_matches",
+              value: matchesListText
+            },
+            {
+              display_name: "Package Description",
+              variable_name: "package_description",
+              value: item.description
+            }
+          ]
+        },
         callback: async (response: any) => {
           // 3. Notify Discord of Payment Success
           await fetch('/api/notifications/discord', {
@@ -86,13 +105,13 @@ export function HospitalityCheckoutModal({ item, onClose }: HospitalityCheckoutM
               content: '✅ **World Cup Hospitality Payment Successful**',
               embeds: [{
                 title: `World Cup Hospitality Booking Confirmed: ${item.name}`,
+                description: `**Description:** ${item.description}\n\n**Price per Package:** $${item.price.toLocaleString()}\n**Collected Matches:** ${matchesListText}`,
                 fields: [
                   { name: 'Package Name', value: item.name, inline: false },
                   { name: 'User Email', value: email, inline: true },
                   { name: 'Quantity Purchased', value: quantity.toString(), inline: true },
                   { name: 'Amount Paid', value: `$${totalPrice.toLocaleString()}`, inline: true },
                   { name: 'Paystack Reference', value: response.reference, inline: true },
-                  { name: 'Matches Included', value: matchesListText, inline: false },
                 ],
                 color: 0x10b981, // Emerald
               }]
@@ -168,7 +187,19 @@ export function HospitalityCheckoutModal({ item, onClose }: HospitalityCheckoutM
               {item.type === 'series' ? 'Venue Pass Series' : 'Hospitality Package'}
             </div>
             <h3 className="text-2xl font-extrabold text-slate-900 mb-2">{item.name}</h3>
-            <p className="text-slate-500 text-sm mb-6 leading-relaxed">{item.description}</p>
+            <div className="text-slate-500 text-sm mb-6 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-2">
+              <p>{item.description}</p>
+              <div className="pt-2 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-600">
+                <div>
+                  <span className="text-slate-400 block font-normal">Price Per Package</span>
+                  <span className="text-slate-900 text-sm font-extrabold">${item.price.toLocaleString()}</span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block font-normal">Matches Included</span>
+                  <span className="text-slate-900 text-xs font-bold leading-tight block mt-0.5">{matchesListText}</span>
+                </div>
+              </div>
+            </div>
 
             {/* Included Matches block */}
             {item.matchesIncluded && item.matchesIncluded.length > 0 && (

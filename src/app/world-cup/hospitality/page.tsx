@@ -203,6 +203,13 @@ export default function HospitalityPage() {
                       description: pkg.description,
                       price: pkg.price_from,
                       features: pkg.features,
+                      matchesIncluded: pkg.id === 'group-stage-pass'
+                        ? ["All group stage matches at selected venue"]
+                        : pkg.id === 'knockout-package'
+                        ? ["All knockout stage matches from the Round of 32 through the Final"]
+                        : pkg.id === 'final-experience'
+                        ? ["The FIFA World Cup 2026™ Final Match"]
+                        : ["Official hospitality match access"],
                       type: 'package'
                     })}
                     className="mt-auto inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold hover:shadow-lg transition-all text-sm"
