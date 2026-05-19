@@ -40,15 +40,16 @@ export default function AfronationHome() {
           <h2 className="text-5xl md:text-7xl font-black mb-16 text-white uppercase tracking-tighter">
             Phase 1 <span className="text-[#feaa1e]">Lineup</span>
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {['BURNA BOY', 'WIZKID', 'DAVIDO', 'REMA', 'ASAKE', 'TEMS'].map((artist, idx) => (
-              <div key={idx} className="group relative aspect-[4/5] bg-zinc-900 overflow-hidden cursor-pointer">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10 transition-opacity group-hover:opacity-70" />
-                <div className="absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-4 group-hover:translate-y-0 transition-transform">
-                  <h3 className="text-4xl font-black text-white tracking-tighter uppercase">{artist}</h3>
-                  <div className="w-12 h-1 bg-[#feaa1e] mt-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-              </div>
+          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-4 max-w-4xl mx-auto">
+            {['BURNA BOY', 'WIZKID', 'DAVIDO', 'REMA', 'ASAKE', 'TEMS'].map((artist, idx, arr) => (
+              <span key={idx} className="flex items-center">
+                <span className="text-4xl md:text-6xl font-extrabold text-white hover:text-[#feaa1e] transition-colors cursor-pointer uppercase tracking-tighter">
+                  {artist}
+                </span>
+                {idx < arr.length - 1 && (
+                  <span className="text-[#ff651f] ml-6 text-2xl md:text-3xl font-black">•</span>
+                )}
+              </span>
             ))}
           </div>
           <div className="mt-20">
