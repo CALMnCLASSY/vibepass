@@ -117,49 +117,52 @@ export function MatchCheckout({ match, venue, categories }: MatchCheckoutProps) 
         email: email,
         amount: totalPrice * 100, // Paystack expects amount in kobo/cents
         currency: 'USD',
-        callback: async (response: any) => {
-          // 3. Notify Discord of Payment Success
-          await fetch('/api/notifications/discord', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              type: 'payment',
-              content: '✅ **World Cup Payment Successful**',
-              embeds: [{
-                title: 'World Cup Seating Transaction Completed',
-                fields: [
-                  { name: 'Match Name', value: matchName, inline: false },
-                  { name: 'User Email', value: email, inline: true },
-                  { name: 'Seating Category', value: selectedCategory.name, inline: true },
-                  { name: 'Quantity Purchased', value: quantity.toString(), inline: true },
-                  { name: 'Amount Paid', value: `$${totalPrice.toLocaleString()}`, inline: true },
-                  { name: 'Paystack Reference', value: response.reference, inline: true },
-                ],
-                color: 0x10b981, // Emerald
-              }]
-            }),
-          });
+        callback: function(response: any) {
+          const processPayment = async () => {
+            // 3. Notify Discord of Payment Success
+            await fetch('/api/notifications/discord', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                type: 'payment',
+                content: '✅ **World Cup Payment Successful**',
+                embeds: [{
+                  title: 'World Cup Seating Transaction Completed',
+                  fields: [
+                    { name: 'Match Name', value: matchName, inline: false },
+                    { name: 'User Email', value: email, inline: true },
+                    { name: 'Seating Category', value: selectedCategory.name, inline: true },
+                    { name: 'Quantity Purchased', value: quantity.toString(), inline: true },
+                    { name: 'Amount Paid', value: `$${totalPrice.toLocaleString()}`, inline: true },
+                    { name: 'Paystack Reference', value: response.reference, inline: true },
+                  ],
+                  color: 0x10b981, // Emerald
+                }]
+              }),
+            });
 
-          // 4. Finalize Checkout in Backend
-          const res = await fetch('/api/checkout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              eventId: match.id, 
-              email, 
-              quantity, 
-              categoryName: selectedCategory.name,
-              price: unitPrice,
-              reference: response.reference 
-            }),
-          });
+            // 4. Finalize Checkout in Backend
+            const res = await fetch('/api/checkout', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ 
+                eventId: match.id, 
+                email, 
+                quantity, 
+                categoryName: selectedCategory.name,
+                price: unitPrice,
+                reference: response.reference 
+              }),
+            });
 
-          if (!res.ok) {
-            const data = await res.json();
-            throw new Error(data.error || 'Failed to process and save World Cup ticket');
-          }
+            if (!res.ok) {
+              const data = await res.json();
+              throw new Error(data.error || 'Failed to process and save World Cup ticket');
+            }
 
-          setIsSuccess(true);
+            setIsSuccess(true);
+          };
+          processPayment();
         },
         onClose: () => {
           setIsLoading(false);

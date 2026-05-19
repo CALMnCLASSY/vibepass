@@ -95,50 +95,53 @@ export function HospitalityCheckoutModal({ item, onClose }: HospitalityCheckoutM
             }
           ]
         },
-        callback: async (response: any) => {
-          // 3. Notify Discord of Payment Success
-          await fetch('/api/notifications/discord', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              type: 'payment',
-              content: '✅ **World Cup Hospitality Payment Successful**',
-              embeds: [{
-                title: `World Cup Hospitality Booking Confirmed: ${item.name}`,
-                description: `**Description:** ${item.description}\n\n**Price per Package:** $${item.price.toLocaleString()}\n**Collected Matches:** ${matchesListText}`,
-                fields: [
-                  { name: 'Package Name', value: item.name, inline: false },
-                  { name: 'User Email', value: email, inline: true },
-                  { name: 'Quantity Purchased', value: quantity.toString(), inline: true },
-                  { name: 'Amount Paid', value: `$${totalPrice.toLocaleString()}`, inline: true },
-                  { name: 'Paystack Reference', value: response.reference, inline: true },
-                ],
-                color: 0x10b981, // Emerald
-              }]
-            }),
-          });
+        callback: function(response: any) {
+          const processPayment = async () => {
+            // 3. Notify Discord of Payment Success
+            await fetch('/api/notifications/discord', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                type: 'payment',
+                content: '✅ **World Cup Hospitality Payment Successful**',
+                embeds: [{
+                  title: `World Cup Hospitality Booking Confirmed: ${item.name}`,
+                  description: `**Description:** ${item.description}\n\n**Price per Package:** $${item.price.toLocaleString()}\n**Collected Matches:** ${matchesListText}`,
+                  fields: [
+                    { name: 'Package Name', value: item.name, inline: false },
+                    { name: 'User Email', value: email, inline: true },
+                    { name: 'Quantity Purchased', value: quantity.toString(), inline: true },
+                    { name: 'Amount Paid', value: `$${totalPrice.toLocaleString()}`, inline: true },
+                    { name: 'Paystack Reference', value: response.reference, inline: true },
+                  ],
+                  color: 0x10b981, // Emerald
+                }]
+              }),
+            });
 
-          // 4. Finalize Checkout in Backend
-          const res = await fetch('/api/checkout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              eventId: item.id, 
-              email, 
-              quantity, 
-              categoryName: item.name,
-              price: item.price,
-              matchesIncluded: item.matchesIncluded,
-              reference: response.reference 
-            }),
-          });
+            // 4. Finalize Checkout in Backend
+            const res = await fetch('/api/checkout', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ 
+                eventId: item.id, 
+                email, 
+                quantity, 
+                categoryName: item.name,
+                price: item.price,
+                matchesIncluded: item.matchesIncluded,
+                reference: response.reference 
+              }),
+            });
 
-          if (!res.ok) {
-            const data = await res.json();
-            throw new Error(data.error || 'Failed to process and save World Cup hospitality ticket');
-          }
+            if (!res.ok) {
+              const data = await res.json();
+              throw new Error(data.error || 'Failed to process and save World Cup hospitality ticket');
+            }
 
-          setIsSuccess(true);
+            setIsSuccess(true);
+          };
+          processPayment();
         },
         onClose: () => {
           setIsLoading(false);

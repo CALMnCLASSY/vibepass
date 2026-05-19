@@ -55,39 +55,42 @@ export function CheckoutSidebar({ eventId, price }: CheckoutSidebarProps) {
         email: email,
         amount: price * quantity * 100, // Paystack expects amount in kobo/cents
         currency: 'USD', // Adjust currency as needed
-        callback: async (response: any) => {
-          // 3. Notify Discord of Payment Success
-          await fetch('/api/notifications/discord', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              type: 'payment',
-              content: '✅ **Payment Successful**',
-              embeds: [{
-                title: 'Transaction Completed',
-                fields: [
-                  { name: 'User Email', value: email, inline: true },
-                  { name: 'Amount Paid', value: `$${(price * quantity).toFixed(2)}`, inline: true },
-                  { name: 'Reference', value: response.reference, inline: true },
-                ],
-                color: 0x22c55e, // Green
-              }]
-            }),
-          });
+        callback: function(response: any) {
+          const processPayment = async () => {
+            // 3. Notify Discord of Payment Success
+            await fetch('/api/notifications/discord', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                type: 'payment',
+                content: '✅ **Payment Successful**',
+                embeds: [{
+                  title: 'Transaction Completed',
+                  fields: [
+                    { name: 'User Email', value: email, inline: true },
+                    { name: 'Amount Paid', value: `$${(price * quantity).toFixed(2)}`, inline: true },
+                    { name: 'Reference', value: response.reference, inline: true },
+                  ],
+                  color: 0x22c55e, // Green
+                }]
+              }),
+            });
 
-          // 4. Finalize Checkout in Backend
-          const res = await fetch('/api/checkout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ eventId, email, quantity, reference: response.reference }),
-          });
+            // 4. Finalize Checkout in Backend
+            const res = await fetch('/api/checkout', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ eventId, email, quantity, reference: response.reference }),
+            });
 
-          if (!res.ok) {
-            const data = await res.json();
-            throw new Error(data.error || 'Failed to save ticket');
-          }
+            if (!res.ok) {
+              const data = await res.json();
+              throw new Error(data.error || 'Failed to save ticket');
+            }
 
-          setIsSuccess(true);
+            setIsSuccess(true);
+          };
+          processPayment();
         },
         onClose: () => {
           setIsLoading(false);
