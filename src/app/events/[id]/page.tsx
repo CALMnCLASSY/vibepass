@@ -20,6 +20,10 @@ export default async function EventDetail({ params }: { params: Promise<{ id: st
     redirect('/afronation');
   }
 
+  if (event.id === 'tomorrowland-belgium-2026') {
+    redirect('/tomorrowland');
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 pb-24">
       {/* Event Hero */}

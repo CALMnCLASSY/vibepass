@@ -48,6 +48,22 @@ export function getAfronationEvent(): Event {
   };
 }
 
+export function getTomorrowlandEvent(): Event {
+  return {
+    id: 'tomorrowland-belgium-2026',
+    name: 'Tomorrowland Belgium 2026',
+    date: '2026-07-17T12:00:00',
+    location: 'Boom, Belgium',
+    image_url: '/tomorrowland/250725-183050-tlbe25-sl.webp',
+    price: 138,
+    organizer: 'We Are One World',
+    description: 'Experience the magic of Tomorrowland in Boom, Belgium. Regular Day Passes, Pleasure Day Passes, and Comfort Day Passes available.',
+    long_description: 'Tomorrowland Belgium returns in July 2026. Prepare for a magnificent new chapter with the world\'s best electronic music acts, breathtaking stage designs, and an immersive wonderland of music and art.',
+    is_active: true,
+    created_at: new Date().toISOString(),
+  };
+}
+
 export async function getEvents(): Promise<Event[]> {
   const { data, error } = await supabase
     .from('events')
@@ -57,13 +73,13 @@ export async function getEvents(): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching events:', error);
-    return [getWorldCupEvent(), getAfronationEvent()];
+    return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent()];
   }
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
 
-  return [getWorldCupEvent(), getAfronationEvent(), ...events];
+  return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), ...events];
 }
 
 export async function getTopEvents(limit: number = 3): Promise<Event[]> {
@@ -76,13 +92,13 @@ export async function getTopEvents(limit: number = 3): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching top events:', error);
-    return [getWorldCupEvent(), getAfronationEvent()];
+    return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent()];
   }
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
 
-  return [getWorldCupEvent(), getAfronationEvent(), ...events].slice(0, limit);
+  return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), ...events].slice(0, limit);
 }
 
 export async function getEventById(id: string): Promise<Event | null> {
@@ -91,6 +107,9 @@ export async function getEventById(id: string): Promise<Event | null> {
   }
   if (id === 'afronation-portugal-2026') {
     return getAfronationEvent();
+  }
+  if (id === 'tomorrowland-belgium-2026') {
+    return getTomorrowlandEvent();
   }
 
   const { data, error } = await supabase

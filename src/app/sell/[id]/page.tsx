@@ -51,7 +51,18 @@ export default function SellTicketPage() {
         return;
       }
 
-      // 2. Check if World Cup Match
+      // 2. Check if Tomorrowland Belgium
+      if (eventId === 'tomorrowland-belgium-2026') {
+        setEventName('Tomorrowland Belgium 2026');
+        setCategories([
+          'Regular Day Pass',
+          'Pleasure Day Pass',
+          'Comfort Day Pass'
+        ]);
+        return;
+      }
+
+      // 3. Check if World Cup Match
       if (eventId.startsWith('m')) {
         const match = getMatchById(eventId);
         if (match) {
