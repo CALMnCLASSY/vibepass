@@ -86,6 +86,18 @@ export default async function EventDetail({ params }: { params: Promise<{ id: st
                     {event.long_description || event.description}
                   </p>
                 </div>
+                {event.ticket_url && (
+                  <div className="mt-8">
+                    <a
+                      href={event.ticket_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition hover:bg-blue-700"
+                    >
+                      Visit official ticket site
+                    </a>
+                  </div>
+                )}
               </div>
             </section>
           </div>

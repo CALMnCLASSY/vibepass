@@ -10,6 +10,7 @@ export type Event = {
   organizer: string;
   description: string;
   long_description: string;
+  ticket_url?: string;
   is_active: boolean;
   created_at: string;
   is_world_cup?: boolean;
@@ -64,6 +65,23 @@ export function getTomorrowlandEvent(): Event {
   };
 }
 
+export function getMonacoGrandPrixEvent(): Event {
+  return {
+    id: 'monaco-grand-prix-2026',
+    name: 'Monaco Grand Prix 2026',
+    date: '2026-05-24T14:00:00',
+    location: 'Monte Carlo, Monaco',
+    image_url: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop',
+    price: 720,
+    organizer: 'Formula 1',
+    description: 'The iconic Monaco Grand Prix returns with street racing through the heart of Monte Carlo and legendary glamour on the Côte d’Azur.',
+    long_description: 'Experience the ultimate Formula 1 spectacle at Monaco Grand Prix 2026. The world\'s most famous street circuit delivers dramatic racing through Monte Carlo, legendary tight turns, and breathtaking harbor views. Use the official ticket site to compare premium access and hospitality options before booking.',
+    ticket_url: 'https://tickets.formula1.com/en/f1-3202-monaco',
+    is_active: true,
+    created_at: new Date().toISOString(),
+  };
+}
+
 export async function getEvents(): Promise<Event[]> {
   const { data, error } = await supabase
     .from('events')
@@ -79,7 +97,7 @@ export async function getEvents(): Promise<Event[]> {
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
 
-  return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), ...events];
+  return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events];
 }
 
 export async function getTopEvents(limit: number = 3): Promise<Event[]> {
@@ -98,7 +116,7 @@ export async function getTopEvents(limit: number = 3): Promise<Event[]> {
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
 
-  return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), ...events].slice(0, limit);
+  return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events].slice(0, limit);
 }
 
 export async function getEventById(id: string): Promise<Event | null> {
@@ -110,6 +128,10 @@ export async function getEventById(id: string): Promise<Event | null> {
   }
   if (id === 'tomorrowland-belgium-2026') {
     return getTomorrowlandEvent();
+  }
+
+  if (id === 'monaco-grand-prix-2026') {
+    return getMonacoGrandPrixEvent();
   }
 
   const { data, error } = await supabase
