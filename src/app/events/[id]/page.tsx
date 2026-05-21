@@ -20,6 +20,10 @@ export default async function EventDetail({ params }: { params: Promise<{ id: st
     redirect('/afronation');
   }
 
+  if (event.id === 'monaco-grand-prix-2026') {
+    redirect('/monaco-grand-prix-2026');
+  }
+
   if (event.id === 'tomorrowland-belgium-2026') {
     redirect('/tomorrowland');
   }

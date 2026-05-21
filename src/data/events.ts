@@ -75,7 +75,7 @@ export function getMonacoGrandPrixEvent(): Event {
     price: 720,
     organizer: 'Formula 1',
     description: 'The iconic Monaco Grand Prix returns with street racing through the heart of Monte Carlo and legendary glamour on the Côte d’Azur.',
-    long_description: 'Experience the ultimate Formula 1 spectacle at Monaco Grand Prix 2026. The world\'s most famous street circuit delivers dramatic racing through Monte Carlo, legendary tight turns, and breathtaking harbor views. Use the official ticket site to compare premium access and hospitality options before booking.',
+    long_description: 'Experience the ultimate Formula 1 spectacle at Monaco Grand Prix 2026. The world\'s most famous street circuit delivers dramatic racing through Monte Carlo, legendary tight turns, and breathtaking harbor views. Book premium grandstand and hospitality-style access directly through VibePass.',
     ticket_url: 'https://tickets.formula1.com/en/f1-3202-monaco',
     is_active: true,
     created_at: new Date().toISOString(),
