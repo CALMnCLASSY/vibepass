@@ -20,7 +20,7 @@ export default async function EventDetail({ params }: { params: Promise<{ id: st
     redirect('/afronation');
   }
 
-  if (event.id === 'monaco-grand-prix-2026') {
+  if (event.id === 'monaco-grand-prix-2026' || event.ticket_url === 'https://tickets.formula1.com/en/f1-3202-monaco') {
     redirect('/monaco-grand-prix-2026');
   }
 

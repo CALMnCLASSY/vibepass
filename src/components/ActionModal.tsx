@@ -22,13 +22,13 @@ export function ActionModal({ event, onClose }: ActionModalProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (event) {
-      // Trigger animation after mount
-      const t = setTimeout(() => setIsVisible(true), 10);
-      return () => clearTimeout(t);
-    } else {
-      setIsVisible(false);
+    if (!event) {
+      return;
     }
+
+    // Trigger animation after mount
+    const t = setTimeout(() => setIsVisible(true), 10);
+    return () => clearTimeout(t);
   }, [event]);
 
   if (!event) return null;
@@ -41,7 +41,11 @@ export function ActionModal({ event, onClose }: ActionModalProps) {
   const handleBuy = () => {
     handleClose();
     setTimeout(() => {
-      router.push(event.is_world_cup ? '/world-cup' : `/events/${event.id}`);
+      if (event.id === 'monaco-grand-prix-2026') {
+        router.push('/monaco-grand-prix-2026');
+      } else {
+        router.push(event.is_world_cup ? '/world-cup' : `/events/${event.id}`);
+      }
     }, 250);
   };
 
@@ -135,7 +139,7 @@ export function ActionModal({ event, onClose }: ActionModalProps) {
               Sell Tickets
             </h3>
             <p className="text-sm text-slate-500 group-hover:text-emerald-100 transition-colors">
-              List your original tickets and we'll handle the rest.
+              List your original tickets and we&apos;ll handle the rest.
             </p>
             <div className="mt-4 flex items-center text-emerald-600 group-hover:text-white font-semibold text-sm transition-colors">
               List tickets <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
