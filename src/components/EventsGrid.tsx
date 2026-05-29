@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, MapPin } from 'lucide-react';
 import { ActionModal } from './ActionModal';
+import { AvailabilityBadge } from './AvailabilityBadge';
 
 type Event = {
   id: string;
@@ -37,6 +38,7 @@ export function EventsGrid({ events }: { events: Event[] }) {
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
+                <AvailabilityBadge ticketId={event.id} />
                 <div className="absolute bottom-5 left-5 z-20">
                   <span className="bg-white/95 text-blue-600 px-4 py-1.5 rounded-full text-sm font-bold shadow-md">
                     From ${event.price}

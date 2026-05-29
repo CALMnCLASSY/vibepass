@@ -56,7 +56,12 @@ This project is not a generic ticket site: it is a conversion-focused, fan-first
   2. Ensure the event object includes: `id`, `name`, `date`, `location`, `image_url`, `price`, `organizer`, `description`, `long_description`, `is_active`, `created_at`.
   3. If the event is a major flagship event and needs a dedicated page, create a new route under `src/app/` and a brand-specific layout if necessary.
   4. Ensure `EventsGrid` and `ActionModal` render the event card consistently and route correctly with `router.push`.
-  5. Add any event-specific checkout component only when the event has unique payment or bundle behavior.
+  5. **Always import and add the `AvailabilityBadge` component** to any new event pages or ticket cards:
+     - Import: `import { AvailabilityBadge } from "@/components/AvailabilityBadge";`
+     - Usage: `<AvailabilityBadge ticketId={ticketOrEventId} className="top-4 right-4" />` for overlays on images or cards
+     - Utility: `getAvailabilityText()` from `@/lib/ticketAvailability.ts` returns "X available" text (10-60 range)
+     - The badge ensures new events show realistic ticket availability numbers, making the site look active and trustworthy
+  6. Add any event-specific checkout component only when the event has unique payment or bundle behavior.
 
 - For World Cup matches and hospitality:
   1. Add match objects into `src/data/worldcup.ts` and ensure each match has a unique `id`, `home_team`, `away_team`, `date`, `time`, `venue_id`, `stage`, `price`, and ticket category data.
@@ -84,6 +89,12 @@ This project is not a generic ticket site: it is a conversion-focused, fan-first
 ## Appendices & Change Logs
 
 - `2026-05-21`: Created long-term project memory file describing VibePass architecture, event flow, rules, and active World Cup milestone.
+- `2026-05-29`: Implemented ticket availability banner system across all event pages:
+  - Created `src/lib/ticketAvailability.ts` with hash-based randomization (10-60 tickets per ID)
+  - Created reusable `src/components/AvailabilityBadge.tsx` component with overlay and badge variants
+  - Integrated badges into 6+ event pages: World Cup matches, Afronation, Tomorrowland, Monaco, EventsGrid, World Cup Hospitality
+  - Feature uses deterministic hashing so same ticket always shows same availability (prevents confusion on page refresh)
+  - Future events must include this banner for consistent "live marketplace" appearance
 - Future sessions should append bullet entries here with date, changes made, and notes for next-agent actions.
 
 ### Session log template for future agents

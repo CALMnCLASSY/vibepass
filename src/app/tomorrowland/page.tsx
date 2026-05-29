@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Calendar, MapPin, Info } from 'lucide-react';
 import { getTomorrowlandEvent } from '@/data/events';
 import { TomorrowlandCheckoutModal } from '@/components/TomorrowlandCheckoutModal';
+import { AvailabilityBadge } from '@/components/AvailabilityBadge';
 
 const ticketOptions = [
   {
@@ -119,8 +120,9 @@ export default function TomorrowlandPage() {
                     setSelectedTicket(ticket);
                     setIsModalOpen(true);
                   }}
-                  className={`rounded-[2rem] border p-6 text-left transition-all ${selectedTicket.id === ticket.id ? 'border-violet-500 bg-violet-500/10 shadow-xl' : 'border-slate-800 bg-slate-900 hover:border-violet-500 hover:bg-slate-900/80'}`}
+                  className={`rounded-[2rem] border p-6 text-left transition-all relative ${selectedTicket.id === ticket.id ? 'border-violet-500 bg-violet-500/10 shadow-xl' : 'border-slate-800 bg-slate-900 hover:border-violet-500 hover:bg-slate-900/80'}`}
                 >
+                  <AvailabilityBadge ticketId={ticket.id} className="top-4 right-4" />
                   <div className="flex items-center justify-between gap-4 mb-5">
                     <div>
                       <h3 className="text-xl font-black text-white">{ticket.name}</h3>

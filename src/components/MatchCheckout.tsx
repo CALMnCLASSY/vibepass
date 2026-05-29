@@ -9,6 +9,7 @@ import {
   ChevronRight, 
   AlertTriangle 
 } from 'lucide-react';
+import { AvailabilityBadge } from './AvailabilityBadge';
 
 type Match = {
   id: string;
@@ -225,6 +226,7 @@ export function MatchCheckout({ match, venue, categories }: MatchCheckoutProps) 
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
+                  <AvailabilityBadge ticketId={cat.id} variant="overlay" />
                   <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
                     <span className="text-white font-extrabold text-lg bg-blue-600/90 px-3 py-1 rounded-full border border-blue-400/30">
                       ${price.toLocaleString()}

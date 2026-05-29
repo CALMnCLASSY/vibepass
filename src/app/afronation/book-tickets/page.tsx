@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { AfronationCheckoutModal } from '@/components/AfronationCheckoutModal';
+import { AvailabilityBadge } from '@/components/AvailabilityBadge';
 import { Check, ShieldCheck, HelpCircle } from 'lucide-react';
 
 type SelectedItem = {
@@ -75,6 +76,7 @@ export default function AfronationBookTickets() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {tickets.map((ticket) => (
             <div key={ticket.id} className="bg-zinc-950 border border-zinc-800 p-8 flex flex-col justify-between group hover:border-[#feaa1e] transition-colors relative duration-300">
+              <AvailabilityBadge ticketId={ticket.id} className="top-4 right-4" />
               <div>
                 <h3 className="text-2xl font-black uppercase text-white tracking-tighter mb-4">{ticket.name}</h3>
                 <p className="text-zinc-400 text-sm mb-6 leading-relaxed min-h-[80px]">

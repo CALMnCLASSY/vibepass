@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Calendar, MapPin, Info, Sparkles } from 'lucide-react';
 import { getMonacoGrandPrixEvent } from '@/data/events';
 import { MonacoCheckoutModal } from '@/components/MonacoCheckoutModal';
+import { AvailabilityBadge } from '@/components/AvailabilityBadge';
 
 const ticketOptions = [
   {
@@ -146,8 +147,9 @@ export default function MonacoGrandPrixPage() {
                     setSelectedTicket(ticket);
                     setIsModalOpen(true);
                   }}
-                  className={`rounded-[2rem] border p-8 text-left transition-all ${selectedTicket.id === ticket.id ? 'border-rose-500 bg-rose-500/10 shadow-2xl shadow-rose-500/10' : 'border-slate-800 bg-slate-900/90 hover:border-rose-500 hover:bg-slate-900/80'}`}
+                  className={`rounded-[2rem] border p-8 text-left transition-all relative ${selectedTicket.id === ticket.id ? 'border-rose-500 bg-rose-500/10 shadow-2xl shadow-rose-500/10' : 'border-slate-800 bg-slate-900/90 hover:border-rose-500 hover:bg-slate-900/80'}`}
                 >
+                  <AvailabilityBadge ticketId={ticket.id} className="top-4 right-4" />
                   <div className="flex items-center justify-between gap-4 mb-4">
                     <div>
                       <h3 className="text-2xl font-black text-white">{ticket.name}</h3>

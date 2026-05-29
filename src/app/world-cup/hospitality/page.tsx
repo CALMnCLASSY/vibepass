@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { hospitalityPackages, ticketCategories, venueSeries, venues } from "@/data/worldcup";
 import { HospitalityCheckoutModal } from "@/components/HospitalityCheckoutModal";
+import { AvailabilityBadge } from "@/components/AvailabilityBadge";
 import {
   Crown,
   Check,
@@ -117,7 +118,7 @@ export default function HospitalityPage() {
             {ticketCategories.slice(1).map((cat) => (
               <div
                 key={cat.id}
-                className="glass-card bg-white rounded-2xl overflow-hidden flex flex-col"
+                className="glass-card bg-white rounded-2xl overflow-hidden flex flex-col relative"
               >
                 <div className="relative h-40 w-full overflow-hidden">
                   <Image
@@ -126,6 +127,7 @@ export default function HospitalityPage() {
                     fill
                     className="object-cover"
                   />
+                  <AvailabilityBadge ticketId={cat.id} className="top-2 right-2" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent" />
                   <div className="absolute bottom-3 left-3 right-3">
                     <div className="text-white font-bold">{cat.price_range}</div>
