@@ -90,7 +90,7 @@ export async function getEvents(): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching events:', error);
-    return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent()];
+    return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()];
   }
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
@@ -109,7 +109,7 @@ export async function getTopEvents(limit: number = 3): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching top events:', error);
-    return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent()];
+    return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()].slice(0, limit);
   }
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
