@@ -1,9 +1,14 @@
 import { getEvents } from '@/data/events';
 import { Search } from 'lucide-react';
 import { EventsGrid } from '@/components/EventsGrid';
+import { PastEventsGrid } from '@/components/PastEventsGrid';
 
 export default async function EventsDirectory() {
-  const events = await getEvents();
+  const allEvents = await getEvents();
+  const now = new Date();
+  
+  const upcomingEvents = allEvents.filter(e => new Date(e.date) >= now);
+  const pastEvents = allEvents.filter(e => new Date(e.date) < now);
 
   return (
     <div className="min-h-screen bg-slate-50 pt-10 pb-24">
@@ -28,11 +33,27 @@ export default async function EventsDirectory() {
           </div>
         </div>
 
-        <EventsGrid events={events} />
+        <EventsGrid events={upcomingEvents} />
 
-        {events.length === 0 && (
-          <div className="text-center py-20 text-slate-500 glass-card rounded-3xl max-w-2xl mx-auto">
-            <p className="text-xl font-medium">No events currently available.</p>
+        {upcomingEvents.length === 0 && (
+          <div className="text-center py-20 text-slate-500 glass-card rounded-3xl max-w-2xl mx-auto mb-16">
+            <p className="text-xl font-medium">No active events currently available.</p>
+          </div>
+        )}
+
+        {/* Past Events Section */}
+        {pastEvents.length > 0 && (
+          <div className="mt-24 pt-16 border-t border-slate-200">
+            <div className="mb-12">
+              <h2 className="text-4xl font-extrabold text-slate-900 mb-3">
+                Past <span className="text-slate-500">Events</span>
+              </h2>
+              <p className="text-slate-500 text-lg">
+                Browse our archive of successfully hosted events.
+              </p>
+            </div>
+            
+            <PastEventsGrid events={pastEvents} />
           </div>
         )}
       </div>

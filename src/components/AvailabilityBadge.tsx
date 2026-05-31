@@ -33,7 +33,7 @@ export function AvailabilityBadge({
 
   // Overlay variant (default)
   return (
-    <div className={`absolute top-3 right-3 inline-flex items-center justify-center px-3 py-1.5 rounded-lg bg-emerald-500 text-white text-xs font-bold shadow-lg ${className}`}>
+    <div className={`absolute top-3 right-3 z-20 inline-flex items-center justify-center px-3 py-1.5 rounded-lg bg-emerald-500 text-white text-xs font-bold shadow-lg ${className}`}>
       ✓ {availabilityText}
     </div>
   );

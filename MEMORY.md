@@ -38,16 +38,15 @@ This project is not a generic ticket site: it is a conversion-focused, fan-first
 
 ## Current Active Milestones
 
-1. World Cup ticketing replication:
-   - Build exact replica pages for FIFA World Cup 2026™ based on the official ticketing and hospitality experience.
-   - Use `src/app/world-cup/page.tsx`, `src/data/worldcup.ts`, and associated `matches`, `venues`, and `hospitalityPackages` data.
-   - Ensure users can click a World Cup event card and land on fully branded match and hospitality detail pages.
-2. Event expansion workflow:
-   - Add new events by extending `src/data/events.ts` and/or the Supabase `events` table.
-   - For new event pages, decide if the event needs a dedicated route or can use generic event detail flow under `/events/[id]`.
-3. Improve payment and checkout consistency:
-   - Verify all checkout flows (`CheckoutSidebar`, `MatchCheckout`, `HospitalityCheckoutModal`, `AfroNationCheckoutModal`, `TomorrowlandCheckoutModal`) match the same success/error messaging and Discord notification structure.
-4. Maintain page consistency across event landing pages and checkout journeys.
+1. **Maintenance Mode & Event Expansion:**
+   - The initial replica pages and standard event features (World Cup, Afro Nation, Tomorrowland, Monaco) are completed.
+   - The platform is now in maintenance mode. 
+   - New events will be added occasionally.
+   - Ensure the Past Events logic automatically archives events after their date has passed.
+2. **Checkout Consistency:**
+   - Continue ensuring all checkout modals provide the exact same success/error responses and Discord notification payload structures.
+3. **Availability Badges:**
+   - Ensure dynamic ticket availability badges remain visible across all event grid cards and individual ticket category cards.
 
 ### How to add events
 

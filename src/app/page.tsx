@@ -1,10 +1,15 @@
-import { getTopEvents } from '@/data/events';
+import { getEvents } from '@/data/events';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { EventsGrid } from '@/components/EventsGrid';
+import { PastEventsGrid } from '@/components/PastEventsGrid';
 
 export default async function Home() {
-  const topEvents = await getTopEvents(3);
+  const allEvents = await getEvents();
+  const now = new Date();
+  
+  const upcomingEvents = allEvents.filter(e => new Date(e.date) >= now).slice(0, 3);
+  const pastEvents = allEvents.filter(e => new Date(e.date) < now).slice(0, 3);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -51,15 +56,29 @@ export default async function Home() {
             </Link>
           </div>
 
-          <EventsGrid events={topEvents} />
+          <EventsGrid events={upcomingEvents} />
 
-          {topEvents.length === 0 && (
+          {upcomingEvents.length === 0 && (
             <div className="text-center py-20 text-slate-500 glass-card rounded-3xl mx-auto max-w-2xl">
-              <p className="text-xl font-medium">No events found. Please run the SQL seed script in your Supabase dashboard.</p>
+              <p className="text-xl font-medium">No active events currently available.</p>
             </div>
           )}
         </div>
       </section>
+
+      {/* Past Events Section */}
+      {pastEvents.length > 0 && (
+        <section className="py-24 bg-slate-50 relative border-t border-slate-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mb-16">
+              <h2 className="text-4xl font-bold text-slate-900 mb-4">Past <span className="text-slate-500">Events</span></h2>
+              <p className="text-slate-500 text-lg">Browse highlights from our past flagship experiences.</p>
+            </div>
+
+            <PastEventsGrid events={pastEvents} />
+          </div>
+        </section>
+      )}
     </div>
   );
 }
