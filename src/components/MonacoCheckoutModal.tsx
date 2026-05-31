@@ -95,7 +95,7 @@ export function MonacoCheckoutModal({ item, onClose }: MonacoCheckoutModalProps)
       }
 
       const handler = paystack.setup({
-        key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
+        key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY as string,
         email,
         amount: Math.round(totalPrice * 100),
         currency: 'USD',
