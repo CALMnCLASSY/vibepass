@@ -4,10 +4,17 @@
  * This ensures consistent display across page reloads and different sessions.
  */
 export function getAvailableTickets(ticketId: string): number {
+  // Calculate a 48-hour period value (milliseconds in 48 hours)
+  const periodDuration = 1000 * 60 * 60 * 48;
+  const currentPeriod = Math.floor(Date.now() / periodDuration);
+  
+  // Combine ticketId and the current period string
+  const seedString = `${ticketId}-${currentPeriod}`;
+
   // Simple hash function that generates a number from string
   let hash = 0;
-  for (let i = 0; i < ticketId.length; i++) {
-    const char = ticketId.charCodeAt(i);
+  for (let i = 0; i < seedString.length; i++) {
+    const char = seedString.charCodeAt(i);
     hash = ((hash << 5) - hash) + char;
     hash = hash & hash; // Convert to 32bit integer
   }
