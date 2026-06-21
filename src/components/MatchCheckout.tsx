@@ -114,7 +114,7 @@ export function MatchCheckout({ match, venue, categories }: MatchCheckoutProps) 
 
       // 2. Initialize Flutterwave
       (window as any).FlutterwaveCheckout({
-        public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY || 'FLWPUBK-4b28912f42b436c26942587b0aa3a124-X',
+        public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY || 'FLWPUBK-2e4373dda23b34dd487aa3e6b2444c3f-X',
         tx_ref: `tx-wc-match-${match.id}-${Date.now()}`,
         amount: totalPrice, // Flutterwave expects amount in main currency units
         currency: 'USD',

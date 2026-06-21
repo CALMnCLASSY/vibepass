@@ -100,7 +100,7 @@ export function MonacoCheckoutModal({ item, onClose }: MonacoCheckoutModalProps)
       }
 
       flutterwaveCheckout({
-        public_key: (process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY || 'FLWPUBK-4b28912f42b436c26942587b0aa3a124-X') as string,
+        public_key: (process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY || 'FLWPUBK-2e4373dda23b34dd487aa3e6b2444c3f-X') as string,
         tx_ref: `tx-monaco-${Date.now()}`,
         amount: totalPrice,
         currency: 'USD',
