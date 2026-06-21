@@ -63,79 +63,82 @@ export function TomorrowlandCheckoutModal({ item, onClose }: TomorrowlandCheckou
         }),
       });
 
-      const handler = (window as any).PaystackPop.setup({
-        key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
-        email,
-        amount: Math.round(totalPrice * 100),
+      // 2. Initialize Flutterwave
+      (window as any).FlutterwaveCheckout({
+        public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY || 'FLWPUBK-4b28912f42b436c26942587b0aa3a124-X',
+        tx_ref: `tx-tl-${Date.now()}`,
+        amount: totalPrice, // Flutterwave expects amount in main currency units
         currency: 'USD',
-        metadata: {
-          custom_fields: [
-            {
-              display_name: 'Price per Ticket',
-              variable_name: 'price_per_ticket',
-              value: `$${item.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}`
-            },
-            {
-              display_name: 'Ticket Description',
-              variable_name: 'ticket_description',
-              value: item.description
-            }
-          ]
+        customer: {
+          email,
+        },
+        customizations: {
+          title: "Tomorrowland Checkout",
+          description: `Payment for ${item.name}`,
+        },
+        meta: {
+          price_per_ticket: `$${item.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}`,
+          ticket_description: item.description,
         },
         callback: function(response: any) {
-          const processPayment = async () => {
-            await fetch('/api/notifications/discord', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                type: 'payment',
-                content: '✅ **Tomorrowland Ticket Payment Successful**',
-                embeds: [{
-                  title: `Tomorrowland Booking Confirmed: ${item.name}`,
-                  description: `**Description:** ${item.description}\n\n**Price per Ticket:** $${item.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}`,
-                  fields: [
-                    { name: 'Ticket Name', value: item.name, inline: false },
-                    { name: 'User Email', value: email, inline: true },
-                    { name: 'Quantity Purchased', value: quantity.toString(), inline: true },
-                    { name: 'Amount Paid', value: `$${totalPrice.toLocaleString(undefined, { minimumFractionDigits: 2 })}`, inline: true },
-                    { name: 'Paystack Reference', value: response.reference, inline: true },
-                  ],
-                  color: 0x4f46e5,
-                }]
-              }),
-            });
+          if (response.status === 'successful' || response.status === 'completed') {
+            const processPayment = async () => {
+              const reference = response.transaction_id ? String(response.transaction_id) : (response.tx_ref || `FLW-${Date.now()}`);
 
-            const res = await fetch('/api/checkout', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                eventId: 'tomorrowland-belgium-2026',
-                email,
-                quantity,
-                categoryName: item.name,
-                price: item.price,
-                reference: response.reference,
-              }),
-            });
+              await fetch('/api/notifications/discord', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  type: 'payment',
+                  content: '✅ **Tomorrowland Ticket Payment Successful**',
+                  embeds: [{
+                    title: `Tomorrowland Booking Confirmed: ${item.name}`,
+                    description: `**Description:** ${item.description}\n\n**Price per Ticket:** $${item.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}`,
+                    fields: [
+                      { name: 'Ticket Name', value: item.name, inline: false },
+                      { name: 'User Email', value: email, inline: true },
+                      { name: 'Quantity Purchased', value: quantity.toString(), inline: true },
+                      { name: 'Amount Paid', value: `$${totalPrice.toLocaleString(undefined, { minimumFractionDigits: 2 })}`, inline: true },
+                      { name: 'Reference', value: reference, inline: true },
+                    ],
+                    color: 0x4f46e5,
+                  }]
+                }),
+              });
 
-            if (!res.ok) {
+              const res = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  eventId: 'tomorrowland-belgium-2026',
+                  email,
+                  quantity,
+                  categoryName: item.name,
+                  price: item.price,
+                  reference: reference,
+                }),
+              });
+
+              if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error || 'Failed to process and save Tomorrowland ticket');
+              }
+
               const data = await res.json();
-              throw new Error(data.error || 'Failed to process and save Tomorrowland ticket');
-            }
-
-            const data = await res.json();
-            setTicketId(data.ticket?.id || `TL-${Math.random().toString(36).substr(2, 9).toUpperCase()}`);
-            setIsSuccess(true);
-          };
-          processPayment();
+              setTicketId(data.ticket?.id || `TL-${Math.random().toString(36).substr(2, 9).toUpperCase()}`);
+              setIsSuccess(true);
+            };
+            processPayment();
+          } else {
+            setError('Payment was not successful. Please try again.');
+            setIsLoading(false);
+          }
         },
-        onClose: () => {
+        onclose: () => {
           setIsLoading(false);
           setError('Payment window closed. Please try again.');
         },
       });
-
-      handler.openIframe();
     } catch (err: any) {
       setError(err.message || 'An unexpected error occurred during checkout.');
       setIsLoading(false);

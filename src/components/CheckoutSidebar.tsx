@@ -49,56 +49,68 @@ export function CheckoutSidebar({ eventId, price }: CheckoutSidebarProps) {
         }),
       });
 
-      // 2. Initialize Paystack
-      const handler = (window as any).PaystackPop.setup({
-        key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
-        email: email,
-        amount: price * quantity * 100, // Paystack expects amount in kobo/cents
-        currency: 'USD', // Adjust currency as needed
-        callback: function(response: any) {
-          const processPayment = async () => {
-            // 3. Notify Discord of Payment Success
-            await fetch('/api/notifications/discord', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                type: 'payment',
-                content: '✅ **Payment Successful**',
-                embeds: [{
-                  title: 'Transaction Completed',
-                  fields: [
-                    { name: 'User Email', value: email, inline: true },
-                    { name: 'Amount Paid', value: `$${(price * quantity).toFixed(2)}`, inline: true },
-                    { name: 'Reference', value: response.reference, inline: true },
-                  ],
-                  color: 0x22c55e, // Green
-                }]
-              }),
-            });
-
-            // 4. Finalize Checkout in Backend
-            const res = await fetch('/api/checkout', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ eventId, email, quantity, reference: response.reference }),
-            });
-
-            if (!res.ok) {
-              const data = await res.json();
-              throw new Error(data.error || 'Failed to save ticket');
-            }
-
-            setIsSuccess(true);
-          };
-          processPayment();
+      // 2. Initialize Flutterwave
+      (window as any).FlutterwaveCheckout({
+        public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY || 'FLWPUBK-4b28912f42b436c26942587b0aa3a124-X',
+        tx_ref: `tx-gen-${eventId}-${Date.now()}`,
+        amount: price * quantity, // Flutterwave expects amount in main currency units
+        currency: 'USD',
+        customer: {
+          email: email,
         },
-        onClose: () => {
+        customizations: {
+          title: "VibePass Checkout",
+          description: "Payment for event tickets",
+        },
+        callback: function(response: any) {
+          if (response.status === 'successful' || response.status === 'completed') {
+            const processPayment = async () => {
+              const reference = response.transaction_id ? String(response.transaction_id) : (response.tx_ref || `FLW-${Date.now()}`);
+              
+              // 3. Notify Discord of Payment Success
+              await fetch('/api/notifications/discord', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  type: 'payment',
+                  content: '✅ **Payment Successful**',
+                  embeds: [{
+                    title: 'Transaction Completed',
+                    fields: [
+                      { name: 'User Email', value: email, inline: true },
+                      { name: 'Amount Paid', value: `$${(price * quantity).toFixed(2)}`, inline: true },
+                      { name: 'Reference', value: reference, inline: true },
+                    ],
+                    color: 0x22c55e, // Green
+                  }]
+                }),
+              });
+
+              // 4. Finalize Checkout in Backend
+              const res = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ eventId, email, quantity, reference }),
+              });
+
+              if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error || 'Failed to save ticket');
+              }
+
+              setIsSuccess(true);
+            };
+            processPayment();
+          } else {
+            setError('Payment was not successful. Please try again.');
+            setIsLoading(false);
+          }
+        },
+        onclose: () => {
           setIsLoading(false);
           setError('Payment window closed. Please try again.');
         },
       });
-
-      handler.openIframe();
     } catch (err: any) {
       setError(err.message || 'An unexpected error occurred.');
       setIsLoading(false);

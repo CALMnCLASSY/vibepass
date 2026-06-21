@@ -198,7 +198,7 @@ export default function MonacoGrandPrixPage() {
                     <li>Official 2026 Monaco Grand Prix event</li>
                     <li>Historic street circuit through Monte Carlo</li>
                     <li>Available premium grandstand and hospitality seats</li>
-                    <li>Secure checkout via Paystack + email confirmation</li>
+                    <li>Secure checkout via Flutterwave + email confirmation</li>
                   </ul>
                 </div>
               </div>

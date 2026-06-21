@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script src="https://js.paystack.co/v1/inline.js" strategy="beforeInteractive" />
+        <Script src="https://checkout.flutterwave.com/v3.js" strategy="beforeInteractive" />
       </head>
       <body className={`${outfit.variable} font-sans antialiased flex flex-col min-h-screen`}>
         <SiteVisitNotifier />

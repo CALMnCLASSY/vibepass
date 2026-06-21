@@ -94,11 +94,8 @@ This project is not a generic ticket site: it is a conversion-focused, fan-first
   - Integrated badges into 6+ event pages: World Cup matches, Afronation, Tomorrowland, Monaco, EventsGrid, World Cup Hospitality
   - Feature uses deterministic hashing so same ticket always shows same availability (prevents confusion on page refresh)
   - Future events must include this banner for consistent "live marketplace" appearance
-- Future sessions should append bullet entries here with date, changes made, and notes for next-agent actions.
-
-### Session log template for future agents
-
-- `YYYY-MM-DD`: Summary of edits and reasoning.
-- `Added/Updated`: files and features changed.
-- `Notes`: any follow-up tasks, design decisions, or architecture adjustments.
-- `Next`: next milestone or bug to fix.
+- `2026-06-21`: Converted payment integration from Paystack to Flutterwave checkout.
+  - Added: `.env.local`
+  - Updated: `src/app/layout.tsx`, `src/components/CheckoutSidebar.tsx`, `src/components/AfronationCheckoutModal.tsx`, `src/components/HospitalityCheckoutModal.tsx`, `src/components/MatchCheckout.tsx`, `src/components/MonacoCheckoutModal.tsx`, `src/components/TomorrowlandCheckoutModal.tsx`, `src/app/monaco-grand-prix-2026/page.tsx`
+  - Notes: Updated SDK script URLs, adjusted amounts from cents to standard currency units, mapping custom fields into Flutterwave customizations/meta properties, and extracting transaction reference using `transaction_id` / `tx_ref` response properties.
+  - Next: Perform end-to-end sandbox verification of Flutterwave inline checkout popup in the staging environment.

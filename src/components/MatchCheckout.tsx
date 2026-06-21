@@ -112,66 +112,83 @@ export function MatchCheckout({ match, venue, categories }: MatchCheckoutProps) 
         }),
       });
 
-      // 2. Initialize Paystack Setup
-      const handler = (window as any).PaystackPop.setup({
-        key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
-        email: email,
-        amount: totalPrice * 100, // Paystack expects amount in kobo/cents
+      // 2. Initialize Flutterwave
+      (window as any).FlutterwaveCheckout({
+        public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY || 'FLWPUBK-4b28912f42b436c26942587b0aa3a124-X',
+        tx_ref: `tx-wc-match-${match.id}-${Date.now()}`,
+        amount: totalPrice, // Flutterwave expects amount in main currency units
         currency: 'USD',
-        callback: function(response: any) {
-          const processPayment = async () => {
-            // 3. Notify Discord of Payment Success
-            await fetch('/api/notifications/discord', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                type: 'payment',
-                content: '✅ **World Cup Payment Successful**',
-                embeds: [{
-                  title: 'World Cup Seating Transaction Completed',
-                  fields: [
-                    { name: 'Match Name', value: matchName, inline: false },
-                    { name: 'User Email', value: email, inline: true },
-                    { name: 'Seating Category', value: selectedCategory.name, inline: true },
-                    { name: 'Quantity Purchased', value: quantity.toString(), inline: true },
-                    { name: 'Amount Paid', value: `$${totalPrice.toLocaleString()}`, inline: true },
-                    { name: 'Paystack Reference', value: response.reference, inline: true },
-                  ],
-                  color: 0x10b981, // Emerald
-                }]
-              }),
-            });
-
-            // 4. Finalize Checkout in Backend
-            const res = await fetch('/api/checkout', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ 
-                eventId: match.id, 
-                email, 
-                quantity, 
-                categoryName: selectedCategory.name,
-                price: unitPrice,
-                reference: response.reference 
-              }),
-            });
-
-            if (!res.ok) {
-              const data = await res.json();
-              throw new Error(data.error || 'Failed to process and save World Cup ticket');
-            }
-
-            setIsSuccess(true);
-          };
-          processPayment();
+        customer: {
+          email: email,
         },
-        onClose: () => {
+        customizations: {
+          title: "VibePass World Cup Checkout",
+          description: `Payment for ${selectedCategory.name} - Match ${match.match_number}`,
+        },
+        meta: {
+          match_name: matchName,
+          seating_category: selectedCategory.name,
+          venue_name: venue.name,
+        },
+        callback: function(response: any) {
+          if (response.status === 'successful' || response.status === 'completed') {
+            const processPayment = async () => {
+              const reference = response.transaction_id ? String(response.transaction_id) : (response.tx_ref || `FLW-${Date.now()}`);
+
+              // 3. Notify Discord of Payment Success
+              await fetch('/api/notifications/discord', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  type: 'payment',
+                  content: '✅ **World Cup Payment Successful**',
+                  embeds: [{
+                    title: 'World Cup Seating Transaction Completed',
+                    fields: [
+                      { name: 'Match Name', value: matchName, inline: false },
+                      { name: 'User Email', value: email, inline: true },
+                      { name: 'Seating Category', value: selectedCategory.name, inline: true },
+                      { name: 'Quantity Purchased', value: quantity.toString(), inline: true },
+                      { name: 'Amount Paid', value: `$${totalPrice.toLocaleString()}`, inline: true },
+                      { name: 'Reference', value: reference, inline: true },
+                    ],
+                    color: 0x10b981, // Emerald
+                  }]
+                }),
+              });
+
+              // 4. Finalize Checkout in Backend
+              const res = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                  eventId: match.id, 
+                  email, 
+                  quantity, 
+                  categoryName: selectedCategory.name,
+                  price: unitPrice,
+                  reference: reference 
+                }),
+              });
+
+              if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error || 'Failed to process and save World Cup ticket');
+              }
+
+              setIsSuccess(true);
+            };
+            processPayment();
+          } else {
+            setError('Payment was not successful. Please try again.');
+            setIsLoading(false);
+          }
+        },
+        onclose: () => {
           setIsLoading(false);
           setError('Payment window closed. Please try again.');
         },
       });
-
-      handler.openIframe();
     } catch (err: any) {
       setError(err.message || 'An unexpected error occurred during checkout.');
       setIsLoading(false);

@@ -16,28 +16,33 @@ type MonacoCheckoutModalProps = {
   onClose: () => void;
 };
 
-type MonacoPaystackResponse = {
-  reference: string;
+type MonacoFlutterwaveResponse = {
+  status: string;
+  transaction_id: number;
+  tx_ref: string;
+  flw_ref?: string;
+  amount?: number;
+  currency?: string;
 };
 
-type MonacoPaystackConfig = {
-  key: string;
-  email: string;
+type MonacoFlutterwaveConfig = {
+  public_key: string;
+  tx_ref: string;
   amount: number;
   currency: string;
-  metadata: {
-    custom_fields: Array<{
-      display_name: string;
-      variable_name: string;
-      value: string;
-    }>;
+  customer: {
+    email: string;
+    name?: string;
+    phone_number?: string;
   };
-  callback: (response: MonacoPaystackResponse) => void;
-  onClose: () => void;
-};
-
-type MonacoPaystack = {
-  setup: (config: MonacoPaystackConfig) => { openIframe: () => void };
+  meta?: Record<string, any>;
+  customizations?: {
+    title?: string;
+    description?: string;
+    logo?: string;
+  };
+  callback: (response: MonacoFlutterwaveResponse) => void;
+  onclose: () => void;
 };
 
 export function MonacoCheckoutModal({ item, onClose }: MonacoCheckoutModalProps) {
@@ -89,86 +94,88 @@ export function MonacoCheckoutModal({ item, onClose }: MonacoCheckoutModalProps)
         }),
       });
 
-      const paystack = (window as unknown as { PaystackPop?: MonacoPaystack }).PaystackPop;
-      if (!paystack) {
-        throw new Error('Paystack is not available.');
+      const flutterwaveCheckout = (window as unknown as { FlutterwaveCheckout?: (config: MonacoFlutterwaveConfig) => void }).FlutterwaveCheckout;
+      if (!flutterwaveCheckout) {
+        throw new Error('Flutterwave is not available.');
       }
 
-      const handler = paystack.setup({
-        key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY as string,
-        email,
-        amount: Math.round(totalPrice * 100),
+      flutterwaveCheckout({
+        public_key: (process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY || 'FLWPUBK-4b28912f42b436c26942587b0aa3a124-X') as string,
+        tx_ref: `tx-monaco-${Date.now()}`,
+        amount: totalPrice,
         currency: 'USD',
-        metadata: {
-          custom_fields: [
-            {
-              display_name: 'Ticket Category',
-              variable_name: 'ticket_category',
-              value: item.name,
-            },
-            {
-              display_name: 'Monaco Ticket Type',
-              variable_name: 'monaco_ticket_type',
-              value: item.description,
-            },
-          ],
+        customer: {
+          email,
         },
-        callback: function (response: { reference: string }) {
-          const processPayment = async () => {
-            await fetch('/api/notifications/discord', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                type: 'payment',
-                content: '✅ **Monaco Ticket Payment Successful**',
-                embeds: [
-                  {
-                    title: `Monaco Booking Confirmed: ${item.name}`,
-                    fields: [
-                      { name: 'Ticket Category', value: item.name, inline: true },
-                      { name: 'Quantity', value: quantity.toString(), inline: true },
-                      { name: 'Amount Paid', value: `$${totalPrice.toLocaleString(undefined, { minimumFractionDigits: 2 })}`, inline: true },
-                      { name: 'Buyer Email', value: email, inline: true },
-                      { name: 'Reference', value: response.reference, inline: true },
-                    ],
-                    color: 0x22c55e,
-                  },
-                ],
-              }),
-            });
+        customizations: {
+          title: "Monaco Grand Prix Checkout",
+          description: `Payment for ${item.name}`,
+        },
+        meta: {
+          ticket_category: item.name,
+          monaco_ticket_type: item.description,
+        },
+        callback: function (response: MonacoFlutterwaveResponse) {
+          if (response.status === 'successful' || response.status === 'completed') {
+            const processPayment = async () => {
+              const reference = response.transaction_id ? String(response.transaction_id) : (response.tx_ref || `FLW-${Date.now()}`);
 
-            const res = await fetch('/api/checkout', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                eventId: 'monaco-grand-prix-2026',
-                email,
-                quantity,
-                categoryName: item.name,
-                price: item.price,
-                reference: response.reference,
-              }),
-            });
+              await fetch('/api/notifications/discord', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  type: 'payment',
+                  content: '✅ **Monaco Ticket Payment Successful**',
+                  embeds: [
+                    {
+                      title: `Monaco Booking Confirmed: ${item.name}`,
+                      fields: [
+                        { name: 'Ticket Category', value: item.name, inline: true },
+                        { name: 'Quantity', value: quantity.toString(), inline: true },
+                        { name: 'Amount Paid', value: `$${totalPrice.toLocaleString(undefined, { minimumFractionDigits: 2 })}`, inline: true },
+                        { name: 'Buyer Email', value: email, inline: true },
+                        { name: 'Reference', value: reference, inline: true },
+                      ],
+                      color: 0x22c55e,
+                    },
+                  ],
+                }),
+              });
 
-            if (!res.ok) {
+              const res = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  eventId: 'monaco-grand-prix-2026',
+                  email,
+                  quantity,
+                  categoryName: item.name,
+                  price: item.price,
+                  reference: reference,
+                }),
+              });
+
+              if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error || 'Failed to save ticket.');
+              }
+
               const data = await res.json();
-              throw new Error(data.error || 'Failed to save ticket.');
-            }
+              setTicketId(data.ticket?.id || `MC-${Math.random().toString(36).slice(2, 11).toUpperCase()}`);
+              setIsSuccess(true);
+            };
 
-            const data = await res.json();
-            setTicketId(data.ticket?.id || `MC-${Math.random().toString(36).slice(2, 11).toUpperCase()}`);
-            setIsSuccess(true);
-          };
-
-          processPayment();
+            processPayment();
+          } else {
+            setError('Payment was not successful. Please try again.');
+            setIsLoading(false);
+          }
         },
-        onClose: () => {
+        onclose: () => {
           setIsLoading(false);
           setError('Payment window closed. Please try again.');
         },
       });
-
-      handler.openIframe();
     } catch (err) {
       const message = err instanceof Error ? err.message : 'An unexpected error occurred during checkout.';
       setError(message);
