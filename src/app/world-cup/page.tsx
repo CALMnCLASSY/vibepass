@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { matches, venues, ticketCategories, hospitalityPackages } from "@/data/worldcup";
+import { matches as rawMatches, venues, ticketCategories, hospitalityPackages } from "@/data/worldcup";
+
+const matches = rawMatches.filter((m) => m.stage !== "Group Stage");
 import {
   Calendar,
   MapPin,
@@ -102,7 +104,7 @@ export default function WorldCupPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {[
-              { stage: "Group Stage", dates: "Jun 11 – Jun 27", matches: "72", color: "from-blue-500 to-blue-600" },
+              { stage: "Group Stage (Completed)", dates: "Jun 11 – Jun 27", matches: "72", color: "from-blue-500 to-blue-600" },
               { stage: "Round of 32", dates: "Jun 29 – Jul 1", matches: "16", color: "from-indigo-500 to-indigo-600" },
               { stage: "Round of 16", dates: "Jul 4 – Jul 5", matches: "8", color: "from-violet-500 to-violet-600" },
               { stage: "Quarter Finals", dates: "Jul 9 – Jul 10", matches: "4", color: "from-purple-500 to-purple-600" },

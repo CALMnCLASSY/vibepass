@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { getMatchById, getVenueById, ticketCategories, getVenueSeriesById, venueSeries } from "@/data/worldcup";
+import { getMatchById, getVenueById, getMatchesByVenue, ticketCategories, getVenueSeriesById, venueSeries } from "@/data/worldcup";
 import {
   Calendar,
   MapPin,
@@ -186,7 +186,9 @@ export default async function MatchDetailPage({
                   <div className="text-sm text-slate-500 font-medium">Capacity</div>
                 </div>
                 <div className="bg-slate-50 rounded-xl p-4">
-                  <div className="text-2xl font-extrabold text-slate-900">{venue.matches_count}</div>
+                  <div className="text-2xl font-extrabold text-slate-900">
+                    {getMatchesByVenue(venue.id).filter((m) => m.stage !== "Group Stage").length}
+                  </div>
                   <div className="text-sm text-slate-500 font-medium">Matches Hosted</div>
                 </div>
               </div>

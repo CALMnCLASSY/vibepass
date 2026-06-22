@@ -3,7 +3,10 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { matches, venues, stages, groups } from "@/data/worldcup";
+import { matches as rawMatches, venues, stages as rawStages, groups } from "@/data/worldcup";
+
+const matches = rawMatches.filter((m) => m.stage !== "Group Stage");
+const stages = rawStages.filter((s) => s !== "Group Stage");
 import {
   Calendar,
   MapPin,
@@ -70,7 +73,7 @@ export default function MatchesPage() {
             Match <span className="text-gradient bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">Schedule</span>
           </h1>
           <p className="text-slate-300 text-lg max-w-2xl">
-            Browse all 104 matches across 16 venues. Select a match to explore ticket and hospitality options.
+            Browse all knockout matches from the Round of 32 through the Final. Select a match to explore ticket and hospitality options.
           </p>
         </div>
       </div>
@@ -102,7 +105,7 @@ export default function MatchesPage() {
           </div>
 
           {showFilters && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 pt-4 border-t border-slate-100">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-100">
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">Stage</label>
                 <select
@@ -114,21 +117,6 @@ export default function MatchesPage() {
                   {stages.map((s) => (
                     <option key={s} value={s}>
                       {s}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Group</label>
-                <select
-                  value={groupFilter}
-                  onChange={(e) => setGroupFilter(e.target.value)}
-                  className="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="All">All Groups</option>
-                  {groups.map((g) => (
-                    <option key={g} value={g}>
-                      Group {g}
                     </option>
                   ))}
                 </select>
@@ -157,7 +145,7 @@ export default function MatchesPage() {
           <p className="text-slate-500 font-medium">
             Showing <span className="text-slate-900 font-bold">{filteredMatches.length}</span> matches
           </p>
-          {(stageFilter !== "All" || groupFilter !== "All" || venueFilter !== "All" || searchQuery) && (
+          {(stageFilter !== "All" || venueFilter !== "All" || searchQuery) && (
             <button
               onClick={() => {
                 setStageFilter("All");
