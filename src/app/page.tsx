@@ -36,8 +36,8 @@ export default async function Home() {
             <Link href="/events" className="bg-white text-slate-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-100 transition-all hover:-translate-y-1 w-full sm:w-auto text-center shadow-lg">
               Explore Events
             </Link>
-            <Link href="/world-cup" className="bg-white/20 backdrop-blur-md text-white px-8 py-4 rounded-full font-bold text-lg border border-white/30 hover:bg-white/30 transition-all hover:-translate-y-1 w-full sm:w-auto text-center">
-              FIFA World Cup
+            <Link href="/sell" className="bg-white/20 backdrop-blur-md text-white px-8 py-4 rounded-full font-bold text-lg border border-white/30 hover:bg-white/30 transition-all hover:-translate-y-1 w-full sm:w-auto text-center">
+              Sell Your Tickets
             </Link>
           </div>
         </div>

@@ -81,6 +81,23 @@ export function getMonacoGrandPrixEvent(): Event {
   };
 }
 
+export function getACLFestEvent(): Event {
+  return {
+    id: 'acl-fest-2026',
+    name: '2026 ACL Music Festival — Weekend One',
+    date: '2026-10-02T12:00:00',
+    location: 'Zilker Park, Austin, TX',
+    image_url: '/acl-fest/header.png',
+    price: 170,
+    organizer: 'C3 Presents',
+    description: 'Three days of live music on 9 stages at Austin\'s iconic Zilker Park. One-day General Admission tickets for Friday, Saturday, or Sunday.',
+    long_description: 'The Weekend One 1-Day General Admission Ticket allows admittance to Zilker Park for Friday, Saturday, or Sunday of the festival. Your ticket includes access to live music on 9 stages, food from local chefs and restaurants, bars with cocktails and craft drinks throughout the park, and Austin Kiddie Limits. Children 8 and under are free with a ticketed adult (limit 2 per adult). A portion of your purchase goes to Austin Parks Foundation, benefitting 300+ public parks, trails, and green spaces.',
+    ticket_url: 'https://aclfest-weekend1.frontgatetickets.com/event/wkqxl7c4tv1tn1xr',
+    is_active: true,
+    created_at: new Date().toISOString(),
+  };
+}
+
 export async function getEvents(): Promise<Event[]> {
   const { data, error } = await supabase
     .from('events')
@@ -90,13 +107,13 @@ export async function getEvents(): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching events:', error);
-    return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()];
+    return [getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()];
   }
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
 
-  return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events];
+  return [getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events];
 }
 
 export async function getTopEvents(limit: number = 3): Promise<Event[]> {
@@ -109,16 +126,19 @@ export async function getTopEvents(limit: number = 3): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching top events:', error);
-    return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()].slice(0, limit);
+    return [getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()].slice(0, limit);
   }
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
 
-  return [getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events].slice(0, limit);
+  return [getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events].slice(0, limit);
 }
 
 export async function getEventById(id: string): Promise<Event | null> {
+  if (id === 'acl-fest-2026') {
+    return getACLFestEvent();
+  }
   if (id === 'world-cup-2026') {
     return getWorldCupEvent();
   }

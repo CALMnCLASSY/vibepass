@@ -55,20 +55,10 @@ export default function WorldCupPage() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/world-cup/matches"
-              className="bg-gradient-to-r from-blue-600 to-emerald-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-xl hover:shadow-emerald-500/20 transition-all hover:-translate-y-1 w-full sm:w-auto text-center flex items-center justify-center gap-2"
-            >
-              <Ticket className="w-5 h-5" />
-              Browse Matches
-            </Link>
-            <Link
-              href="/world-cup/hospitality"
-              className="glass bg-white/10 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-all hover:-translate-y-1 w-full sm:w-auto text-center flex items-center justify-center gap-2 border border-white/20"
-            >
-              <Crown className="w-5 h-5" />
-              Hospitality Packages
-            </Link>
+            <div className="inline-flex items-center gap-3 rounded-full border border-slate-600 bg-slate-800/80 px-8 py-4 text-sm font-bold uppercase tracking-widest text-slate-400">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500 inline-block" />
+              Tournament Completed — Final: July 19, 2026
+            </div>
           </div>
 
           {/* Stats */}

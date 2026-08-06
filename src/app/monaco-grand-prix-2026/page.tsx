@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Calendar, MapPin, Info, Sparkles } from 'lucide-react';
 import { getMonacoGrandPrixEvent } from '@/data/events';
-import { MonacoCheckoutModal } from '@/components/MonacoCheckoutModal';
 import { AvailabilityBadge } from '@/components/AvailabilityBadge';
 
 const ticketOptions = [
@@ -61,7 +60,7 @@ type TicketOption = (typeof ticketOptions)[0];
 export default function MonacoGrandPrixPage() {
   const event = getMonacoGrandPrixEvent();
   const [selectedTicket, setSelectedTicket] = useState<TicketOption>(ticketOptions[0]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // Past event — Monaco Grand Prix 2026 was May 24, 2026
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
@@ -106,15 +105,9 @@ export default function MonacoGrandPrixPage() {
               </div>
             </div>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <button
-                type="button"
-                onClick={() => setIsModalOpen(true)}
-                className="inline-flex items-center justify-center rounded-full bg-rose-500 px-8 py-4 text-sm font-black uppercase tracking-[0.18em] text-white transition hover:bg-rose-400"
-              >
-                Book tickets now
-              </button>
-              <div className="rounded-full border border-slate-700/80 bg-slate-900/90 px-5 py-4 text-sm text-slate-300">
-                Starting at <span className="font-black text-white">${ticketOptions[0].price}</span>
+              <div className="inline-flex items-center gap-3 rounded-full border border-slate-600 bg-slate-800/80 px-8 py-4 text-sm font-bold uppercase tracking-widest text-slate-400">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500 inline-block" />
+                This event has ended — May 24, 2026
               </div>
             </div>
           </div>
@@ -143,11 +136,8 @@ export default function MonacoGrandPrixPage() {
                 <button
                   key={ticket.id}
                   type="button"
-                  onClick={() => {
-                    setSelectedTicket(ticket);
-                    setIsModalOpen(true);
-                  }}
-                  className={`rounded-[2rem] border p-8 text-left transition-all relative ${selectedTicket.id === ticket.id ? 'border-rose-500 bg-rose-500/10 shadow-2xl shadow-rose-500/10' : 'border-slate-800 bg-slate-900/90 hover:border-rose-500 hover:bg-slate-900/80'}`}
+                  onClick={() => setSelectedTicket(ticket)}
+                  className={`rounded-[2rem] border p-8 text-left transition-all relative cursor-default ${selectedTicket.id === ticket.id ? 'border-slate-500 bg-slate-800/50 shadow-2xl' : 'border-slate-800 bg-slate-900/90'}`}
                 >
                   <AvailabilityBadge ticketId={ticket.id} className="top-4 right-4" />
                   <div className="flex items-center justify-between gap-4 mb-4">
@@ -207,9 +197,6 @@ export default function MonacoGrandPrixPage() {
         </div>
       </main>
 
-      {isModalOpen && (
-        <MonacoCheckoutModal item={selectedTicket} onClose={() => setIsModalOpen(false)} />
-      )}
     </div>
   );
 }

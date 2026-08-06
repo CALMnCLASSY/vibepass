@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Image from 'next/image';
 
 export default function AfronationHome() {
@@ -25,12 +24,10 @@ export default function AfronationHome() {
           <p className="text-xl md:text-3xl text-white/90 mb-12 max-w-3xl mx-auto font-medium drop-shadow-md">
             Join us on the beach for an unforgettable summer.
           </p>
-          <Link
-            href="/afronation/book-tickets"
-            className="bg-white text-black px-12 py-5 font-black text-xl hover:bg-[#ff651f] hover:text-white transition-all transform hover:scale-105 shadow-2xl uppercase tracking-widest"
-          >
-            Book Tickets Now
-          </Link>
+          <div className="inline-flex items-center gap-3 bg-black/40 border border-white/30 text-white/80 px-8 py-4 text-sm font-bold uppercase tracking-widest backdrop-blur-sm">
+            <span className="w-2.5 h-2.5 rounded-full bg-red-500 inline-block" />
+            This event has ended — July 9–11, 2026
+          </div>
         </div>
       </section>
 
@@ -79,12 +76,9 @@ export default function AfronationHome() {
                   <div className="w-2 h-2 bg-[#feaa1e] rounded-full" /> Fast-track Entry
                 </li>
               </ul>
-              <Link
-                href="/afronation/book-tickets"
-                className="inline-block bg-[#ff651f] text-white px-10 py-4 font-black text-lg hover:bg-white hover:text-black transition-all uppercase tracking-widest"
-              >
-                Explore Packages
-              </Link>
+              <div className="inline-block border border-[#ff651f]/50 text-[#ff651f]/80 px-8 py-4 font-bold text-sm uppercase tracking-widest cursor-not-allowed">
+                Event Has Ended
+              </div>
             </div>
             <div className="relative aspect-square bg-zinc-900 p-4">
               <div className="absolute inset-0 border-2 border-[#feaa1e] translate-x-4 translate-y-4 -z-10" />

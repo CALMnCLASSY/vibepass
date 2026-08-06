@@ -2,9 +2,8 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Calendar, MapPin, Info } from 'lucide-react';
+import { Calendar, MapPin } from 'lucide-react';
 import { getTomorrowlandEvent } from '@/data/events';
-import { TomorrowlandCheckoutModal } from '@/components/TomorrowlandCheckoutModal';
 import { AvailabilityBadge } from '@/components/AvailabilityBadge';
 
 const ticketOptions = [
@@ -51,7 +50,8 @@ type TicketOption = (typeof ticketOptions)[0];
 export default function TomorrowlandPage() {
   const event = getTomorrowlandEvent();
   const [selectedTicket, setSelectedTicket] = useState<TicketOption>(ticketOptions[0]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Past event — Tomorrowland Belgium 2026 ended July 17, 2026
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
@@ -75,16 +75,10 @@ export default function TomorrowlandPage() {
           <p className="mt-6 max-w-3xl text-lg text-slate-300 leading-relaxed">
             {event.long_description}
           </p>
-          <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center justify-center rounded-full bg-violet-500 px-10 py-4 text-sm font-black uppercase tracking-[0.18em] text-white transition hover:bg-white hover:text-violet-700"
-            >
-              Buy Tickets
-            </button>
-            <div className="rounded-full border border-slate-800 bg-slate-900/70 px-5 py-3 text-sm text-slate-300">
-              From <span className="text-white font-bold">${event.price}</span>
+          <div className="mt-10">
+            <div className="inline-flex items-center gap-3 rounded-full border border-slate-600 bg-slate-800/80 px-8 py-4 text-sm font-bold uppercase tracking-widest text-slate-400">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500 inline-block" />
+              This event has ended — July 17, 2026
             </div>
           </div>
         </div>
@@ -116,11 +110,8 @@ export default function TomorrowlandPage() {
               {ticketOptions.map((ticket) => (
                 <button
                   key={ticket.id}
-                  onClick={() => {
-                    setSelectedTicket(ticket);
-                    setIsModalOpen(true);
-                  }}
-                  className={`rounded-[2rem] border p-6 text-left transition-all relative ${selectedTicket.id === ticket.id ? 'border-violet-500 bg-violet-500/10 shadow-xl' : 'border-slate-800 bg-slate-900 hover:border-violet-500 hover:bg-slate-900/80'}`}
+                  onClick={() => setSelectedTicket(ticket)}
+                  className={`rounded-[2rem] border p-6 text-left transition-all relative cursor-default ${selectedTicket.id === ticket.id ? 'border-violet-500 bg-violet-500/10 shadow-xl' : 'border-slate-800 bg-slate-900'}`}
                 >
                   <AvailabilityBadge ticketId={ticket.id} className="top-4 right-4" />
                   <div className="flex items-center justify-between gap-4 mb-5">
@@ -177,13 +168,9 @@ export default function TomorrowlandPage() {
                     <span>Total</span>
                     <span className="text-white font-black">${selectedTicket.price}</span>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setIsModalOpen(true)}
-                    className="w-full rounded-full bg-violet-500 px-6 py-4 text-sm font-black uppercase tracking-[0.18em] text-white hover:bg-white hover:text-violet-700 transition"
-                  >
-                    Purchase now
-                  </button>
+                  <div className="w-full rounded-full border border-slate-700 px-6 py-4 text-sm font-bold uppercase tracking-[0.18em] text-slate-500 text-center cursor-not-allowed">
+                    Event Has Ended
+                  </div>
                 </div>
               </div>
             </div>
@@ -191,12 +178,6 @@ export default function TomorrowlandPage() {
         </div>
       </main>
 
-      {isModalOpen && (
-        <TomorrowlandCheckoutModal
-          item={selectedTicket}
-          onClose={() => setIsModalOpen(false)}
-        />
-      )}
     </div>
   );
 }
