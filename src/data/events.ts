@@ -115,6 +115,23 @@ export function getEDCOrlandoEvent(): Event {
   };
 }
 
+export function getCoronaCapitalEvent(): Event {
+  return {
+    id: 'corona-capital-2026',
+    name: 'Corona Capital CDMX 2026',
+    date: '2026-11-15T14:00:00',
+    location: 'Autódromo Hermanos Rodríguez, Mexico City, MX',
+    image_url: '/corona-capital/logo-corona-capital.webp',
+    price: 135,
+    organizer: 'OCESA / Corona Capital',
+    description: 'Capítulo 15! Mexico City\'s biggest international music festival returns to Autódromo Hermanos Rodríguez November 15–17, 2026.',
+    long_description: 'Corona Capital CDMX returns for its 15th anniversary chapter at Autódromo Hermanos Rodríguez in Mexico City. Featuring 3 legendary days of world-renowned rock, indie, alternative, and pop headliners. Choose from General Access, Comfort Pass by Banamex, VIP Banamex Plus, and Ultra-Luxury Club Passes.',
+    ticket_url: 'https://www.coronacapital.com.mx/boletos',
+    is_active: true,
+    created_at: new Date().toISOString(),
+  };
+}
+
 export async function getEvents(): Promise<Event[]> {
   const { data, error } = await supabase
     .from('events')
@@ -124,13 +141,13 @@ export async function getEvents(): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching events:', error);
-    return [getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()];
+    return [getCoronaCapitalEvent(), getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()];
   }
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
 
-  return [getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events];
+  return [getCoronaCapitalEvent(), getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events];
 }
 
 export async function getTopEvents(limit: number = 3): Promise<Event[]> {
@@ -143,16 +160,19 @@ export async function getTopEvents(limit: number = 3): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching top events:', error);
-    return [getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()].slice(0, limit);
+    return [getCoronaCapitalEvent(), getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()].slice(0, limit);
   }
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
 
-  return [getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events].slice(0, limit);
+  return [getCoronaCapitalEvent(), getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events].slice(0, limit);
 }
 
 export async function getEventById(id: string): Promise<Event | null> {
+  if (id === 'corona-capital-2026') {
+    return getCoronaCapitalEvent();
+  }
   if (id === 'edc-orlando-2026') {
     return getEDCOrlandoEvent();
   }

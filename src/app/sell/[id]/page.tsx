@@ -40,6 +40,25 @@ export default function SellTicketPage() {
     async function loadEvent() {
       if (!eventId) return;
 
+      // 0. Check if Corona Capital CDMX
+      if (eventId === 'corona-capital-2026') {
+        setEventName('Corona Capital CDMX 2026');
+        setCategories([
+          'Corona Capital 2026 - 3-Day General Access Pass (Abono)',
+          'Corona Capital 2026 - 3-Day Comfort Pass (Banamex)',
+          'Corona Capital 2026 - 3-Day VIP Pass (Banamex Plus)',
+          'Corona Capital 2026 - 3-Day Ultra Luxury Club Pass',
+          'Corona Capital 2026 - Friday General Access Pass',
+          'Corona Capital 2026 - Friday VIP Pass (Banamex Plus)',
+          'Corona Capital 2026 - Saturday General Access Pass',
+          'Corona Capital 2026 - Saturday VIP Pass (Banamex Plus)',
+          'Corona Capital 2026 - Sunday General Access Pass',
+          'Corona Capital 2026 - Sunday VIP Pass (Banamex Plus)',
+          'Other Corona Capital Ticket'
+        ]);
+        return;
+      }
+
       // 0. Check if EDC Orlando
       if (eventId === 'edc-orlando-2026') {
         setEventName('2026 EDC Orlando');

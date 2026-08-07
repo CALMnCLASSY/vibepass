@@ -7,6 +7,15 @@ import { Tag, CheckCircle, Loader2, ArrowRight, ShieldCheck, DollarSign, Users, 
 
 const FEATURED_SELL_EVENTS = [
   {
+    id: 'corona-capital-2026',
+    name: 'Corona Capital CDMX 2026',
+    date: 'Nov 15–17, 2026',
+    location: 'Mexico City, MX',
+    image: '/corona-capital/logo-corona-capital.webp',
+    badge: 'Trending CDMX',
+    badgeColor: 'bg-amber-400 text-slate-950',
+  },
+  {
     id: 'edc-orlando-2026',
     name: '2026 EDC Orlando',
     date: 'Nov 6–8, 2026',
