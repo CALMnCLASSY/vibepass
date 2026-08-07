@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar, MapPin, Sparkles, ShieldCheck, Ticket, Check, Filter } from 'lucide-react';
 import { CoronaCapitalCheckoutModal, CoronaTicketItem } from '@/components/CoronaCapitalCheckoutModal';
+import { AvailabilityBadge } from '@/components/AvailabilityBadge';
 
 const CORONA_TICKETS: CoronaTicketItem[] = [
   {
@@ -301,7 +302,7 @@ export default function CoronaCapitalPage() {
               >
                 <div>
                   {/* Card Header & Tier Badge */}
-                  <div className="p-6 border-b border-blue-900/60 bg-gradient-to-r from-blue-950 to-[#002356] flex items-center justify-between">
+                  <div className="p-6 border-b border-blue-900/60 bg-gradient-to-r from-blue-950 to-[#002356] flex items-center justify-between relative">
                     <span className={`px-3 py-1 rounded-full text-xs font-black tracking-wider uppercase ${
                       ticket.tier === 'Club'
                         ? 'bg-purple-500 text-white'
@@ -317,6 +318,8 @@ export default function CoronaCapitalPage() {
                     <span className="px-2.5 py-1 rounded-full bg-slate-900/80 text-blue-200 text-xs font-bold border border-blue-700/50">
                       {ticket.dayText} ({ticket.dateText})
                     </span>
+
+                    <AvailabilityBadge ticketId={ticket.id} price={ticket.priceUsd} className="top-2 right-2 border border-emerald-400/40" />
                   </div>
 
                   {/* Card Info */}

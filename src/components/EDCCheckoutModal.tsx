@@ -234,7 +234,7 @@ export function EDCCheckoutModal({ item, onClose }: EDCCheckoutModalProps) {
                     </span>
                   </div>
                   <div className="text-2xl font-extrabold text-white mt-1">
-                    ${item.price.toFixed(2)}{' '}
+                    ${item.price}{' '}
                     <span className="text-xs font-normal text-slate-400">/ pass</span>
                   </div>
                 </div>
@@ -305,7 +305,7 @@ export function EDCCheckoutModal({ item, onClose }: EDCCheckoutModalProps) {
                 <div className="pt-2 border-t border-slate-800 space-y-1.5 text-sm">
                   <div className="flex justify-between text-slate-400">
                     <span>{quantity}x {item.name}</span>
-                    <span>${(item.price * quantity).toFixed(2)}</span>
+                    <span>${item.price * quantity}</span>
                   </div>
                   <div className="flex justify-between text-slate-400 text-xs">
                     <span>Fulfillment & Service Fees</span>
@@ -313,7 +313,7 @@ export function EDCCheckoutModal({ item, onClose }: EDCCheckoutModalProps) {
                   </div>
                   <div className="flex justify-between text-lg font-bold text-white pt-2 border-t border-slate-800">
                     <span>Total Amount</span>
-                    <span className="text-purple-400">${totalPrice.toFixed(2)} USD</span>
+                    <span className="text-purple-400">${totalPrice} USD</span>
                   </div>
                 </div>
 

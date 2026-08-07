@@ -4,6 +4,7 @@ import { getAvailabilityText } from '@/lib/ticketAvailability';
 
 interface AvailabilityBadgeProps {
   ticketId: string;
+  price?: number;
   className?: string;
   variant?: 'overlay' | 'badge';
 }
@@ -13,15 +14,17 @@ interface AvailabilityBadgeProps {
  * Displays ticket availability as an overlay or badge
  * 
  * @param ticketId - The ticket ID used to generate consistent availability number
+ * @param price - Optional price used to scale availability (higher price = lower availability)
  * @param className - Additional CSS classes
  * @param variant - 'overlay' for absolute positioned overlay, 'badge' for standalone badge
  */
 export function AvailabilityBadge({ 
   ticketId, 
+  price,
   className = '', 
   variant = 'overlay' 
 }: AvailabilityBadgeProps) {
-  const availabilityText = getAvailabilityText(ticketId);
+  const availabilityText = getAvailabilityText(ticketId, price);
 
   if (variant === 'badge') {
     return (

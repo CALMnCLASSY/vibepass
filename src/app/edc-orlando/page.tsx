@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar, MapPin, Sparkles, ShieldCheck, Ticket, Users, Check, Filter } from 'lucide-react';
 import { EDCCheckoutModal, EDCTicketItem } from '@/components/EDCCheckoutModal';
+import { AvailabilityBadge } from '@/components/AvailabilityBadge';
 
 const EDC_TICKETS: EDCTicketItem[] = [
   {
@@ -14,7 +15,7 @@ const EDC_TICKETS: EDCTicketItem[] = [
     tier: 'GA',
     dayText: 'Fri - Sun',
     dateText: 'Nov 6-8, 2026',
-    price: 333.71,
+    price: 334,
     ageLimit: 'Ages 18+ Only',
     image: '/edc-orlando/158544_lg.jpg',
     features: [
@@ -32,7 +33,7 @@ const EDC_TICKETS: EDCTicketItem[] = [
     tier: 'GA+',
     dayText: 'Fri - Sun',
     dateText: 'Nov 6-8, 2026',
-    price: 402.67,
+    price: 403,
     ageLimit: 'Ages 18+ Only',
     image: '/edc-orlando/158545_lg.jpg',
     features: [
@@ -50,7 +51,7 @@ const EDC_TICKETS: EDCTicketItem[] = [
     tier: 'VIP',
     dayText: 'Fri - Sun',
     dateText: 'Nov 6-8, 2026',
-    price: 699.99,
+    price: 700,
     ageLimit: 'Ages 21+ Only',
     image: '/edc-orlando/158546_lg.jpg',
     features: [
@@ -68,7 +69,7 @@ const EDC_TICKETS: EDCTicketItem[] = [
     tier: 'GA',
     dayText: 'Friday',
     dateText: 'Nov 6, 2026',
-    price: 146.99,
+    price: 147,
     ageLimit: 'Ages 18+ Only',
     image: '/edc-orlando/160815_lg.jpg',
     features: [
@@ -85,7 +86,7 @@ const EDC_TICKETS: EDCTicketItem[] = [
     tier: 'GA+',
     dayText: 'Friday',
     dateText: 'Nov 6, 2026',
-    price: 212.99,
+    price: 213,
     ageLimit: 'Ages 18+ Only',
     image: '/edc-orlando/160816_lg.jpg',
     features: [
@@ -102,7 +103,7 @@ const EDC_TICKETS: EDCTicketItem[] = [
     tier: 'VIP',
     dayText: 'Friday',
     dateText: 'Nov 6, 2026',
-    price: 244.99,
+    price: 245,
     ageLimit: 'Ages 21+ Only',
     image: '/edc-orlando/160817_lg.jpg',
     features: [
@@ -119,7 +120,7 @@ const EDC_TICKETS: EDCTicketItem[] = [
     tier: 'GA',
     dayText: 'Saturday',
     dateText: 'Nov 7, 2026',
-    price: 157.99,
+    price: 158,
     ageLimit: 'Ages 18+ Only',
     image: '/edc-orlando/158544_lg.jpg',
     features: [
@@ -136,7 +137,7 @@ const EDC_TICKETS: EDCTicketItem[] = [
     tier: 'GA+',
     dayText: 'Saturday',
     dateText: 'Nov 7, 2026',
-    price: 212.99,
+    price: 213,
     ageLimit: 'Ages 18+ Only',
     image: '/edc-orlando/158545_lg.jpg',
     features: [
@@ -153,7 +154,7 @@ const EDC_TICKETS: EDCTicketItem[] = [
     tier: 'VIP',
     dayText: 'Saturday',
     dateText: 'Nov 7, 2026',
-    price: 244.99,
+    price: 245,
     ageLimit: 'Ages 21+ Only',
     image: '/edc-orlando/158546_lg.jpg',
     isSoldOut: true,
@@ -171,7 +172,7 @@ const EDC_TICKETS: EDCTicketItem[] = [
     tier: 'GA',
     dayText: 'Sunday',
     dateText: 'Nov 8, 2026',
-    price: 146.99,
+    price: 147,
     ageLimit: 'Ages 18+ Only',
     image: '/edc-orlando/160815_lg.jpg',
     features: [
@@ -188,7 +189,7 @@ const EDC_TICKETS: EDCTicketItem[] = [
     tier: 'GA+',
     dayText: 'Sunday',
     dateText: 'Nov 8, 2026',
-    price: 212.99,
+    price: 213,
     ageLimit: 'Ages 18+ Only',
     image: '/edc-orlando/160816_lg.jpg',
     features: [
@@ -205,7 +206,7 @@ const EDC_TICKETS: EDCTicketItem[] = [
     tier: 'VIP',
     dayText: 'Sunday',
     dateText: 'Nov 8, 2026',
-    price: 244.99,
+    price: 245,
     ageLimit: 'Ages 21+ Only',
     image: '/edc-orlando/160817_lg.jpg',
     features: [
@@ -372,6 +373,8 @@ export default function EDCOrlandoPage() {
                         {ticket.dayText} ({ticket.dateText})
                       </span>
                     </div>
+
+                    <AvailabilityBadge ticketId={ticket.id} price={ticket.price} className="bottom-3 right-3 top-auto" />
                   </div>
 
                   {/* Card Info */}
@@ -397,7 +400,7 @@ export default function EDCOrlandoPage() {
                   <div>
                     <span className="text-xs text-slate-400 block font-medium">Price per Pass</span>
                     <div className="text-2xl font-black text-white">
-                      ${ticket.price.toFixed(2)}{' '}
+                      ${ticket.price}{' '}
                       <span className="text-xs font-normal text-slate-400">USD</span>
                     </div>
                   </div>
