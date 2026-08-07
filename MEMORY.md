@@ -50,17 +50,36 @@ This project is not a generic ticket site: it is a conversion-focused, fan-first
 
 ### How to add events
 
-- For standard events:
-  1. Add the event to Supabase `events` and/or `src/data/events.ts` if you need a default seed.
-  2. Ensure the event object includes: `id`, `name`, `date`, `location`, `image_url`, `price`, `organizer`, `description`, `long_description`, `is_active`, `created_at`.
-  3. If the event is a major flagship event and needs a dedicated page, create a new route under `src/app/` and a brand-specific layout if necessary.
-  4. Ensure `EventsGrid` and `ActionModal` render the event card consistently and route correctly with `router.push`.
-  5. **Always import and add the `AvailabilityBadge` component** to any new event pages or ticket cards:
-     - Import: `import { AvailabilityBadge } from "@/components/AvailabilityBadge";`
-     - Usage: `<AvailabilityBadge ticketId={ticketOrEventId} className="top-4 right-4" />` for overlays on images or cards
-     - Utility: `getAvailabilityText()` from `@/lib/ticketAvailability.ts` returns "X available" text (10-60 range)
-     - The badge ensures new events show realistic ticket availability numbers, making the site look active and trustworthy
-  6. Add any event-specific checkout component only when the event has unique payment or bundle behavior.
+- For flagship & custom event pages:
+  1. **Reference Parsing**: Extract ticket names, pass tiers (GA, GA+, VIP, Comfort, Club), dates, prices, and venue info from reference HTML files or official tickets page.
+  2. **Asset Migration**: Copy event graphics and ticket artwork into `public/<event-slug>/`.
+  3. **Event Dataset (`src/data/events.ts`)**:
+     - Create `get<EventName>Event()` function.
+     - Include event in `getEvents()`, `getTopEvents()`, and `getEventById('<event-slug>')`.
+     - **Price Rounding Rule**: Round all ticket prices to clean whole dollar amounts (no decimals for USD prices).
+  4. **Dedicated Event Page (`src/app/<event-slug>/page.tsx`)**:
+     - Create branded festival/sports hub page with hero section, pass filter bar, and pass cards.
+     - **MANDATORY Availability Badge**: Import `AvailabilityBadge` from `@/components/AvailabilityBadge` and render `<AvailabilityBadge ticketId={ticket.id} price={ticket.price} className="..." />` on every ticket pass card.
+  5. **Dedicated Checkout Modal (`src/components/<EventName>CheckoutModal.tsx`)**:
+     - Handle quantity adjustments, email input, Flutterwave payment gateway, Discord notifications (`/api/notifications/discord`), backend database insertion (`/api/checkout`), and confirmation state.
+  6. **Routing Integration**:
+     - Update `src/app/events/[id]/page.tsx` to redirect `<event-slug>` to `/<event-slug>`.
+     - Update `src/components/ActionModal.tsx` to route `handleBuy` to `/<event-slug>`.
+  7. **Marketplace Seller Integration**:
+     - Add event to `FEATURED_SELL_EVENTS` in `src/app/sell/page.tsx`.
+     - Add ticket categories for event in `src/app/sell/[id]/page.tsx`.
+
+- Past Events vs. Upcoming Events Rule:
+  1. Events with `date >= now` automatically render in the "Trending Now" / Upcoming section.
+  2. Events with `date < now` automatically move to the "Past Events" section on the homepage and show an "Event Has Ended" / read-only badge.
+
+- Ticket Availability System (5–20 Range & Price Scaling):
+  1. Availability count is strictly between **5 and 20** remaining tickets.
+  2. **Price-tiered scaling**:
+     - High-Tier / VIP / Club / Hospitality Passes (≥ $400): **5 to 8** tickets available.
+     - Mid-Tier / GA+ / Comfort Passes ($200–$399): **9 to 13** tickets available.
+     - Standard GA Passes (< $200): **14 to 20** tickets available.
+  3. Deterministic hashing ensures consistency across page reloads.
 
 - For World Cup matches and hospitality:
   1. Add match objects into `src/data/worldcup.ts` and ensure each match has a unique `id`, `home_team`, `away_team`, `date`, `time`, `venue_id`, `stage`, `price`, and ticket category data.
@@ -80,7 +99,7 @@ This project is not a generic ticket site: it is a conversion-focused, fan-first
   - Use `Link` components from Next.js for internal routes and avoid raw `<a>` tags unless linking external resources.
 - Replication method:
   1. Identify the target event page or brand route.
-  2. Copy the structural layout from existing flagship pages (`src/app/world-cup/page.tsx`, `src/app/afronation/page.tsx`, `src/app/tomorrowland/page.tsx`).
+  2. Copy the structural layout from existing flagship pages (`src/app/edc-orlando/page.tsx`, `src/app/corona-capital/page.tsx`, `src/app/afronation/page.tsx`).
   3. Replace copy, images, pricing, and match/package data with the new event-specific values.
   4. Verify the new page appears in navigation and the event card route resolves correctly.
   5. Confirm the checkout flow still sends the same JSON shape to `/api/checkout` and displays confirmation text consistently.
@@ -88,14 +107,12 @@ This project is not a generic ticket site: it is a conversion-focused, fan-first
 ## Appendices & Change Logs
 
 - `2026-05-21`: Created long-term project memory file describing VibePass architecture, event flow, rules, and active World Cup milestone.
-- `2026-05-29`: Implemented ticket availability banner system across all event pages:
-  - Created `src/lib/ticketAvailability.ts` with hash-based randomization (10-60 tickets per ID)
-  - Created reusable `src/components/AvailabilityBadge.tsx` component with overlay and badge variants
-  - Integrated badges into 6+ event pages: World Cup matches, Afronation, Tomorrowland, Monaco, EventsGrid, World Cup Hospitality
-  - Feature uses deterministic hashing so same ticket always shows same availability (prevents confusion on page refresh)
-  - Future events must include this banner for consistent "live marketplace" appearance
+- `2026-05-29`: Implemented ticket availability banner system across all event pages.
 - `2026-06-21`: Converted payment integration from Paystack to Flutterwave checkout.
-  - Added: `.env.local`
-  - Updated: `src/app/layout.tsx`, `src/components/CheckoutSidebar.tsx`, `src/components/AfronationCheckoutModal.tsx`, `src/components/HospitalityCheckoutModal.tsx`, `src/components/MatchCheckout.tsx`, `src/components/MonacoCheckoutModal.tsx`, `src/components/TomorrowlandCheckoutModal.tsx`, `src/app/monaco-grand-prix-2026/page.tsx`
-  - Notes: Updated SDK script URLs, adjusted amounts from cents to standard currency units, mapping custom fields into Flutterwave customizations/meta properties, and extracting transaction reference using `transaction_id` / `tx_ref` response properties.
-  - Next: Perform end-to-end sandbox verification of Flutterwave inline checkout popup in the staging environment.
+- `2026-08-07`: Added EDC Orlando 2026 & Corona Capital CDMX 2026 events + fixed `/sell` route:
+  - Created `/edc-orlando` with 12 admission ticket passes (3-Day & Single Day GA, GA+, VIP) and rounded prices ($147, $158, $213, $245, $334, $403, $700).
+  - Created `/corona-capital` with 10 admission ticket passes (3-Day Abono, Comfort, VIP, Club & Single Day) in USD & MXN.
+  - Created `/sell` marketplace hub page resolving 404 error on homepage hero button.
+  - Updated `ticketAvailability.ts` to 5–20 range with price-tiered scaling (VIP = 5–8, Mid = 9–13, GA = 14–20).
+  - Integrated `AvailabilityBadge` on all ticket passes for new events.
+
