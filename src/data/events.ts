@@ -98,6 +98,23 @@ export function getACLFestEvent(): Event {
   };
 }
 
+export function getEDCOrlandoEvent(): Event {
+  return {
+    id: 'edc-orlando-2026',
+    name: '2026 EDC Orlando',
+    date: '2026-11-06T13:00:00',
+    location: 'Tinker Field, Orlando, FL',
+    image_url: '/edc-orlando/header.png',
+    price: 146.99,
+    organizer: 'Insomniac Events',
+    description: 'Electric Daisy Carnival returns to Orlando\'s Tinker Field November 6–8, 2026. 3-Day & 1-Day GA, GA+, and VIP passes available.',
+    long_description: 'Electric Daisy Carnival (EDC) returns to Tinker Field in Orlando, Florida on November 6-8, 2026. Experience world-class electronic dance music, mind-blowing stage designs, supercharged pyrotechnics, immersive art installations, and unforgettable performer showcases under the electric sky.',
+    ticket_url: 'https://edcorlando.frontgatetickets.com/',
+    is_active: true,
+    created_at: new Date().toISOString(),
+  };
+}
+
 export async function getEvents(): Promise<Event[]> {
   const { data, error } = await supabase
     .from('events')
@@ -107,13 +124,13 @@ export async function getEvents(): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching events:', error);
-    return [getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()];
+    return [getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()];
   }
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
 
-  return [getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events];
+  return [getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events];
 }
 
 export async function getTopEvents(limit: number = 3): Promise<Event[]> {
@@ -126,16 +143,19 @@ export async function getTopEvents(limit: number = 3): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching top events:', error);
-    return [getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()].slice(0, limit);
+    return [getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()].slice(0, limit);
   }
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
 
-  return [getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events].slice(0, limit);
+  return [getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events].slice(0, limit);
 }
 
 export async function getEventById(id: string): Promise<Event | null> {
+  if (id === 'edc-orlando-2026') {
+    return getEDCOrlandoEvent();
+  }
   if (id === 'acl-fest-2026') {
     return getACLFestEvent();
   }
@@ -166,3 +186,4 @@ export async function getEventById(id: string): Promise<Event | null> {
 
   return data as Event;
 }
+

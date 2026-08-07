@@ -1,0 +1,331 @@
+(function () {
+    'use strict';
+
+    var COOKIE_NAME = 'fgt_tally_uuid';
+    var COOKIE_TTL_DAYS = 365;
+    var PING_INTERVAL_MS = 20000;
+    var ACTIVITY_WINDOW_MS = 60000;
+
+    /** Prefix for the temporary "census-1:1" comparison stream.
+     *
+     *  The canonical Tally count ("active") gates a site visitor on visibility +
+     *  60s engagement. Census, by contrast, pings unconditionally every cycle, so
+     *  it counts more tabs (background / idle / bounce). To measure that gap on the
+     *  SAME visitors — with no IP-churn confound — the tag additionally emits an
+     *  ungated ping (no visibility, no engagement gate = "count like Census") to a
+     *  label prefixed with this value, so it lands in a separate tally:ungated:*
+     *  keyspace and never touches canonical counts.
+     *
+     *  Two independent switches control this stream:
+     *
+     *   1. CLIENT (load): the tag only emits the census ping when the embed sets
+     *      data-census-test="true" (default off). When off, no extra request is
+     *      sent at all — the tag is fully dormant, adding zero ping load. This is
+     *      driven by a buy feature flag, so it flips on the next page render.
+     *
+     *   2. SERVER (data): the env flag TALLY_CENSUS_TEST_ENABLED (default on) is
+     *      the in-window emergency kill — set it false to make the API drop
+     *      ungated:-prefixed writes before any Redis write. It does NOT reduce
+     *      request load, but it is the only lever that can stop already-open tabs
+     *      from recording mid-event (the client attribute only affects newly
+     *      served pages). Defaults on because the client flag already gates
+     *      whether any census ping is sent.
+     *
+     *  It is throwaway instrumentation: remove the prefix and the census-test
+     *  ping below once the gap is characterized. */
+    var CENSUS_TEST_LABEL_PREFIX = 'ungated:';
+
+    /**
+     * Read a cookie by name. Returns null if not found.
+     * @param {string} name
+     * @returns {string|null}
+     */
+    function readCookie(name) {
+        var match = document.cookie.match(
+            new RegExp('(?:^|;\\s*)' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '=([^;]*)')
+        );
+        return match ? decodeURIComponent(match[1]) : null;
+    }
+
+    /**
+     * Write a cookie that survives page loads.
+     * @param {string} name
+     * @param {string} value
+     * @param {number} days
+     */
+    function writeCookie(name, value, days) {
+        var expires = new Date(Date.now() + days * 864e5).toUTCString();
+        var secure = location.protocol === 'https:' ? '; Secure' : '';
+        document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/; SameSite=Lax' + secure;
+    }
+
+    /**
+     * Generate a RFC 4122 v4 UUID.
+     * @returns {string}
+     */
+    function generateUUID() {
+        if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+            return crypto.randomUUID();
+        }
+        // Fallback for older browsers
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = (Math.random() * 16) | 0;
+            return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+        });
+    }
+
+    /**
+     * Get or create a persistent UUID from cookie.
+     * @returns {string}
+     */
+    function getOrCreateUUID() {
+        var existing = readCookie(COOKIE_NAME);
+        if (existing && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(existing)) {
+            return existing;
+        }
+        var fresh = generateUUID();
+        writeCookie(COOKIE_NAME, fresh, COOKIE_TTL_DAYS);
+        return fresh;
+    }
+
+    /**
+     * Read configuration from the script tag's data-* attributes.
+     * Falls back to sensible defaults so the tag works with no attributes.
+     * @returns {{
+     *   apiUrl: string,
+     *   label: string,
+     *   segment: string,
+     *   step: string,
+     *   censusTest: boolean,
+     * }}
+     */
+    function readConfig() {
+        // document.currentScript is set at execution time and works even with
+        // async scripts before the rest of the DOM is parsed. Fall back to
+        // querySelectorAll for environments that don't support it.
+        var tag = document.currentScript || (function () {
+            var scripts = document.querySelectorAll('script[src*="tag.js"], script[src*="tally.js"]');
+            return scripts[scripts.length - 1];
+        }());
+        return {
+            apiUrl:  (tag && tag.getAttribute('data-api-url')) || 'https://tally-api.frontgatetickets.com',
+            label:   (tag && tag.getAttribute('data-label'))   || 'global',
+            segment: (tag && tag.getAttribute('data-segment')) || 'site',
+            step:    (tag && tag.getAttribute('data-step'))    || 'other',
+            // Census-1:1 comparison stream. Client emit is OFF unless the embed
+            // explicitly opts in with data-census-test="true" — so the tag is
+            // genuinely dormant (zero extra ping RPS) by default, not just
+            // server-dropped after occupying a worker. This is the only lever
+            // that removes the request load; toggling it (via the buy feature
+            // flag that sets the attribute) takes effect on the next page
+            // render. The server-side TALLY_CENSUS_TEST_ENABLED flag is a
+            // separate, in-window data-integrity valve: it drops the ping before
+            // the Redis write, so it's the only thing that can stop already-open
+            // tabs from recording mid-event (the attribute only affects newly
+            // served pages). It does not reduce request load — the ping still
+            // hits the API.
+            censusTest: !!(tag && tag.getAttribute('data-census-test') === 'true'),
+        };
+    }
+
+    /**
+     * Send a single ping to the Tally API.
+     * @param {string} uuid
+     * @param {{ apiUrl: string, label: string, segment: string, step: string }} payloadCfg
+     */
+    function ping(uuid, payloadCfg) {
+        var url = payloadCfg.apiUrl.replace(/\/$/, '') + '/api/ping';
+        var payload = JSON.stringify({
+            uuid:    uuid,
+            label:   payloadCfg.label,
+            segment: payloadCfg.segment,
+            step:    payloadCfg.step,
+        });
+
+        // Prefer fetch; fall back to XHR for legacy browsers
+        if (typeof fetch === 'function') {
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: payload,
+                keepalive: true,
+            }).catch(function () { /* silent — best-effort telemetry */ });
+        } else {
+            var xhr = new XMLHttpRequest();
+            xhr.onerror = function () { /* silent — best-effort telemetry */ };
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(payload);
+        }
+    }
+
+    // ------------------------------------------------------------------------
+    // Bootstrap
+    // ------------------------------------------------------------------------
+
+    var uuid = getOrCreateUUID();
+    var config = readConfig();
+
+    // ------------------------------------------------------------------------
+    // Activity tracking
+    //
+    // The "active" path counts a site visitor as engaged only if, within the
+    // last 60s, they have either interacted with the page (mouse/key/scroll/
+    // tap), dispatched a same-origin fetch/XHR, or have an in-flight same-
+    // origin request. Initial timestamp is now() — a freshly loaded page is
+    // considered engaged for the first ACTIVITY_WINDOW_MS.
+    //
+    // Waitroom segments always count as engaged regardless of input —
+    // someone in the Fastly waitroom is waiting, not idle.
+    // ------------------------------------------------------------------------
+
+    var lastActivityAt = Date.now();
+    var inFlightCount = 0;
+
+    function markActive() {
+        lastActivityAt = Date.now();
+    }
+
+    function isSameOriginUrl(url) {
+        if (typeof url !== 'string' || !url) {
+            return false;
+        }
+        // Relative URLs (no scheme) are always same-origin
+        if (!/^[a-z][a-z0-9+.-]*:/i.test(url) && !url.startsWith('//')) {
+            return true;
+        }
+        try {
+            var parsed = new URL(url, location.href);
+            return parsed.origin === location.origin;
+        } catch (_) {
+            return false;
+        }
+    }
+
+    function isOwnPingUrl(url) {
+        if (typeof url !== 'string' || !url) return false;
+        var pingBase = config.apiUrl.replace(/\/$/, '');
+        return url.indexOf(pingBase + '/api/ping') === 0;
+    }
+
+    function installActivityListeners() {
+        var events = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart', 'click'];
+        for (var i = 0; i < events.length; i++) {
+            window.addEventListener(events[i], markActive, { passive: true, capture: true });
+        }
+
+        // Wrap fetch
+        if (typeof window.fetch === 'function') {
+            var originalFetch = window.fetch.bind(window);
+            window.fetch = function (input, init) {
+                var url = typeof input === 'string' ? input : (input && input.url) || '';
+                // Don't count our own ping as activity (would defeat the gate)
+                if (!isOwnPingUrl(url) && isSameOriginUrl(url)) {
+                    markActive();
+                    inFlightCount++;
+                    var p = originalFetch(input, init);
+                    var settle = function () { inFlightCount = Math.max(0, inFlightCount - 1); };
+                    p.then(settle, settle);
+                    return p;
+                }
+                return originalFetch(input, init);
+            };
+        }
+
+        // Wrap XMLHttpRequest
+        if (typeof window.XMLHttpRequest === 'function') {
+            var XHR = window.XMLHttpRequest;
+            var originalOpen = XHR.prototype.open;
+            var originalSend = XHR.prototype.send;
+            XHR.prototype.open = function (method, url) {
+                this.__tallyTrack = !isOwnPingUrl(url) && isSameOriginUrl(url);
+                return originalOpen.apply(this, arguments);
+            };
+            XHR.prototype.send = function () {
+                if (this.__tallyTrack) {
+                    markActive();
+                    inFlightCount++;
+                    var settle = function () { inFlightCount = Math.max(0, inFlightCount - 1); };
+                    this.addEventListener('loadend', settle);
+                }
+                return originalSend.apply(this, arguments);
+            };
+        }
+    }
+
+    /** Canonical "active" eligibility: visibility + engagement. Waitroom always
+     *  counts (someone parked in the Fastly waitroom is waiting, not idle). */
+    function shouldEmitActive() {
+        if (config.segment === 'waitroom') {
+            return true;
+        }
+        if (typeof document.visibilityState === 'string' && document.visibilityState === 'hidden') {
+            return false;
+        }
+        var idle = (Date.now() - lastActivityAt) > ACTIVITY_WINDOW_MS;
+        return !idle || inFlightCount > 0;
+    }
+
+    /** Build the canonical payload config. Writes to the unprefixed label —
+     *  this is the count we keep and report. */
+    function activePayloadCfg(stepOverride) {
+        return {
+            apiUrl:  config.apiUrl,
+            label:   config.label,
+            segment: config.segment,
+            step:    stepOverride || config.step,
+        };
+    }
+
+    /** Build the census-1:1 payload config. Writes to a label prefixed with
+     *  CENSUS_TEST_LABEL_PREFIX so the comparison keys live under
+     *  tally:ungated:* and never touch canonical counts. */
+    function censusTestPayloadCfg(stepOverride) {
+        return {
+            apiUrl:  config.apiUrl,
+            label:   CENSUS_TEST_LABEL_PREFIX + config.label,
+            segment: config.segment,
+            step:    stepOverride || config.step,
+        };
+    }
+
+    /** Emit the canonical ping (gated). When the embed opts in with
+     *  data-census-test="true", also emit an ungated ping that mirrors Census
+     *  behavior (no visibility/engagement gate). The census ping is skipped
+     *  entirely when the attribute is off, so the default embed sends no extra
+     *  request. Initial-load pings bypass the engagement gate — a freshly loaded
+     *  page is engaged by definition; the gate only distinguishes later ticks.
+     *  The census ping deliberately never gates on visibility: the point of the
+     *  ungated stream is to count every tab the way Census does, so gating it
+     *  would collapse it back into the visibility-only definition. */
+    function emitPings(opts) {
+        opts = opts || {};
+        var bypassGates = !!opts.bypassGates;
+
+        if (bypassGates || shouldEmitActive()) {
+            ping(uuid, activePayloadCfg());
+        }
+        if (config.censusTest) {
+            ping(uuid, censusTestPayloadCfg());
+        }
+    }
+
+    installActivityListeners();
+
+    // Programmatic one-off ping. Bypasses gates — explicit caller signal.
+    // Mirrors the census-1:1 stream (when opted in) so dashboards stay
+    // consistent. Usage: window.__tallyPing('checkout')
+    window.__tallyPing = function (step) {
+        ping(uuid, activePayloadCfg(step));
+        if (config.censusTest) {
+            ping(uuid, censusTestPayloadCfg(step));
+        }
+    };
+
+    // Initial load: bypass gates so the dashboard sees the visitor immediately.
+    emitPings({ bypassGates: true });
+
+    setInterval(function () {
+        emitPings({ bypassGates: false });
+    }, PING_INTERVAL_MS);
+}());

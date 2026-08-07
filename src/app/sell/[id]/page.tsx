@@ -40,6 +40,27 @@ export default function SellTicketPage() {
     async function loadEvent() {
       if (!eventId) return;
 
+      // 0. Check if EDC Orlando
+      if (eventId === 'edc-orlando-2026') {
+        setEventName('2026 EDC Orlando');
+        setCategories([
+          '2026 EDC Orlando - 3-Day GA Experience Pass',
+          '2026 EDC Orlando - 3-Day GA+ Experience Plus',
+          '2026 EDC Orlando - 3-Day VIP Elevated Experience Pass',
+          '2026 EDC Orlando - Friday GA Experience Pass',
+          '2026 EDC Orlando - Friday GA+ Experience Plus',
+          '2026 EDC Orlando - Friday VIP Elevated Experience Pass',
+          '2026 EDC Orlando - Saturday GA Experience Pass',
+          '2026 EDC Orlando - Saturday GA+ Experience Plus',
+          '2026 EDC Orlando - Saturday VIP Elevated Experience Pass',
+          '2026 EDC Orlando - Sunday GA Experience Pass',
+          '2026 EDC Orlando - Sunday GA+ Experience Plus',
+          '2026 EDC Orlando - Sunday VIP Elevated Experience Pass',
+          'Other EDC Orlando Ticket'
+        ]);
+        return;
+      }
+
       // 1. Check if hardcoded Afronation
       if (eventId === 'afronation-portugal-2026') {
         setEventName('Afro Nation Portugal 2026');

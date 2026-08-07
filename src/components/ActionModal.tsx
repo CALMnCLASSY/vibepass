@@ -41,7 +41,9 @@ export function ActionModal({ event, onClose }: ActionModalProps) {
   const handleBuy = () => {
     handleClose();
     setTimeout(() => {
-      if (event.id === 'acl-fest-2026') {
+      if (event.id === 'edc-orlando-2026') {
+        router.push('/edc-orlando');
+      } else if (event.id === 'acl-fest-2026') {
         router.push('/acl-fest-2026');
       } else if (event.id === 'monaco-grand-prix-2026') {
         router.push('/monaco-grand-prix-2026');
