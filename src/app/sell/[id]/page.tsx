@@ -40,6 +40,26 @@ export default function SellTicketPage() {
     async function loadEvent() {
       if (!eventId) return;
 
+      // 0. Check if Creamfields Festival
+      if (eventId === 'creamfields-2026') {
+        setEventName('Creamfields Festival 2026');
+        setCategories([
+          'Creamfields 2026 - 4-Day Gold Camping Pass',
+          'Creamfields 2026 - 3-Day Gold Camping Pass (Fri-Sun)',
+          'Creamfields 2026 - 2-Day Gold Camping Pass (Sat-Sun)',
+          'Creamfields 2026 - 4-Day Silver Camping Pass',
+          'Creamfields 2026 - 3-Day Silver Camping Pass (Fri-Sun)',
+          'Creamfields 2026 - 4-Day Standard Camping Pass',
+          'Creamfields 2026 - 3-Day Standard Camping Pass (Fri-Sun)',
+          'Creamfields 2026 - 2-Day Standard Camping Pass (Sat-Sun)',
+          'Creamfields 2026 - Friday Day Pass (Non-Camping)',
+          'Creamfields 2026 - Saturday Day Pass (Non-Camping)',
+          'Creamfields 2026 - Sunday Day Pass (Non-Camping)',
+          'Other Creamfields Ticket'
+        ]);
+        return;
+      }
+
       // 0. Check if Corona Capital CDMX
       if (eventId === 'corona-capital-2026') {
         setEventName('Corona Capital CDMX 2026');

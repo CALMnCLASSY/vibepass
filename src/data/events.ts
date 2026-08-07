@@ -132,6 +132,22 @@ export function getCoronaCapitalEvent(): Event {
   };
 }
 
+export function getCreamfieldsEvent(): Event {
+  return {
+    id: 'creamfields-2026',
+    name: 'Creamfields Festival 2026',
+    date: '2026-08-27T14:00:00',
+    location: 'Daresbury, Cheshire, UK',
+    image_url: '/creamfields/1.png',
+    price: 143,
+    organizer: 'Rockstar Energy & Live Nation',
+    description: 'The UK\'s premier electronic dance music festival featuring world-class DJs across 4 massive days.',
+    long_description: 'Rockstar Energy presents Creamfields 2026 returns to Daresbury, Cheshire for the ultimate Bank Holiday weekend celebration of electronic dance music. Featuring 4 days of groundbreaking production, legendary mainstage acts, and exclusive Gold, Silver, and Standard camping options.',
+    is_active: true,
+    created_at: new Date().toISOString(),
+  };
+}
+
 export async function getEvents(): Promise<Event[]> {
   const { data, error } = await supabase
     .from('events')
@@ -141,13 +157,13 @@ export async function getEvents(): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching events:', error);
-    return [getCoronaCapitalEvent(), getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()];
+    return [getCreamfieldsEvent(), getCoronaCapitalEvent(), getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()];
   }
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
 
-  return [getCoronaCapitalEvent(), getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events];
+  return [getCreamfieldsEvent(), getCoronaCapitalEvent(), getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events];
 }
 
 export async function getTopEvents(limit: number = 3): Promise<Event[]> {
@@ -160,16 +176,19 @@ export async function getTopEvents(limit: number = 3): Promise<Event[]> {
 
   if (error) {
     console.error('Error fetching top events:', error);
-    return [getCoronaCapitalEvent(), getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()].slice(0, limit);
+    return [getCreamfieldsEvent(), getCoronaCapitalEvent(), getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent()].slice(0, limit);
   }
 
   // Filter out any World Cup event from the DB to avoid duplicates with our hardcoded version
   const events = (data as Event[]).filter(e => !e.name.toLowerCase().includes('world cup'));
 
-  return [getCoronaCapitalEvent(), getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events].slice(0, limit);
+  return [getCreamfieldsEvent(), getCoronaCapitalEvent(), getEDCOrlandoEvent(), getACLFestEvent(), getWorldCupEvent(), getAfronationEvent(), getTomorrowlandEvent(), getMonacoGrandPrixEvent(), ...events].slice(0, limit);
 }
 
 export async function getEventById(id: string): Promise<Event | null> {
+  if (id === 'creamfields-2026') {
+    return getCreamfieldsEvent();
+  }
   if (id === 'corona-capital-2026') {
     return getCoronaCapitalEvent();
   }

@@ -7,6 +7,15 @@ import { Tag, CheckCircle, Loader2, ArrowRight, ShieldCheck, DollarSign, Users, 
 
 const FEATURED_SELL_EVENTS = [
   {
+    id: 'creamfields-2026',
+    name: 'Creamfields Festival 2026',
+    date: 'Aug 27–30, 2026',
+    location: 'Daresbury, Cheshire, UK',
+    image: '/creamfields/1.png',
+    badge: 'Bank Holiday Special',
+    badgeColor: 'bg-amber-400 text-slate-950',
+  },
+  {
     id: 'corona-capital-2026',
     name: 'Corona Capital CDMX 2026',
     date: 'Nov 15–17, 2026',

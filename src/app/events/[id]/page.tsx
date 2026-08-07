@@ -16,6 +16,10 @@ export default async function EventDetail({ params }: { params: Promise<{ id: st
     redirect('/world-cup');
   }
 
+  if (event.id === 'creamfields-2026') {
+    redirect('/creamfields');
+  }
+
   if (event.id === 'corona-capital-2026') {
     redirect('/corona-capital');
   }

@@ -41,7 +41,9 @@ export function ActionModal({ event, onClose }: ActionModalProps) {
   const handleBuy = () => {
     handleClose();
     setTimeout(() => {
-      if (event.id === 'corona-capital-2026') {
+      if (event.id === 'creamfields-2026') {
+        router.push('/creamfields');
+      } else if (event.id === 'corona-capital-2026') {
         router.push('/corona-capital');
       } else if (event.id === 'edc-orlando-2026') {
         router.push('/edc-orlando');
